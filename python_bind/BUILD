@@ -1,4 +1,4 @@
-load("@pybind11_bazel//:build_defs.bzl", "pybind_extension")
+load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "pybind_library_test")
 
 filegroup(
     name = "basic",
@@ -34,12 +34,27 @@ cc_library(
     deps = [],
 )
 
+pybind_library(
+    name = "pybind_basic_cc_library",
+    srcs = [":basic"],
+    deps = [],
+)
+
 cc_test(
     name = "basic_test",
     #    main = 'basic_test.cpp',
     srcs = ["basic_test.cpp"],
     deps = [
         ":basic_cc_library",
+        "@googletest//:gtest_main",
+    ],
+)
+
+pybind_library_test(
+    name = "pybind_basic_test",
+    srcs = ["basic_test.cpp"],
+    deps = [
+        ":pybind_basic_cc_library",
         "@googletest//:gtest_main",
     ],
 )
