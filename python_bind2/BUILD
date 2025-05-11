@@ -28,8 +28,8 @@ py_library(
 )
 
 py_test(
-    name = "python_basic_test2",
-    srcs = ["python_basic_test2.py"],
+    name = "python_basic_test",
+    srcs = ["python_basic_test.py"],
     deps = [":basic_lib"],
 )
 
