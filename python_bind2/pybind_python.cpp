@@ -40,22 +40,19 @@ std::string call_go(Animal *animal) {
     return animal->go(3);
 }
 
-std::string call_go(Dog *animal) {
-    return animal->go(3);
-}
 
 PYBIND11_MODULE(basic, m) {
     py::class_<Animal, PyAnimal /* <--- trampoline*/>(m, "Animal")
         .def(py::init<>())
         .def("go", &Animal::go);
 
-    py::class_<Dog, PyDog>(m, "Dog")
+    py::class_<Dog, Animal, PyDog>(m, "Dog")
         .def(py::init<>())
         .def("go", &Animal::go);
 
 
-    m.def("call_go", py::overload_cast<Animal *>(&call_go));
-    m.def("call_go", py::overload_cast<Dog *>(&call_go));
+    // m.def("call_go", py::overload_cast<Animal *>(&call_go));
+    m.def("call_go", &call_go);
 }
 
 
