@@ -3,6 +3,11 @@ load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "
 filegroup(
     name = "_basic",
     srcs = [
+        "Dog.cpp",
+        "Dog.h",
+        "Pet.cpp",
+        "Pet.h",
+        "PolymorphhicPet.h",
         "basic.cpp",
         "basic.h",
     ],
@@ -40,7 +45,7 @@ cc_library(
 
 pybind_library(
     name = "pybind_basic_cc_library",
-    srcs = [":basic"],
+    srcs = [":_basic"],
     deps = [],
 )
 
@@ -59,6 +64,30 @@ pybind_library_test(
     srcs = ["basic_test.cpp"],
     deps = [
         ":pybind_basic_cc_library",
+        "@googletest//:gtest_main",
+    ],
+)
+
+filegroup(
+    name = "_Pet",
+    srcs = [
+        "Pet.cpp",
+        "Pet.h",
+    ],
+)
+
+cc_library(
+    name = "Pet",
+    srcs = [":_Pet"],
+    deps = [],
+)
+
+cc_test(
+    name = "PetTest",
+    #    main = 'basic_test.cpp',
+    srcs = ["PetTest.cpp"],
+    deps = [
+        ":Pet",
         "@googletest//:gtest_main",
     ],
 )

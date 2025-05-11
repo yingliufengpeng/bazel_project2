@@ -12,5 +12,5 @@ TEST(BasicTest, HelloTest) {
 
 
 TEST(BasicTest, HelloTest2) {
-
+   EXPECT_EQ(add(4, 15), 19);
 }
