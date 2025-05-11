@@ -138,7 +138,7 @@ PYBIND11_MODULE(basic, m) {
 
         type->tp_str = [](PyObject *self_base) {
             auto &self = py::cast<OwnsPythonObjects&>(py::handle(self_base));
-
+            pybind11::print("add debug  info...");
             auto v = py::str(self.value);
             v.inc_ref();
             return v.ptr();
