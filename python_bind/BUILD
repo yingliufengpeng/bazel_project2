@@ -1,7 +1,7 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "pybind_library_test")
 
 filegroup(
-    name = "basic",
+    name = "_basic",
     srcs = [
         "basic.cpp",
         "basic.h",
@@ -9,16 +9,20 @@ filegroup(
 )
 
 pybind_extension(
-    name = "pybind_basic",
+    name = "basic",
     srcs = [
         "pybind_python.cpp",
-        ":basic",
+        ":_basic",
     ],
 )
 
 py_library(
     name = "basic_lib",
-    data = [":pybind_basic"],
+    srcs = ["basic_tools.py"],
+    data = [
+        #        "basic_tools.py",
+        ":basic",
+    ],
     imports = ["."],
 )
 
@@ -30,7 +34,7 @@ py_test(
 
 cc_library(
     name = "basic_cc_library",
-    srcs = [":basic"],
+    srcs = [":_basic"],
     deps = [],
 )
 
