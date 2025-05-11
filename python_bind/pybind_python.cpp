@@ -6,6 +6,34 @@
 #include "PolymorphhicPet.h"
 namespace py = pybind11;
 
+struct Data {
+    int value;
+    Data(int v) : value(v) {}
+};
+
+class Container {
+    Data* data;
+public:
+    Container(Data* d) : data(d) {}
+    Data* get_data() { return data; }
+};
+
+static Data static_data(42); // 静态对象
+
+void print_dict(const py::dict& dict, py::args args, py::kwargs kwargs) {
+    for (auto item : dict)
+        py::print("key= ", item.first, " value = ", item.second);
+
+    for (auto item: args) {
+        py::print("key= ", item);
+
+    }
+
+    for (auto item : kwargs)
+        py::print("key= ", item.first, " value = ", item.second);
+
+}
+
 
 PYBIND11_MODULE(basic, module) {
     module.doc() = "A basic pybind11 extension";
@@ -13,6 +41,20 @@ PYBIND11_MODULE(basic, module) {
     module.attr("the_answer") = 42;
     py::object world = py::cast("World");
     module.attr("world") = world;
+
+
+    module.def("print_dict", &print_dict);
+
+    py::class_<Data>(module, "Data")
+    .def_readwrite("value", &Data::value);
+
+    py::class_<Container>(module, "Container")
+    .def(py::init<Data*>())
+    .def("get_data", &Container::get_data, py::return_value_policy::reference);
+
+
+    module.def("get_static_data", []() { return &static_data; }, py::return_value_policy::reference);
+    // module.def("get_static_data", []() { return &static_data; }   );
 
 
     auto pet = py::class_<Pet>(module, "Pet", py::dynamic_attr())

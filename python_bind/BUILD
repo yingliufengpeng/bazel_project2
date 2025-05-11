@@ -17,6 +17,8 @@ filegroup(
 pybind_extension(
     name = "basic",
     srcs = [
+        #        "basic.cpp",
+        #        "basic.h",
         "pybind_python.cpp",
         ":_basic",
     ],

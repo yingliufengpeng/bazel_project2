@@ -48,6 +48,18 @@ class TestBasic(unittest.TestCase):
         pet.show()
 
 
+    def test_print_dict(self):
+        d = {'name': "44", 'agre': 4}
+        basic_tools.print_dict(d, 4, 5, a=4, b=5)
+
+
+    def test_get_static_data(self):
+        data = basic_tools.get_static_data()
+
+        c = basic_tools.Container(data)
+
+
+        print(f'data is {data}  data of c is {c.get_data()}')
 
 
 if __name__ == "__main__":

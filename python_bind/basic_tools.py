@@ -19,6 +19,11 @@ def add(a, b):
 # basic.Pet.CAT
 Pet = basic.Pet
 Dog = basic.Dog
+Data = basic.Data
+Container = basic.Container
+
+print_dict = basic.print_dict
+get_static_data = basic.get_static_data
 
 pet_store = basic.pet_store
 pet_store2 = basic.pet_store2

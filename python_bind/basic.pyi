@@ -8,6 +8,24 @@ the_answer = ...
 
 world = ...
 
+def get_static_data():
+    ...
+
+def print_dict(v: dict, *args, **kwargs):
+    ...
+
+
+
+class Data:
+    ...
+
+class Container:
+    def __init__(self, data: Data):
+        ...
+
+
+    def get_data(self) -> Data:
+        ...
 
 from enum import Enum
 
