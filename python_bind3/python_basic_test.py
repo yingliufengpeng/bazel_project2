@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 
 
@@ -5,10 +6,11 @@ import basic
 import tools
 from basic import Dog
 
-class TestBasic2(unittest.TestCase):
+class TestBasic(unittest.TestCase):
 
     def test_add(self):
         m = 3 + 4
+
 
 
     def test_cccc(self):
