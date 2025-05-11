@@ -1,12 +1,13 @@
 import unittest
 
-# import basic
+import basic
 import tools
 
-class TestBasic(unittest.TestCase):
+class TestBasic2(unittest.TestCase):
 
     def test_add(self):
         m = 3 + 4
+
 
     def test_cccc(self):
 
@@ -14,7 +15,7 @@ class TestBasic(unittest.TestCase):
 
         print(f'test ab ...')
 
-    # def test_add(self):
+    # def test_call_go(self):
     #
     #     d = basic.Dog()
     #
@@ -28,3 +29,6 @@ class TestBasic(unittest.TestCase):
     #     v2 = basic.call_go(Cat())
     #     print(f'call value is {v}')
 
+
+if __name__ == '__main__':
+    unittest.main()
