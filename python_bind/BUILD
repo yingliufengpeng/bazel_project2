@@ -11,6 +11,7 @@ filegroup(
         "PolymorphhicPet.h",
         "basic.cpp",
         "basic.h",
+        "basic.pyi",
     ],
 )
 
@@ -26,7 +27,10 @@ pybind_extension(
 
 py_library(
     name = "basic_lib",
-    srcs = ["basic_tools.py"],
+    srcs = [
+        #        "basic.pyi",
+        "basic_tools.py",
+    ],
     data = [
         ":basic",
     ],

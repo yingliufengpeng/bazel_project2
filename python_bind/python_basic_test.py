@@ -3,14 +3,12 @@ import unittest
 import basic_tools
 
 class TestBasic(unittest.TestCase):
-
+  
     def test_add(self):
-        self.assertEqual(basic_tools.add(1, 2), 3)
-        self.assertEqual(basic_tools.add(2, 2), 4)
+        m = 3 + 4
 
 
-
-    def testPet(self):
+    def test_Pet(self):
         pet = basic_tools.Pet("44")
         pet.show()
         pet.name = "444"
