@@ -1,4 +1,5 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "pybind_library_test")
+load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
 
 filegroup(
     name = "_basic",
@@ -25,7 +26,6 @@ py_library(
     name = "basic_lib",
     srcs = ["basic_tools.py"],
     data = [
-        #        "basic_tools.py",
         ":basic",
     ],
     imports = ["."],
@@ -90,4 +90,28 @@ cc_test(
         ":Pet",
         "@googletest//:gtest_main",
     ],
+)
+
+#py_package(
+#    name = "my_package",
+#    #    distribution = "basic",  # 包名
+#    packages = [],
+#    #    python_tag = "py3",  # Python 版本
+#    #    requires = ["requests==2.28.1"],  # 声明运行时依赖
+#    #    version = "0.1.0",  # 版本号
+#    deps = [":basic_lib"],  # 引用 py_library
+#)
+#platform = "linux_x86_64",
+py_wheel(
+    name = "my_package_wheel",
+    #    data = [":basic_lib"],
+    distribution = "basic",  # 包名
+    platform = "linux_x86_64",
+    python_tag = "py3",  # Python 版本
+    requires = ["requests==2.28.1"],  # 声明运行时依赖
+    version = "0.1.0",  # 版本号
+    deps = [
+        ":basic",
+        ":basic_lib",
+    ],  # 引用 py_library
 )
