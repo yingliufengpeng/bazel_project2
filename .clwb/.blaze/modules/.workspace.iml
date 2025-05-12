@@ -2,7 +2,7 @@
 <module external.system.id="Blaze" type="BLAZE_CPP_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Python" name="Python">
-      <configuration sdkName="test" />
+      <configuration sdkName="Python 3.13" />
     </facet>
   </component>
   <component name="NewModuleRootManager">
@@ -10,8 +10,8 @@
       <sourceFolder url="file://$MODULE_DIR$/../../.." isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/../.." />
       <excludeFolder url="file://$MODULE_DIR$/../../../.ijwb" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-bazel_project1" />
       <excludeFolder url="file://$MODULE_DIR$/../../../bazel-bin" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../bazel-demo2" />
       <excludeFolder url="file://$MODULE_DIR$/../../../bazel-genfiles" />
       <excludeFolder url="file://$MODULE_DIR$/../../../bazel-out" />
       <excludeFolder url="file://$MODULE_DIR$/../../../bazel-testlogs" />
@@ -19,10 +19,10 @@
       <excludePattern pattern="bazel-genfiles" />
       <excludePattern pattern="bazel-out" />
       <excludePattern pattern="bazel-testlogs" />
-      <excludePattern pattern="bazel-demo2" />
+      <excludePattern pattern="bazel-bazel_project1" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="test interpreter library" level="application" />
+    <orderEntry type="library" name="Python 3.13 interpreter library" level="application" />
   </component>
 </module>
