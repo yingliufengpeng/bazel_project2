@@ -86,6 +86,28 @@ struct OwnsPythonObjects {
 };
 
 
+class MyClass {
+public:
+    bool myMethod(int32_t & a);
+};
+
+bool MyClass::myMethod(int32_t& value)
+{
+    pybind11::gil_scoped_acquire gil;  // Acquire the GIL while in this scope.
+    // Try to look up the overridden method on the Python side.
+    pybind11::function override = pybind11::get_override(this, "myMethod");
+    if (override) {  // method is found
+        auto obj = override(value);  // Call the Python function.
+        if (py::isinstance<py::int_>(obj)) {  // check if it returned a Python integer type
+            value = obj.cast<int32_t>();  // Cast it and assign it to the value.
+            return true;  // Return true; value should be used.
+        } else {
+            return false;  // Python returned none, return false.
+        }
+    }
+    return false;  // Alternatively return MyClass::myMethod(value);
+}
+
 
 PYBIND11_MODULE(basic, m) {
 
@@ -148,6 +170,10 @@ PYBIND11_MODULE(basic, m) {
     }));
     cls.def(py::init<>());
     cls.def_readwrite("value", &OwnsPythonObjects::value);
+
+    py::class_<MyClass>(m, "MyClass")
+    .def(py::init())
+    .def("myMethod", &MyClass::myMethod);
 }
 
 

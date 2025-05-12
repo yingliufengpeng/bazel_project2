@@ -33,3 +33,8 @@ class Example:
 
 class OwnsPythonObjects:
     ...
+
+
+class MyClass:
+    def myMethod(self, a):
+        ...
