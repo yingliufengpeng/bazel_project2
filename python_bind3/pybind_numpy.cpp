@@ -50,8 +50,57 @@ void test_py_demo() {
 
 }
 
+#define STR(x) #x
+
+
+#define INIT_Vector(type) \
+    py::class_<std::vector<type>>(m,   STR(type ## Vector) ) \
+    .def(py::init<>()) \
+    .def("clear", &std::vector<type>::clear) \
+    .def("pop_back", &std::vector<type>::pop_back) \
+    .def("__len__", [](const std::vector<type> &v) { return v.size(); }) \
+    .def("__iter__", [](std::vector<type> &v) { \
+       return py::make_iterator(v.begin(), v.end()); \
+    }, py::keep_alive<0, 1>()) \
+    .def("push_back", (void (int_vector::*)(const type &))&std::vector<type>::push_back );
+
+
+
+
+template <typename T>
+void init_Vector(pybind11::module& m) {
+
+    INIT_Vector(int)
+
+#undef INIT_Vector
+#undef STR
+    // py::class_<std::vector<int>>(m, "IntVector")
+    // .def(py::init<>())
+    // .def("clear", &std::vector<int>::clear)
+    // .def("pop_back", &std::vector<int>::pop_back)
+    // .def("__len__", [](const std::vector<int> &v) { return v.size(); })
+    // .def("__iter__", [](std::vector<int> &v) {
+    //    return py::make_iterator(v.begin(), v.end());
+    // }, py::keep_alive<0, 1>())
+    // .def("push_back", (void (int_vector::*)(const int &))&std::vector<int>::push_back )
+    // ;
+}
+
 
 void InitNumpyBinding(pybind11::module& m) {
+
+    py::class_<std::vector<int>>(m, "IntVector")
+        .def(py::init<>())
+        .def("clear", &std::vector<int>::clear)
+        .def("pop_back", &std::vector<int>::pop_back)
+        .def("__len__", [](const std::vector<int> &v) { return v.size(); })
+        .def("__iter__", [](std::vector<int> &v) {
+           return py::make_iterator(v.begin(), v.end());
+        }, py::keep_alive<0, 1>())
+        .def("push_back", (void (int_vector::*)(const int &))&std::vector<int>::push_back )
+    ; /* Keep vector alive while iterator is used */
+        // ....
+
 
     py::class_<A>(m, "A")
     .def(py::init<int, double>());
@@ -113,4 +162,6 @@ void InitNumpyBinding(pybind11::module& m) {
             return py::bytes(s);  // Return the data without transcoding
         }
     );
+
+
 }

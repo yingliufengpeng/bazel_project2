@@ -72,3 +72,22 @@ def return_bytes() -> bytes:
 
 def utf8_test(s: str):
     ...
+
+class intVector:
+    ...
+
+    def push_back(self, e):
+        ...
+
+
+    def __len__(self):
+        ...
+
+
+    def __iter__(self):
+        ...
+
+    def pop_back(self):
+        ...
+
+IntVector = intVector
