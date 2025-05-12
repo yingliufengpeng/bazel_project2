@@ -3,43 +3,43 @@
   <component name="BlazeCTargetInfoService">
     <infoMap>
       <entry key="//cpp_demo:e1">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo:e1" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo:e1" />
       </entry>
       <entry key="//cpp_demo:e2.compile">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo:e2.compile" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo:e2.compile" />
       </entry>
       <entry key="//cpp_demo:lib1">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo:lib1 and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo:lib1 and 2 other target(s)" />
       </entry>
       <entry key="//cpp_demo_test:my_test">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo_test:my_test and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo_test:my_test and 2 other target(s)" />
       </entry>
       <entry key="//python_bind2:basic.so">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//python_bind2:basic.so and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//python_bind2:basic.so and 1 other target(s)" />
       </entry>
       <entry key="//python_bind3:basic.so">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//python_bind3:basic.so" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//python_bind3:basic.so" />
       </entry>
       <entry key="//python_bind:Pet">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo:lib1 and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo:lib1 and 2 other target(s)" />
       </entry>
       <entry key="//python_bind:PetTest">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo_test:my_test and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo_test:my_test and 2 other target(s)" />
       </entry>
       <entry key="//python_bind:basic.so">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//python_bind2:basic.so and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//python_bind2:basic.so and 1 other target(s)" />
       </entry>
       <entry key="//python_bind:basic_cc_library">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo:lib1 and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo:lib1 and 2 other target(s)" />
       </entry>
       <entry key="//python_bind:basic_test">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//cpp_demo_test:my_test and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//cpp_demo_test:my_test and 2 other target(s)" />
       </entry>
       <entry key="//python_bind:pybind_basic_cc_library">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//python_bind2:basic.so and 2 other target(s)" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//python_bind:pybind_basic_cc_library" />
       </entry>
       <entry key="//python_bind:pybind_basic_test">
-        <TargetInfo compilerVersion="Microsoft (R) C/C++ Optimizing Compiler Version 19.43.34810 for x64" configurationId="//python_bind:pybind_basic_test" />
+        <TargetInfo compilerVersion="gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0&#10;Copyright (C) 2023 Free Software Foundation, Inc.&#10;This is free software; see the source for copying conditions.  There is NO&#10;warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#10;&#10;" configurationId="//python_bind:pybind_basic_test" />
       </entry>
     </infoMap>
   </component>

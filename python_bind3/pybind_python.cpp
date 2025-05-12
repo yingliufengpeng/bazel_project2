@@ -2,6 +2,8 @@
 #include <iostream>
 #include <strstream>
 
+#include "pybind_numpy.h"
+
 namespace py = pybind11;
 
 class Animal {
@@ -174,6 +176,8 @@ PYBIND11_MODULE(basic, m) {
     py::class_<MyClass>(m, "MyClass")
     .def(py::init())
     .def("myMethod", &MyClass::myMethod);
+
+    InitNumpyBinding(m);
 }
 
 

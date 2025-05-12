@@ -2,6 +2,7 @@
 import unittest
 
 
+
 import basic
 import tools
 from basic import Dog
@@ -87,6 +88,26 @@ class TestBasic(unittest.TestCase):
         o.myMethod(4)
 
 
+
+
+    def test_points(self):
+        import numpy as np
+        # 调用 C++ 函数创建 Point 数组
+        points = basic.create_points()
+
+        # 打印数组
+        print(points)  # 输出类似: [(1., 2.) (3., 4.) (5., 6.)] dtype=[('x', '<f4'), ('y', '<f4')]
+
+        # 访问字段
+        print(points['x'])  # 输出: [1. 3. 5.]
+        print(points['y'])  # 输出: [2. 4. 6.]
+
+        # 调用 C++ 函数处理 Point 数组
+        basic.print_points(points)
+
+        # 创建一个新的 Point 数组并传递给 C++
+        new_points = np.array([(0.0, 0.0), (1.1, 2.2)], dtype=[('x', np.float32), ('y', np.float32)])
+        basic.print_points(new_points)
 
 if __name__ == '__main__':
     unittest.main()
