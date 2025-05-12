@@ -84,10 +84,7 @@ class TestBasic(unittest.TestCase):
 
     def test_myMethod(self):
         o = basic.MyClass()
-
         o.myMethod(4)
-
-
 
 
     def test_points(self):

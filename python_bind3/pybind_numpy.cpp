@@ -11,6 +11,14 @@ using namespace pybind11::literals; // to bring in the `_a` literal
 
 namespace py = pybind11;
 
+// Define ssize_t for Windows
+#ifndef _WIN32
+#include <sys/types.h> // POSIX systems have ssize_t
+#else
+#include <cstddef> // For ptrdiff_t
+using ssize_t = std::ptrdiff_t; // Use ptrdiff_t as ssize_t on Windows
+#endif
+
 struct A {
     int x;
     double y;

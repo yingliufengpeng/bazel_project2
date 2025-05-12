@@ -11,6 +11,29 @@ filegroup(
     ],
 )
 
+
+# 定义 config_setting 用于平台检测
+config_setting(
+    name = "is_windows",
+    constraint_values = [
+        "@platforms//os:windows",
+    ],
+)
+
+config_setting(
+    name = "is_linux",
+    constraint_values = [
+        "@platforms//os:linux",
+    ],
+)
+
+config_setting(
+    name = "is_macos",
+    constraint_values = [
+        "@platforms//os:macos",
+    ],
+)
+
 pybind_extension(
     name = "basic",
     srcs = [
@@ -19,11 +42,27 @@ pybind_extension(
         "pybind_python.cpp",
         #        ":_basic",
     ],
-    copts = [
-        "-g",
-        #        "--strip=never",
-        "-O0",
-    ],  # 确保调试符号，禁用优化
+    copts = select({
+            ":is_windows": [
+
+                "/O",                       # Windows MSVC 优化
+            ],
+            ":is_linux": [
+                "-O0",                       # Linux GCC/Clang 优化
+
+            ],
+            ":is_macos": [
+                "-O0",                       # macOS Clang 优化
+
+            ],
+            "//conditions:default": [],
+        }),
+
+#    copts = [
+#        "-g",
+#        #        "--strip=never",
+#        "-O0",
+#    ],  # 确保调试符号，禁用优化
 )
 
 py_library(
