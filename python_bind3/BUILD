@@ -1,3 +1,4 @@
+load("@pip_deps2//:requirements.bzl", "all_data_requirements", "all_requirements", "all_whl_requirements", "requirement")
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "pybind_library_test")
 load("@rules_python//python:defs.bzl", "py_test")
 load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
@@ -33,8 +34,8 @@ py_library(
     ],
     imports = ["."],
     deps = [
-        #        "//pip_deps:numpy",
         "@pip_deps2//numpy",
+        requirement("pandas"),
     ],
 )
 
