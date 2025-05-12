@@ -80,5 +80,13 @@ class TestBasic(unittest.TestCase):
         print(f"o is {o}")
 
 
+
+    def test_myMethod(self):
+        o = basic.MyClass()
+
+        o.myMethod(4)
+
+
+
 if __name__ == '__main__':
     unittest.main()
