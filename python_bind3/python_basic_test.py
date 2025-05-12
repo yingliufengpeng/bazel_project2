@@ -121,5 +121,19 @@ class TestBasic(unittest.TestCase):
 
         basic.utf8_test("I am a good man!")
 
+
+    def test_VectorInt(self):
+        v = basic.IntVector()
+        v.push_back(4)
+        v.push_back(5)
+        v.push_back(4)
+        v.push_back(4)
+        v.pop_back()
+        print(f"test_VectorInt's lenght is {len(v)}")
+        for e in v:
+            print(f'e is {e}')
+
+        print(f'type of v is {type(v)}')
+
 if __name__ == '__main__':
     unittest.main()
