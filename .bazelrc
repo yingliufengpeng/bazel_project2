@@ -1,5 +1,5 @@
 
 build --remote_cache=http://127.0.0.1:9090
 
-build:dbg --copt=-g --strip=never
+build:dbg  --strip=never
 
