@@ -35,7 +35,7 @@ py_library(
     imports = ["."],
     deps = [
         "@pip_deps2//numpy",
-        requirement("pandas"),
+        #        requirement("pandas"),
     ],
 )
 
