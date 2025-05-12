@@ -64,7 +64,7 @@ class TestBasic(unittest.TestCase):
 
 
 
-    def test_example_inistance(self):
+    def test_example_instance(self):
         Example = basic.Example
         o = Example(4)
         print(f'o is {o}')
@@ -108,6 +108,18 @@ class TestBasic(unittest.TestCase):
         # 创建一个新的 Point 数组并传递给 C++
         new_points = np.array([(0.0, 0.0), (1.1, 2.2)], dtype=[('x', np.float32), ('y', np.float32)])
         basic.print_points(new_points)
+
+
+
+    def test_py_demo(self):
+        basic.test_py_demo()
+
+
+    def test_return_bytes(self):
+        o = basic.return_bytes()
+        print(f'return_bytes is {o}')
+
+        basic.utf8_test("I am a good man!")
 
 if __name__ == '__main__':
     unittest.main()

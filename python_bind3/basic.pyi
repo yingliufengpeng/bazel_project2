@@ -61,3 +61,14 @@ def create_points():
 
 def print_points(ls):
     ...
+
+
+def test_py_demo():
+    ...
+
+
+def return_bytes() -> bytes:
+    ...
+
+def utf8_test(s: str):
+    ...

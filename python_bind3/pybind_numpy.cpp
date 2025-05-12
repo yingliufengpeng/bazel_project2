@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "pybind11/numpy.h"
+using namespace pybind11::literals; // to bring in the `_a` literal
 
 namespace py = pybind11;
 
@@ -23,7 +24,7 @@ struct B {
 template <typename T>
 void f(py::array_t<T> array) {
     for (auto e: array) {
-        std::cout << "4o" << std::endl;
+        std::cout << 40 << std::endl;
     }
 }
 
@@ -37,6 +38,18 @@ struct Point {
     float y;
 };
 
+void test_py_demo() {
+
+    py::print("hello world begin ...");
+
+    py::print(1, 2.9, "three", "sep"_a="-");
+
+    auto args = py::make_tuple("unpacked", true);
+    py::print("->", *args, "end"_a="<-"); // -> unpacked True <-
+    py::print("hello world end ...");
+
+}
+
 
 void InitNumpyBinding(pybind11::module& m) {
 
@@ -47,13 +60,16 @@ void InitNumpyBinding(pybind11::module& m) {
     .def(py::init<int, A>());
 
 
+    m.def("test_py_demo", &test_py_demo);
+
+
 
     PYBIND11_NUMPY_DTYPE(A, x, y);
     PYBIND11_NUMPY_DTYPE(B, z, a);
     PYBIND11_NUMPY_DTYPE(Point, x, y);
 
-    m.def("f", &f<A>);
-    m.def("f", &f<B>);
+    // m.def("f", &f<A>);
+    // m.def("f", &f<B>);
 
     m.def("vectorized_func", py::vectorize(my_func));
 
@@ -76,4 +92,25 @@ void InitNumpyBinding(pybind11::module& m) {
             std::cout << "Point " << i << ": x=" << r(i).x << ", y=" << r(i).y << std::endl;
         }
     });
+
+
+    m.def("utf8_test",
+    [](const std::string &s) {
+        std::cout << "utf-8 is icing on the cake.\n";
+        std::cout << s;
+    }
+);
+    m.def("utf8_charptr",
+        [](const char *s) {
+            std::cout << "My favorite food is\n";
+            std::cout << s;
+        }
+    );
+
+    m.def("return_bytes",
+        []() {
+            std::string s("\xba\xd0\xba\xd0");  // Not valid UTF-8
+            return py::bytes(s);  // Return the data without transcoding
+        }
+    );
 }
