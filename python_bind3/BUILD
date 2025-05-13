@@ -38,6 +38,7 @@ pybind_extension(
     srcs = [
         "pybind_numpy.cpp",
         "pybind_custom_smart_pointer.cpp",
+        "pybind_exception.cpp",
         "pybind_smart_pointers.cpp",
         "pybind_numpy.h",
         "pybind_python.cpp",

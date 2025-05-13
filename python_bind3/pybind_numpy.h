@@ -15,6 +15,7 @@ using int_vector = std::vector<int>;
 void InitNumpyBinding(pybind11::module& m);
 void InitSmartPoint(pybind11::module& m);
 void InitCustomSmallPointer(pybind11::module& m);
+void InitCustomException(pybind11::module& m);
 
 
 
