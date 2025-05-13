@@ -30,6 +30,6 @@ Note!!!
         },
         )
 
-    providers is guaranteed to ensure  go_library 's label which belongs to some 
+    `providers` is guaranteed to ensure  go_library 's label which belongs to some 
         rule must have GoSource in that return values.
 
