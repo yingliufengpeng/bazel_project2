@@ -29,6 +29,16 @@ class TestBasic(unittest.TestCase):
         print(f'test_smart_pointer is {o.value}')
 
 
+    def test_risky_function(self):
+
+        try:
+            basic.risky_function()
+        except basic.MyCustomError as e:
+            print(f'catched exception is {e}')
+        except Exception:
+            raise
+
+
 
 if __name__ == '__main__':
     unittest.main()

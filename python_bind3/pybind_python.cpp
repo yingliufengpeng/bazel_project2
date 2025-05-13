@@ -180,6 +180,7 @@ PYBIND11_MODULE(basic, m) {
     InitNumpyBinding(m);
     InitSmartPoint(m);
     InitCustomSmallPointer(m);
+    InitCustomException(m);
 }
 
 

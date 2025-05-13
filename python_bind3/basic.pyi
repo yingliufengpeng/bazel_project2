@@ -111,3 +111,10 @@ class Child(Parent):
 
 class Person:
     value: ...
+
+
+class MyCustomError:
+    ...
+
+def risky_function():
+    ...
