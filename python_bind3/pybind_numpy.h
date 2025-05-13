@@ -13,6 +13,8 @@ PYBIND11_MAKE_OPAQUE(std::vector<int>);
 using int_vector = std::vector<int>;
 
 void InitNumpyBinding(pybind11::module& m);
+void InitSmartPoint(pybind11::module& m);
+void InitCustomSmallPointer(pybind11::module& m);
 
 
 

@@ -11,7 +11,6 @@ filegroup(
     ],
 )
 
-
 # 定义 config_setting 用于平台检测
 config_setting(
     name = "is_windows",
@@ -38,31 +37,30 @@ pybind_extension(
     name = "basic",
     srcs = [
         "pybind_numpy.cpp",
+        "pybind_custom_smart_pointer.cpp",
+        "pybind_smart_pointers.cpp",
         "pybind_numpy.h",
         "pybind_python.cpp",
         #        ":_basic",
     ],
     copts = select({
-            ":is_windows": [
+        ":is_windows": [
+            "/O",  # Windows MSVC 优化
+        ],
+        ":is_linux": [
+            "-O0",  # Linux GCC/Clang 优化
+        ],
+        ":is_macos": [
+            "-O0",  # macOS Clang 优化
+        ],
+        "//conditions:default": [],
+    }),
 
-                "/O",                       # Windows MSVC 优化
-            ],
-            ":is_linux": [
-                "-O0",                       # Linux GCC/Clang 优化
-
-            ],
-            ":is_macos": [
-                "-O0",                       # macOS Clang 优化
-
-            ],
-            "//conditions:default": [],
-        }),
-
-#    copts = [
-#        "-g",
-#        #        "--strip=never",
-#        "-O0",
-#    ],  # 确保调试符号，禁用优化
+    #    copts = [
+    #        "-g",
+    #        #        "--strip=never",
+    #        "-O0",
+    #    ],  # 确保调试符号，禁用优化
 )
 
 py_library(
@@ -84,21 +82,14 @@ py_test(
     deps = [":basic_lib"],
 )
 
-#
-#py_wheel(
-#    name = "my_package_wheel",
-#    abi = "py3",
-#    distribution = "basic",  # 包名
-#    platform = select({
-#        "@platforms//os:linux": "linux_x86_64",
-#        "@platforms//os:windows": "win_amd64",
-#        "//conditions:default": "any",
-#    }),
-#    python_tag = "py3",  # Python 版本
-#    requires = ["requests==2.28.1"],  # 声明运行时依赖
-#    version = "0.1.0",  # 版本号
-#    deps = [
-#        ":basic",
-#        ":basic_lib",
-#    ],  # 引用 py_library
-#)
+py_test(
+    name = "python_basic_test2",
+    srcs = ["python_basic_test2.py"],
+    deps = [":basic_lib"],
+)
+
+cc_binary(
+    name = "custom_smart_ptr",
+    srcs = ["CustomSmartPtr.cpp"],
+    deps = [],
+)
