@@ -6,6 +6,11 @@ def _my_rule_impl(ctx):
         ["bbb"],
     )
 
+    return [
+        DefaultInfo(),
+        info,
+    ]
+
 my_rule = rule(
     implementation = _my_rule_impl,
 )
