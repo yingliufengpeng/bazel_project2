@@ -1,4 +1,4 @@
-.clwb
+.clwb/
 bazel-bin
 bazel-demo2
 bazel-out
@@ -6,3 +6,4 @@ bazel-testlogs
 
 **/__pycache__/
 bazel-bazel_project1/
+.ijwb/
