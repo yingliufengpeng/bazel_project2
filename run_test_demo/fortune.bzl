@@ -36,6 +36,12 @@ def _haiku_fortune_impl(ctx):
     ctx.actions.write(script, script_content, is_executable = True)
 
     # The datafile must be in the runfiles for the executable to see it.
+
+    workspace_name = ctx.workspace_name
+    runfile_path = script.short_path
+    print("w_n is {}, r_path is {}".format(workspace_name, runfile_path))
+    #    print("root is {}".format(ctx.root))
+
     runfiles = ctx.runfiles(files = [datafile])
     return [DefaultInfo(executable = script, runfiles = runfiles)]
 
