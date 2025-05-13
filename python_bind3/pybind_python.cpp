@@ -178,6 +178,8 @@ PYBIND11_MODULE(basic, m) {
     .def("myMethod", &MyClass::myMethod);
 
     InitNumpyBinding(m);
+    InitSmartPoint(m);
+    InitCustomSmallPointer(m);
 }
 
 
