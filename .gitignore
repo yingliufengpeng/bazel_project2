@@ -8,3 +8,5 @@ bazel-testlogs
 bazel-bazel_project1/
 bazel-bazel_project1
 .ijwb/
+
+MODULE.bazel.lock
