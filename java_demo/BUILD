@@ -1,35 +1,28 @@
-load("@rules_java//java:defs.bzl", "java_binary")
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@container_structure_test//:defs.bzl", "container_structure_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("@rules_oci//oci:defs.bzl", "oci_image")
 
-
 package(default_visibility = ["//visibility:public"])
 
 java_library(
-	name = "j_l1",
-	srcs = ["src/main/java/com/example/Greeting.java"],
+    name = "j_l1",
+    srcs = ["src/main/java/com/example/Greeting.java"],
 )
 
 java_binary(
     name = "j1",
-    main_class = "com.example.ProjectRunner",
-
     srcs = ["src/main/java/com/example/ProjectRunner.java"],
+    main_class = "com.example.ProjectRunner",
     deps = [":j_l1"],
 )
 
 java_binary(
     name = "j2",
-    main_class = "com.example.cmdline.Runner",
-
     srcs = ["src/main/java/com/example/cmdline/Runner.java"],
+    main_class = "com.example.cmdline.Runner",
     deps = [":j_l1"],
 )
-
-
-
 
 java_library(
     name = "java-maven-lib",
@@ -51,6 +44,7 @@ java_test(
         ":java-maven-lib",
         "@maven//:com_google_guava_guava",
         "@maven//:junit_junit",
+        #        "@myrepo//:gson",
     ],
 )
 
