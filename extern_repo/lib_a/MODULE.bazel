@@ -1,0 +1,12 @@
+module(
+    name = "lib_a",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "rules_cc", version = "0.0.17")
+bazel_dep(name = "glog", version = "0.5.0", repo_name = "com_github_google_glog")
+#bazel_dep(name = "lib_a_sub", version = "0.0.1")
+#local_path_override(
+#    module_name = "lib_a_sub",
+#    path = "./lib_a/sub_module",
+#)
