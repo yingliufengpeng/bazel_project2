@@ -89,8 +89,18 @@ py_test(
     deps = [":basic_lib"],
 )
 
+alias(
+    name = "python_basic_test2_alias",
+    actual = ":python_basic_test2",
+)
+
 cc_binary(
     name = "custom_smart_ptr",
     srcs = ["CustomSmartPtr.cpp"],
     deps = [],
+)
+
+alias(
+    name = "custom_smart_ptr_alias",
+    actual = ":custom_smart_ptr",
 )
