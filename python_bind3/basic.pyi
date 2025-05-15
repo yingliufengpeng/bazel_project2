@@ -89,8 +89,23 @@ class intVector:
 
     def pop_back(self):
         ...
+class IntVector:
+    ...
 
-IntVector = intVector
+    def push_back(self, e):
+        ...
+
+
+    def __len__(self):
+        ...
+
+
+    def __iter__(self):
+        ...
+
+    def pop_back(self):
+        ...
+
 
 class Example2:
     ...
