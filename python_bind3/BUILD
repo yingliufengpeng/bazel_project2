@@ -3,6 +3,13 @@ load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "
 load("@rules_python//python:defs.bzl", "py_test")
 load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
 
+platform(
+    name = "my_target_platform",
+    constraint_values = [
+        "@platforms//os:linux",
+    ],
+)
+
 filegroup(
     name = "_basic",
     srcs = [
