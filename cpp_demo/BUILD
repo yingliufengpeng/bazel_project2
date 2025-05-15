@@ -78,3 +78,15 @@ zip_archive(
     ],
     output = "cpp2.zip",
 )
+
+cc_binary(
+    name = "my_app",
+    srcs = ["main.cpp"],
+    deps = ["//third_party/my_lib"],
+)
+
+cc_binary(
+    name = "my_app2",
+    srcs = ["main2.cpp"],
+    deps = ["//third_party/my_lib:my_lib2"],
+)
