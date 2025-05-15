@@ -7,6 +7,7 @@ platform(
     name = "my_target_platform",
     constraint_values = [
         "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
     ],
 )
 
