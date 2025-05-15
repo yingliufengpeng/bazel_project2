@@ -120,3 +120,10 @@ my_extension.lib(
     version = "1.0.0",
 )
 use_repo(my_extension, "my_external_lib_1_0_0")
+
+bazel_dep(name = "my-panio", version = "1.7.1")
+local_path_override(
+    module_name = "my-panio",
+    #    build_file = "java_demo/BUILD.panio",
+    path = "third_party/my-panio",
+)
