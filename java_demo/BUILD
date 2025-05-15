@@ -14,7 +14,7 @@ java_binary(
     name = "j1",
     srcs = ["src/main/java/com/example/ProjectRunner.java"],
     main_class = "com.example.ProjectRunner",
-    deps = [":j_l1"],
+    deps = [":j_l1", "@my-panio",],
 )
 
 java_binary(
@@ -44,6 +44,7 @@ java_test(
         ":java-maven-lib",
         "@maven//:com_google_guava_guava",
         "@maven//:junit_junit",
+
         #        "@myrepo//:gson",
     ],
 )
