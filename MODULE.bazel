@@ -119,7 +119,7 @@ my_extension.lib(
     url = "https://github.com/google/googletest/releases/download/v1.17.0/googletest-1.17.0.tar.gz",
     version = "1.0.0",
 )
-use_repo(my_extension, "my_external_lib_1_0_0")
+use_repo(my_extension, "my_external_lib_1_0_0", "my_external_lib_1_0_0_ref")
 
 bazel_dep(name = "my-panio", version = "1.7.1")
 local_path_override(
