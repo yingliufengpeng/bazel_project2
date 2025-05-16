@@ -72,7 +72,7 @@ config_setting(
 config_setting(
     name = "fall",
     flag_values = {
-        ":season": "fal l",
+        ":season": "fall",
     },
 )
 
