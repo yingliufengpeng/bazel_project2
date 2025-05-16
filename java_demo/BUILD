@@ -1,7 +1,10 @@
 load("@aspect_bazel_lib//lib:tar.bzl", "tar")
 load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@my-panio//:hello_world.bzl", "my_panio_hello_world")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
 load("@rules_oci//oci:defs.bzl", "oci_image")
+
+my_panio_hello_world("java build")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -14,7 +17,10 @@ java_binary(
     name = "j1",
     srcs = ["src/main/java/com/example/ProjectRunner.java"],
     main_class = "com.example.ProjectRunner",
-    deps = [":j_l1", "@my-panio",],
+    deps = [
+        ":j_l1",
+        "@my-panio",
+    ],
 )
 
 java_binary(

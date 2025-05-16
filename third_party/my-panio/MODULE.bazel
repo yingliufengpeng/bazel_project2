@@ -4,3 +4,5 @@ module(
 )
 
 bazel_dep(name = "rules_java", version = "8.11.0")
+
+print("thrid party my-panio  is initialinazting ....")
