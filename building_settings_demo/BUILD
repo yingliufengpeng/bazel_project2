@@ -30,6 +30,7 @@ drink_rule(
     flavor = ":f1",
 )
 
+# -----------------------------    using label-typed building types     -----------------
 # Define a label_flag (or setting) using the built-in bazel rules.
 # Its default value is the default target this flag should point to.
 label_flag(
@@ -45,7 +46,8 @@ tool(name = "hammer")
 
 tool(name = "screwdriver")
 
-# -------------------------   season  build test ----------------
+# ------------ using Build settings and select() ---------------------
+# -------------------------   harvest  build test ----------------
 string_flag(
     name = "season",
     build_setting_default = "spring",
