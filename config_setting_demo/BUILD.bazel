@@ -1,0 +1,34 @@
+# 基于自定义标志的配置
+config_setting(
+    name = "enable_metrics",
+    values = {"define": "ENABLE_METRICS=1"},
+)
+
+config_setting(
+    name = "log_enabled",
+    define_values = {
+        "CC_LOG": "1",
+    },
+)
+
+config_setting(
+    name = "linux",
+    constraint_values = ["@platforms//os:linux"],
+)
+
+config_setting(
+    name = "windows",
+    constraint_values = ["@platforms//os:windows"],
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    defines = select({
+        ":log_enabled": ["CC_LOG=1"],
+        ":linux": ["PLATFORM_LINUX"],
+        ":windows": ["PLATFORM_WINDOWS"],
+        "//conditions:default": ["BASIC_LOG=1"],
+    }) + ["ENABLE_METRICS=1"],
+    deps = [],
+)
