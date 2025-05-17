@@ -7,7 +7,7 @@ conda install  libstdcxx-ng -c conda-forge
 
 gdb --args  python bazel-bin/python_bind3/python_basic_test
 
-# in console we need to ` run  ` in order to get debug symoal
+# in console we need to ` run  ` in order to get debug symbol
 set breakpoint pending on
 b python_bind3/pybind_python.cpp:140
 
