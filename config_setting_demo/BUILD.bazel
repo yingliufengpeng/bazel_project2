@@ -1,7 +1,7 @@
 # 基于自定义标志的配置
 config_setting(
     name = "enable_metrics",
-    values = {"define": "ENABLE_METRICS=1"},
+    values = {"define": "ENABLE_METRICS1=1"},
 )
 
 config_setting(
@@ -25,10 +25,12 @@ cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     defines = select({
-        ":log_enabled": ["CC_LOG=1"],
         ":linux": ["PLATFORM_LINUX"],
         ":windows": ["PLATFORM_WINDOWS"],
-        "//conditions:default": ["BASIC_LOG=1"],
-    }) + ["ENABLE_METRICS=1"],
+        "//conditions:default": [],
+    }) + select({
+        ":log_enabled": ["CC_LOG"],
+        "//conditions:default": ["BASIC_LOG"],
+    }) + ["ENABLE_METRICS"],
     deps = [],
 )
