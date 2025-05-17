@@ -11,7 +11,15 @@ gdb --args  python bazel-bin/python_bind3/python_basic_test
 set breakpoint pending on
 b python_bind3/pybind_python.cpp:140
 
-
+# 使用模块扩展
+python = use_extension("@rules_python//python:extensions.bzl", "python")
+python.toolchain(python_version = "3.9")
+python.toolchain(python_version = "3.10")
+use_repo(
+    python,
+    py39 = "python_3_9",  # 重命名 python_3_9 为 py39
+    py310 = "python_3_10",  # 重命名 python_3_10 为 py310
+)
 
 
 Note!!!
