@@ -27,6 +27,8 @@ int main() {
 
 #elif PLATFORM_WINDOWS
     LOG_V(WINDOWS)
+#else
+    LOG_V(OTHERS)
 #endif
 
 
