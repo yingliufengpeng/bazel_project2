@@ -10,6 +10,12 @@ from basic import Dog
 class TestBasic(unittest.TestCase):
 
     def test_add(self):
+        import sys
+        import unittest
+        print(f'dddddddd {unittest.__file__}')
+
+        print(f" python version is {sys.executable} ")
+
         m = 3 + 4
 
 
