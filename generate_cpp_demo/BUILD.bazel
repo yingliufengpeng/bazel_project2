@@ -2,8 +2,8 @@ genrule(
     name = "foo",
     srcs = ["generate_cpp.py"],
     outs = ["include/hello_world_generated.h"],
-    cmd = "python3 $(location generate_cpp.py) $@ HelloWorld 'Hello, from generate message!' ",
-    cmd_bat = "py \"$(location generate_cpp.py)\" \"%~1\" HelloWorld \"Hello, from generate message!\"",
+    cmd = """python3 $(location generate_cpp.py) $@ HelloWorld "Hello, from generate message!" """,
+    cmd_bat = """call $(location generate_cpp.py) $@ HelloWorld "Hello, from generate message!"  """,
 )
 
 #
