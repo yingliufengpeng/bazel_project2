@@ -1,0 +1,29 @@
+genrule(
+    name = "foo",
+    srcs = ["generate_cpp.py"],
+    outs = ["include/hello_world_generated.h"],
+    cmd = "python3 $(location generate_cpp.py) $@ HelloWorld 'Hello, from generate message!' ",
+)
+
+#
+cc_library(
+    name = "foo_lib",
+    srcs = [
+        "hello_world.cpp",
+        ":foo",
+    ],
+    includes = ["."],
+    #    deps = [":foo"],
+)
+
+#
+cc_binary(
+    name = "bin",
+    srcs = [
+        "hello_world.cpp",
+        "hello_world.h",
+        "main.cpp",
+        #        ":foo_lib",
+    ],
+    deps = [":foo_lib"],
+)
