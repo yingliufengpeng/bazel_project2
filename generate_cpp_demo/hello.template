@@ -2,12 +2,23 @@
 
 namespace generated {{
 
+
+    namespace {{
+
+        void sayHelloImpl() {{
+
+            std::cout << "sayHelloImpl ---> {message}" << std::endl;
+
+        }}
+
+    }}
+
     class {class_name} {{
 
     public:
 
         void sayHello() {{
-            std::cout << "{message}" << std::endl;
+            sayHelloImpl();
         }}
 
 
