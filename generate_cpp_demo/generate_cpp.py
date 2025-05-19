@@ -35,4 +35,7 @@ if __name__ == '__main__':
 
     _, output, class_name, message = sys.argv
 
+    print(f'----------------- {output} -----')
+
+
     generate_cpp_code(output, class_name, message)
