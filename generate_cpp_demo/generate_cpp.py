@@ -32,14 +32,11 @@ def generate_cpp_code(output_path, tmplate_file, class_name, message):
 
 if __name__ == '__main__':
     import sys
-    print(f'xxxxx {sys.argv}')
+    print(f'execute args are: {sys.argv}')
     if len(sys.argv) != 5:
         print("Usage: generate_cpp.py usage <output> <class_name>  <message> ")
         sys.exit(-1)
 
     _, output, tmplate_file, class_name, message = sys.argv
-
-    print(f'----------------- {output} -----')
-
 
     generate_cpp_code(output,tmplate_file, class_name, message)
