@@ -7,7 +7,6 @@ genrule(
     outs = ["include/hello_world_generated.h"],
     cmd = """python3 $(location generate_cpp.py) $@ $(location hello.template) HelloWorld "Hello, from generate message!" """,
     cmd_bat = """call $(location generate_cpp.py) $@ $(location hello.template) HelloWorld "Hello, from generate message!"  """,
-
 )
 
 #
