@@ -1,0 +1,18 @@
+#include <iostream>
+
+namespace generated {{
+
+    class {class_name} {{
+
+    public:
+
+        void sayHello() {{
+            std::cout << "{message}" << std::endl;
+        }}
+
+
+
+    }};
+
+
+}}
