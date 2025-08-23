@@ -6,7 +6,7 @@ class TestBasic(unittest.TestCase):
 
     def test_add(self):
         import os
-        # from fastapi import FastAPI
+        from fastapi import FastAPI
         # import gast
         import numpy as np
         print(f'xxxxx {np.__file__}')
