@@ -17,6 +17,12 @@ bazel_dep(name = "container_structure_test", version = "1.16.0")
 bazel_dep(name = "rules_jvm_external", version = "6.3")
 bazel_dep(name = "rules_oci", version = "2.2.6")
 bazel_dep(name = "rules_java", version = "8.11.0")
+#bazel_dep(name = "ffmpeg_bazel_build", version = "8.11.0")
+#git_override(
+#    module_name = "ffmpeg_bazel_build",
+#    commit = "01e1d136f85af8be10453224dcf7445f0d1bcabd",
+#    remote = "https://github.com/jonnrb/bazel_ffmpeg.git",
+#)
 
 # File: MODULE.bazel
 bazel_dep(name = "rules_python", version = "0.40.0")
