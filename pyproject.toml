@@ -15,6 +15,7 @@ python = ">=3.3"
 #requests = ">=2.31.0"  # Example dependency
 numpy = ">=2.1.0"      # Example dependency
 fastapi = '>=0.116.1'
+flask = '*'
 #pandas = '>=2.3.2'
 
 [tool.poetry.group.dev.dependencies]

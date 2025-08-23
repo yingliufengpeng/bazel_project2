@@ -24,7 +24,7 @@ py_library(
         #        requirement("fastapi"),
         #        "@pip_deps2//numpy",
         requirement("numpy"),
-        #        requirement("fastapi"),
+        requirement("fastapi"),
     ],
 )
 
