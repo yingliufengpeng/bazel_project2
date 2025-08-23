@@ -1,0 +1,9 @@
+#cc_library(
+#    name = "my_ffmpeg_app",
+#    srcs = ["my_ffmpeg_app.cc"],
+#    deps = [
+#        "@ffmpeg_bazel_build//:libavcodec",
+#        "@ffmpeg_bazel_build//:libavformat",
+#        "@ffmpeg_bazel_build//:libavutil",
+#    ],
+#)

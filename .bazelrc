@@ -3,3 +3,5 @@ build --remote_cache=http://127.0.0.1:9090
 
 build:dbg  --strip=never
 
+build --action_env=HTTP_PROXY="http://127.0.0.1:10809"
+build --action_env=HTTPS_PROXY="http://127.0.0.1:10809"
