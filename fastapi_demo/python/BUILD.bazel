@@ -1,0 +1,35 @@
+load("@pip_deps2//:requirements.bzl", "all_data_requirements", "all_requirements", "all_whl_requirements", "requirement")
+load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library", "pybind_library_test")
+
+filegroup(
+    name = "_basic",
+    srcs = glob(["*.py"]),
+)
+
+py_library(
+    name = "basic_lib",
+    srcs = [
+        #        "main.py",
+        ":_basic",
+    ],
+    data = [
+        #        ":_basic",
+    ],
+    imports = ["."],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        #        "@pip_deps2//fastapi",
+        #        requirement("fastapi"),
+        #        "@pip_deps2//numpy",
+        requirement("numpy"),
+        #        requirement("fastapi"),
+    ],
+)
+
+py_test(
+    name = "main_test",
+    srcs = ["main_test.py"],
+    deps = [":basic_lib"],
+)

@@ -1,0 +1,10 @@
+py_library(
+    name = "basic_lib",
+    srcs = [
+    ],
+    data = [
+    ],
+    deps = [
+        "//fastapi_demo/python:basic_lib",
+    ],
+)
