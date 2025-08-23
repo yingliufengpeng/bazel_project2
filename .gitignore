@@ -6,7 +6,7 @@ bazel-testlogs
 
 **/__pycache__/
 bazel-bazel_project1/
-bazel-bazel_project1
+bazel-bazel_project2
 .ijwb/
 
 MODULE.bazel.lock
