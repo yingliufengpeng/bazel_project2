@@ -80,8 +80,8 @@ py_library(
     ],
     imports = ["."],
     deps = [
-        "@pip_deps2//numpy",
-        #        requirement("pandas"),
+        #        "@pip_deps2//numpy",
+        requirement("numpy"),
     ],
 )
 

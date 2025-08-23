@@ -2,6 +2,8 @@
 # sometimes you need to install following requirements for GLIB-x-x-x not founed.
 conda install  libstdcxx-ng -c conda-forge
 
+# update python package cmd 
+bazelisk  run :requirements.update
 
 # use gdb debug python/c++ code 
 

@@ -1,15 +1,31 @@
 [project]
 name = "my_project"
+version = "0.2.0"
+
+[tool.poetry]
+name = "bazel_project2"
 version = "0.1.0"
-dependencies = [
-    "requests>=2.28.0",
-    "numpy==1.26.4",
-    "pandas==2.2.3",
-]
+description = "A Python project with Bazel"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.3"
+#requests = ">=2.31.0"  # Example dependency
+numpy = ">=2.1.0"      # Example dependency
+fastapi = '>=0.116.1'
+#pandas = '>=2.3.2'
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"     # Example dev dependency
+
 
 [build-system]
 requires = [
-    "setuptools==70.0.0",  # Pinned version
-    "wheel==0.43.0",       # Pinned version
+    "setuptools>=70.0.0",  # Pinned version
+    "wheel>=0.43.0",       # Pinned version
+    "poetry-core>=1.9.0"
 ]
-build-backend = "setuptools.build_meta"
+#build-backend = "setuptools.build_meta"
+build-backend = "poetry.core.masonry.api"
