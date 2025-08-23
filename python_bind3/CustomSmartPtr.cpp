@@ -36,6 +36,6 @@ struct Stu  {
 
 int main() {
 
-    auto m = CustomSmartPtr(new Stu(10));
+    auto m = CustomSmartPtr<Stu>(new Stu(10));
     std::cout << m.get()->value << std::endl;
 }
