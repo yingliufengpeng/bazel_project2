@@ -1,8 +1,7 @@
 # 切记, 尽量是用bazelisk  而非使用 bazel ,原因在于前者可以管理多个bazel版本,可以运行不同的项目中.
 
 
-# 该文档记录自己学习bazel中,自己所遇到的一些问题,并记录下来,以便于自己和其他的学习者可以快速的进入
-到这个领域.
+# 该文档记录自己学习bazel中,自己所遇到的一些问题,并记录下来,以便于自己和其他的学习者可以快速的进入到这个领域.
 
 # sometimes you need to install following requirements for GLIB-x-x-x not founed.
 conda install  libstdcxx-ng -c conda-forge
