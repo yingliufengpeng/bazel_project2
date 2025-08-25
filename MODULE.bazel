@@ -28,6 +28,13 @@ bazel_dep(name = "rules_java", version = "8.11.0")
 bazel_dep(name = "rules_python", version = "1.5.0")
 bazel_dep(name = "platforms", version = "0.0.10")
 
+# 引入 rules_nodejs
+bazel_dep(name = "rules_nodejs", version = "6.5.0")
+
+# NodeJS 扩展
+
+#use_extension("@build_bazel_rules_nodejs //:index.bzl", "yarn_install")
+
 PYTHON_VERSION = "3.12"
 
 # Configure Python toolchain
