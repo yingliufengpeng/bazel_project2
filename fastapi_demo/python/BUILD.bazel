@@ -20,11 +20,9 @@ py_library(
         "//visibility:public",
     ],
     deps = [
-        #        "@pip_deps2//fastapi",
-        #        requirement("fastapi"),
-        #        "@pip_deps2//numpy",
-        requirement("numpy"),
-        requirement("fastapi"),
+        "@pip_deps2//fastapi",
+        "@pip_deps2//numpy",
+        "@pip_deps2//pandas",
     ],
 )
 
