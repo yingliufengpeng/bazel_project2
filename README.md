@@ -1,3 +1,11 @@
+
+# 或者单独设置外部依赖缓存
+build --repository_cache=E:/bazel_local_repo
+build --disk_cache=E:/bazel_local/disk
+# 设置输出根目录
+startup --output_base=E:/bazel_local_repo/bazel_out
+
+
 # 切记, 尽量是用bazelisk  而非使用 bazel ,原因在于前者可以管理多个bazel版本,可以运行不同的项目中.
 
 
@@ -52,5 +60,11 @@ Note!!!
 # 有时候,更新requirements 需要手动执行以下的命令
 bazel-bin/requirements.update.exe '--src=_main/pyproject.toml' _main/requirements_lock_3_12.txt //:requirements '--resolver=backtracking' --allow-unsafe --generate-hashes
 
-# 这条命令以便于刷新库中的相关的BUILD文件建立
+# 这条命令的目的是刷新库中的相关的BUILD文件建立
 bazelisk.exe query @pip_deps2//...  
+
+
+
+
+ 
+
