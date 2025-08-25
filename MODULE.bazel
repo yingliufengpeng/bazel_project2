@@ -25,15 +25,17 @@ bazel_dep(name = "rules_java", version = "8.11.0")
 #)
 
 # File: MODULE.bazel
-bazel_dep(name = "rules_python", version = "0.40.0")
+bazel_dep(name = "rules_python", version = "1.5.0")
 bazel_dep(name = "platforms", version = "0.0.10")
+
+PYTHON_VERSION = "3.12"
 
 # Configure Python toolchain
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     configure_coverage_tool = True,
     is_default = True,
-    python_version = "3.12",
+    python_version = PYTHON_VERSION,
 )
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
@@ -45,7 +47,7 @@ pip.parse(
     #            "build_file": "//third_party:fastapi.BUILD",
     #        },
     #    },
-    python_version = "3.12",
+    python_version = PYTHON_VERSION,
     requirements_lock = "//:requirements_lock_3_12.txt",
 )
 use_repo(pip, "pip_deps2")

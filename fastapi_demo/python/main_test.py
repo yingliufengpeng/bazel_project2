@@ -1,6 +1,6 @@
 import unittest
 
-# import main
+import main
 
 class TestBasic(unittest.TestCase):
 
@@ -8,9 +8,7 @@ class TestBasic(unittest.TestCase):
         import os
         from fastapi import FastAPI
         # import gast
-        import numpy as np
-        print(f'xxxxx {np.__file__}')
-        os.system(' pip list  ')
+        print(f'xxxx {main.app}')
         m = 3 + 4
 
 

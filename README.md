@@ -44,3 +44,9 @@ Note!!!
         rule must have GoSource in that return values.
 
  
+
+# 有时候,更新requirements 需要手动执行以下的命令
+bazel-bin/requirements.update.exe '--src=_main/pyproject.toml' _main/requirements_lock_3_12.txt //:requirements '--resolver=backtracking' --allow-unsafe --generate-hashes
+
+# 这条命令以便于刷新库中的相关的BUILD文件建立
+bazelisk.exe query @pip_deps2//...  
