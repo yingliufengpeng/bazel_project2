@@ -8,7 +8,7 @@ class TestBasic(unittest.TestCase):
         import os
         from fastapi import FastAPI
         # import gast
-        print(f'xxxx {main.app}')
+        print(f'xxxx {fastapi.__file__}')
         m = 3 + 4
 
 
