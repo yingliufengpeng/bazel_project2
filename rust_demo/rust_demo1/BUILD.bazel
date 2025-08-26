@@ -1,0 +1,19 @@
+#load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+##
+#rust_binary(
+#    name = "hello",
+#    srcs = ["main.rs"],
+#    edition = "2021",  # 👈 必须写
+#    deps = [":mylib"],
+#)
+
+#rust_library(
+#    name = "mylib",
+#    srcs = ["lib.rs"],
+#    edition = "2021",   # 👈 必须写
+#
+#)
+
+print("thrid party rust_demo  is initialinazting ....")
