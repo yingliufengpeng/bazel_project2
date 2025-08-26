@@ -1,0 +1,13 @@
+module(
+    name = "rust_my_list",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "rules_rust", version = "0.63.0")
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2024",
+    versions = ["1.81.0"],
+)  # 指定 Rust 版本
+use_repo(rust, "rust_toolchains")
