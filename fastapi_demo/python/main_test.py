@@ -10,7 +10,7 @@ class TestBasic(unittest.TestCase):
         from fastapi import FastAPI
         # import gast
         print(f'xxxx {fastapi.__file__}')
-        m = 3 + 4
+        m = 3 + 43
 
 
 
