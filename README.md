@@ -61,8 +61,10 @@ Note!!!
 bazel-bin/requirements.update.exe '--src=_main/pyproject.toml' _main/requirements_lock_3_12.txt //:requirements '--resolver=backtracking' --allow-unsafe --generate-hashes
 
 # 这条命令的目的是刷新库中的相关的BUILD文件建立
-bazelisk.exe query @pip_deps2//...  
+bazelisk query @pip_deps2//...  
 
+
+only clion 2024.03.* can debug python code
 
 
 
