@@ -118,15 +118,15 @@ cc_test(
 #platform = "linux_x86_64",
 py_wheel(
     name = "my_package_wheel",
-    abi = "py3",
-    distribution = "basic",  # 包名
+    #    abi = "py3",
+    distribution = "python_bind",  # 包名
     platform = select({
         "@platforms//os:linux": "linux_x86_64",
         "@platforms//os:windows": "win_amd64",
         "//conditions:default": "any",
     }),
     python_tag = "py3",  # Python 版本
-    requires = ["requests==2.28.1"],  # 声明运行时依赖
+    requires = ["requests>=2.31.0"],  # 声明运行时依赖
     version = "0.1.0",  # 版本号
     deps = [
         ":basic",
