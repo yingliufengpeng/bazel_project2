@@ -156,9 +156,3 @@ local_path_override(
     #    build_file = "java_demo/BUILD.panio",
     path = "third_party/my-panio",
 )
-
-bazel_dep(name = "rust_my_list", version = "0.0.1")
-local_path_override(
-    module_name = "rust_my_list",
-    path = "rust_demo/rust_demo1",
-)
