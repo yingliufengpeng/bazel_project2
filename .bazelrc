@@ -3,3 +3,6 @@
 
 build:dbg  --strip=never
 
+# 禁用沙盒
+build --spawn_strategy=local
+test --strategy=TestRunner=local
