@@ -27,6 +27,12 @@ py_library(
 )
 
 py_binary(
+    name = "main_test2",
+    srcs = ["main_test2.py"],
+    deps = [":basic_lib"],
+)
+
+py_test(
     name = "main_test",
     srcs = ["main_test.py"],
     deps = [":basic_lib"],
