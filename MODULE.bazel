@@ -156,3 +156,5 @@ local_path_override(
     #    build_file = "java_demo/BUILD.panio",
     path = "third_party/my-panio",
 )
+
+bazel_dep(name = "abseil-cpp", version = "20250814.0")

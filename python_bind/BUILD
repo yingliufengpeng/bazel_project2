@@ -88,6 +88,14 @@ cc_library(
     deps = [],
 )
 
+cc_binary(
+    name = "hello_world",
+    srcs = ["hello_absl.cc"],
+    deps = [
+        "@abseil-cpp//absl/strings:str_format",
+    ],
+)
+
 cc_test(
     name = "PetTest",
     #    main = 'basic_test.cpp',
