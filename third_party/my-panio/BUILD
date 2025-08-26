@@ -4,4 +4,4 @@ java_library(
     visibility = ["//visibility:public"],
 )
 
-print("thrid party my-panio  is building ....")
+print("thrid party build my-panio  is building ....")
