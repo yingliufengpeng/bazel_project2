@@ -149,7 +149,7 @@ my_extension.lib(
 use_repo(my_extension, "my_external_lib_1_0_0", "my_external_lib_1_0_0_ref")
 
 bazel_dep(name = "my-panio", version = "1.7.1")
-#bazel_dep(name = "rules_rust", version = "0.63.0")
+bazel_dep(name = "rules_rust", version = "0.63.0")
 
 local_path_override(
     module_name = "my-panio",
