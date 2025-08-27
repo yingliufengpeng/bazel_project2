@@ -25,6 +25,12 @@ pybind_extension(
     ],
 )
 
+filegroup(
+    name = "basic_ext",
+    srcs = [":basic"],  # 原来生成的 .pyd 目标
+    visibility = ["//visibility:public"],
+)
+
 py_library(
     name = "basic_lib",
     srcs = [
@@ -32,7 +38,8 @@ py_library(
         "basic_tools.py",
     ],
     data = [
-        ":basic",
+        ":basic_ext",
+        #        ":_basic.pyd",
     ],
     imports = ["."],
 )
@@ -129,7 +136,7 @@ py_wheel(
     requires = ["requests>=2.31.0"],  # 声明运行时依赖
     version = "0.1.0",  # 版本号
     deps = [
-        ":basic",
+        ":basic_ext",
         ":basic_lib",
     ],  # 引用 py_library
 )
