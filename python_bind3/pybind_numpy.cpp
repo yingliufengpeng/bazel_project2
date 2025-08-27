@@ -89,16 +89,16 @@ void init_Vector(pybind11::module& m) {
 void InitNumpyBinding(pybind11::module& m) {
 
     py::class_<std::vector<int>>(m, "IntVector")
-        .def(py::init<>())
-        .def("clear", &std::vector<int>::clear)
-        .def("pop_back", &std::vector<int>::pop_back)
-        .def("__len__", [](const std::vector<int> &v) { return v.size(); })
-        .def("__iter__", [](std::vector<int> &v) {
-           return py::make_iterator(v.begin(), v.end() );
-        }, py::keep_alive<0, 1>())
-        .def("push_back", (void (int_vector::*)(const int &))&std::vector<int>::push_back )
-    ; /* Keep vector alive while iterator is used */
-        // ....
+    .def(py::init<>())
+    .def("clear", &std::vector<int>::clear)
+    .def("pop_back", &std::vector<int>::pop_back)
+    .def("__len__", [](const std::vector<int> &v) { return v.size(); })
+    .def("__iter__", [](std::vector<int> &v) {
+        return py::make_iterator(v.begin(), v.end());
+    }, py::keep_alive<0, 1>())   // 关键：保证 v 活着时迭代器活着
+    .def("push_back", [](std::vector<int> &v, int value) {
+        v.push_back(value);
+    });
 
 
     py::class_<A>(m, "A")
