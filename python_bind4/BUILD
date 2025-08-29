@@ -59,31 +59,6 @@ cc_library(
     deps = [],
 )
 
-#pybind_library(
-#    name = "pybind_basic_cc_library",
-#    srcs = [":_basic"],
-#    deps = [],
-#)
-#
-#cc_test(
-#    name = "basic_test",
-#    #    main = 'basic_test.cpp',
-#    srcs = ["basic_test.cpp"],
-#    deps = [
-#        ":basic_cc_library",
-#        "@googletest//:gtest_main",
-#    ],
-#)
-
-#pybind_library_test(
-#    name = "pybind_basic_test",
-#    srcs = ["basic_test.cpp"],
-#    deps = [
-#        ":pybind_basic_cc_library",
-#        "@googletest//:gtest_main",
-#    ],
-#)
-
 filegroup(
     name = "_Pet",
     srcs = [
