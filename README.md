@@ -66,6 +66,22 @@ bazelisk query @pip_deps2//...
 
 only clion 2024.03.* can debug python code
 
+# 构建时,指定的c++标准
+build --action_env=BAZEL_CXXOPTS="-std=c++17"
+
+# Windows PowerShell 用：
+$env:HTTP_PROXY="http://127.0.0.1:10809"
+$env:HTTPS_PROXY="http://127.0.0.1:10809"
+
+
+
+# setx 命令将环境变量添加到 Windows 注册表 中，具体是在以下位置：
+# 用户级别的环境变量: 这些变量会影响当前用户的所有应用程序。
+
+    HKEY_CURRENT_USER\Environment
+
+setx HTTP_PROXY "http://127.0.0.1:10809"
+setx HTTPS_PROXY "http://127.0.0.1:10809"
 
 
  
