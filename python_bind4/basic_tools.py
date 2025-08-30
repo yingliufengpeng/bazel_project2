@@ -8,6 +8,7 @@ import basic
 def get_name():
     return 'ok'
 
+print_values = basic.print_values
 
 def add(a, b):
     # s = basic.the_answer + ' ' + basic.world

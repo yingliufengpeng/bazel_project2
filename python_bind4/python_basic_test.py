@@ -74,5 +74,9 @@ class TestBasic(unittest.TestCase):
 
         print(f'type of v is {type(v)}')
 
+    def test_print_values(self):
+        ls = [2, 4, 5]
+        basic_tools.print_values(ls)
+
 if __name__ == "__main__":
     unittest.main()

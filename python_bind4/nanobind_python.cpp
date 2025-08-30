@@ -2,6 +2,11 @@
 #include <nanobind/stl/string.h>
 // #include <nanobind/stl/vector.h>
 #include <nanobind/make_iterator.h> // Include for make_iterator
+#include <fmt/core.h>
+
+int main() {
+  fmt::print("Hello, world!\n");
+}
 
 
 #include <iostream>
@@ -14,6 +19,8 @@
 
 
 namespace nb = nanobind;
+
+
 
 struct Data {
     int value;
@@ -31,11 +38,12 @@ static Data static_data(42); // 静态对象
 
 void print_dict(const nb::dict& dict, nb::args args, nb::kwargs kwargs) {
     for (auto item : dict) {
+        std::cout << item.first.ptr() << std::endl;
     }
         // nb::print("key= ", item.first, " value = ", item.second);
 
     for (auto item: args) {
-        //nb::print("key= ", item);
+        nb::print("key= ", item);
 
     }
 
@@ -43,6 +51,17 @@ void print_dict(const nb::dict& dict, nb::args args, nb::kwargs kwargs) {
     }
         //nb::print("key= ", item.first, " value = ", item.second);
 
+}
+
+void print_values(const nb::args& args) {
+
+    for (auto item: args) {
+        std::string v = "";
+        auto s =  fmt::format("a is {}, b is {}", "key =", 34);
+        // nb::print("key= " + nb::repr(item));
+        std::cout << "----------->" << s << std::endl;
+        // std::cout << "  |----| " << item.ptr() << std::endl;
+    }
 }
 
 
@@ -55,6 +74,7 @@ NB_MODULE(basic, module) {
 
 
     module.def("print_dict", &print_dict);
+    module.def("print_values", &print_values);
 
     nb::class_<Data>(module, "Data")
     .def_rw("value", &Data::value);

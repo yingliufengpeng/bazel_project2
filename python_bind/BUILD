@@ -23,6 +23,9 @@ pybind_extension(
         "pybind_python.cpp",
         ":_basic",
     ],
+    deps = [
+        #        "@python",  # 依赖 Python
+    ],
 )
 
 filegroup(
@@ -47,6 +50,7 @@ py_library(
 py_test(
     name = "python_basic_test",
     srcs = ["python_basic_test.py"],
+    #    python_interpreter = "/usr/bin/python3-dbg",  # 指定 python3-dbg 解释器
     deps = [":basic_lib"],
 )
 
