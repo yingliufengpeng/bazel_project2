@@ -75,6 +75,9 @@ def pet_store(name: str) -> Pet:
 def pet_store2():...
 
 
+def print_values(values):
+    ...
+
 
 class IntVector:
     ...

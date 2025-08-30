@@ -26,6 +26,10 @@ nanobind_extension(
         "nanobind_python.cpp",
         ":_basic",
     ],
+    deps = [
+        "@fmt",
+    ],
+    #    copts = ["-std=c++20"],  # 这里指定了 C++17 标准
 )
 
 filegroup(

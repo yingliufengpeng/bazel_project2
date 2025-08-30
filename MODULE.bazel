@@ -1,3 +1,5 @@
+#use_extension("@build_bazel_rules_nodejs //:index.bzl", "yarn_install")
+
 ###############################################################################
 # Bazel now uses Bzlmod by default to manage external dependencies.
 # Please consider migrating your external dependencies from WORKSPACE to BUILD.bazel.
@@ -9,7 +11,7 @@ module(
     version = "1.0.0",
 )
 
-bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "rules_cc", version = "0.2.0")
 bazel_dep(name = "googletest", version = "1.15.2")
 bazel_dep(name = "pybind11_bazel", version = "2.13.6")
 bazel_dep(name = "aspect_bazel_lib", version = "2.8.1")
@@ -17,6 +19,7 @@ bazel_dep(name = "container_structure_test", version = "1.16.0")
 bazel_dep(name = "rules_jvm_external", version = "6.3")
 bazel_dep(name = "rules_oci", version = "2.2.6")
 bazel_dep(name = "rules_java", version = "8.11.0")
+bazel_dep(name = "fmt", version = "11.2.0")
 #bazel_dep(name = "ffmpeg_bazel_build", version = "8.11.0")
 #git_override(
 #    module_name = "ffmpeg_bazel_build",
@@ -32,8 +35,6 @@ bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "rules_nodejs", version = "6.5.0")
 
 # NodeJS 扩展
-
-#use_extension("@build_bazel_rules_nodejs //:index.bzl", "yarn_install")
 
 PYTHON_VERSION = "3.12"
 
@@ -149,7 +150,7 @@ my_extension.lib(
 use_repo(my_extension, "my_external_lib_1_0_0", "my_external_lib_1_0_0_ref")
 
 bazel_dep(name = "my-panio", version = "1.7.1")
-bazel_dep(name = "rules_rust", version = "0.63.0")
+#bazel_dep(name = "rules_rust", version = "0.63.0")
 
 local_path_override(
     module_name = "my-panio",
