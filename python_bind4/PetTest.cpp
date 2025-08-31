@@ -7,7 +7,7 @@
 
 TEST(PetTest, HelloTest) {
     auto pet = Pet("name");
-
+    auto i = 3;
     EXPECT_EQ(pet.name, "name");
 }
 
