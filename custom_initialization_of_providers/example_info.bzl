@@ -1,4 +1,7 @@
 def _exampleinfo_init_banned(*args, **kwargs):
+    pass
+    #    return {}
+
     fail("Do not call ExampleInfo(). Use make_exampleinfo() instead.")
 
 ExampleInfo, _new_exampleinfo = provider(
