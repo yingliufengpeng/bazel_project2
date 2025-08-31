@@ -17,6 +17,9 @@ def add(a, b):
     return basic.add(a, b)
 
 
+print_int = basic.print_int
+printAllWrapper = basic.printAllWrapper
+
 # basic.Pet.CAT
 Pet = basic.Pet
 Dog = basic.Dog

@@ -3,6 +3,7 @@
 // #include <nanobind/stl/vector.h>
 #include <nanobind/make_iterator.h> // Include for make_iterator
 #include <fmt/core.h>
+#include "XY.h"
 
 int main() {
   fmt::print("Hello, world!\n");
@@ -64,6 +65,15 @@ void print_values(const nb::args& args) {
     }
 }
 
+template<typename... Args>
+void printAllWrapper(nb::args py_args) {
+    std::cout << "我的数据开始:  >>> ";
+    for (auto i = 0; i < py_args.size(); ++i) {
+        nb::object obj = py_args[i];
+        std::cout << std::string_view(nb::str(obj).c_str()) << " ";  // 转成 Python str 再转 C++
+    }
+    std::cout << ">>>>  \n";
+}
 
 NB_MODULE(basic, module) {
     module.doc() = "A basic pybind11 extension";
@@ -75,6 +85,7 @@ NB_MODULE(basic, module) {
 
     module.def("print_dict", &print_dict);
     module.def("print_values", &print_values);
+    module.def("printAllWrapper", &printAllWrapper<nb::object>);
 
     nb::class_<Data>(module, "Data")
     .def_rw("value", &Data::value);
@@ -83,6 +94,7 @@ NB_MODULE(basic, module) {
     .def(nb::init<Data*>())
     .def("get_data", &Container::get_data, nb::rv_policy::reference);
 
+    module.def("print_int", &XY::Show<int, int, int>);
 
     module.def("get_static_data", []() { return &static_data; }, nb::rv_policy::reference);
     // module.def("get_static_data", []() { return &static_data; }   );
