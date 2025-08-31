@@ -14,6 +14,13 @@ filegroup(
     srcs = ["WI_Poynette_801263_1901_62500_geo.tif"],
 )
 
+cc_library(
+    name = "runfiles_lib",
+    hdrs = ["runfiles.h"],
+    visibility = ["//visibility:public"],
+    deps = ["@rules_cc//cc/runfiles"],
+)
+
 cc_binary(
     name = "main",
     srcs = [
@@ -80,7 +87,9 @@ cc_binary(
     }),
     deps = [
         ":basic_gdal",
-        #        "@bazel_tools//tools/cpp/runfiles",  # Standard runfiles library
+        ":runfiles_lib",
+        "@bazel_tools//tools/cpp/runfiles",
+        #                "@bazel_tools//tools/cpp/runfiles",  # Standard runfiles library
         #        "@rules_cc//cc/runfiles",  # 假设你已经依赖 rules_cc runfiles
     ],
 )
