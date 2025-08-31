@@ -85,4 +85,14 @@ setx HTTPS_PROXY "http://127.0.0.1:10809"
 
 
  
+# use vcpkg pkg_config
+echo 'export PKG_CONFIG_PATH=/home/peng/apps/vcpkg/installed/x64-linux/lib/pkgconfig:$PKG_CONFIG_PATH' >> ~/.bashrc
+source ~/.bashrc
+
+
+# Get Compiler and Linker Flags: 主要是查看有多少库相关的依赖，我们需要做添加
+# Use pkg-config to obtain the flags needed for compilation and linking:
+    pkg-config --cflags gdal
+    pkg-config --libs gdal 
+        output: -L/home/peng/apps/vcpkg/installed/x64-linux/lib/pkgconfig/../../lib -lgdal -lqhullstatic_r -lgeotiff -lLerc -lzstd -lpng16 -lgif -lnetcdf -lhdf5_hl -ltinyxml2 -lhdf5 -lsz -laec -lwebp -lsharpyuv -lopenjp2 -lkmlengine -lkmldom -lkmlbase -luriparser -lpcre2-8 -lspatialite -lfreexl -lminizip -lpq -lpgport -lpgcommon -lexpat -lxml2 -lc -lgeos_c -lgeos -lproj -lsqlite3 -ltiff -llzma -ljpeg -lcurl -lssl -lcrypto -ldl -lz -ljson-c -lstdc++ -lm 
 

@@ -14,13 +14,6 @@ filegroup(
     srcs = ["WI_Poynette_801263_1901_62500_geo.tif"],
 )
 
-filegroup(
-    name = "my_runfile",
-    srcs = [
-        "@rules_cc//cc/runfiles",
-    ],
-)
-
 cc_binary(
     name = "main",
     srcs = [
@@ -32,12 +25,62 @@ cc_binary(
     data = [
         ":tif_file",
     ],
-    linkopts = [
-        "gdal.lib",  # GDAL import lib
-    ],
+    linkopts = select({
+        "@platforms//os:linux": [
+            "-lgdal",
+            "-lqhullstatic_r",
+            "-lgeotiff",
+            "-lLerc",
+            "-lzstd",
+            "-lpng16",
+            "-lgif",
+            "-lnetcdf",
+            "-lhdf5_hl",
+            "-ltinyxml2",
+            "-lhdf5",
+            "-lsz",
+            "-laec",
+            "-lwebp",
+            "-lsharpyuv",
+            "-lopenjp2",
+            "-lkmlengine",
+            "-lkmldom",
+            "-lkmlbase",
+            "-luriparser",
+            "-lpcre2-8",
+            "-lspatialite",
+            "-lfreexl",
+            "-lminizip",
+            "-lpq",
+            "-lpgport",
+            "-lpgcommon",
+            "-lexpat",
+            "-lxml2",
+            "-lc",
+            "-lgeos_c",
+            "-lgeos",
+            "-lproj",
+            "-lsqlite3",
+            "-ltiff",
+            "-llzma",
+            "-ljpeg",
+            "-lcurl",
+            "-lssl",
+            "-lcrypto",
+            "-ldl",
+            "-lz",
+            "-ljson-c",
+            "-lstdc++",
+            "-lm",
+        ],
+        "@platforms//os:windows": [
+            "gdal.lib",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         ":basic_gdal",
         #        "@bazel_tools//tools/cpp/runfiles",  # Standard runfiles library
-        "@rules_cc//cc/runfiles",  # 假设你已经依赖 rules_cc runfiles
+        #        "@rules_cc//cc/runfiles",  # 假设你已经依赖 rules_cc runfiles
     ],
 )

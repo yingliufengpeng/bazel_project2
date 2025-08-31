@@ -5,8 +5,12 @@ load("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
 def _my_extension_impl(mctx):
     if "win" in mctx.os.name:
         path = "D:/apps/vcpkg/installed/x64-windows"
+        lib = "lib"
+        comm = ""
     else:
         path = "/home/peng/apps/vcpkg/installed/x64-linux"
+        lib = ""
+        comm = "#"
 
     print("fsfsfsf fsfs     {} {}".format(mctx.os.name, path))
 
@@ -15,7 +19,7 @@ def _my_extension_impl(mctx):
     build_file_content = """
 cc_library(
    name = "vcpkg",
-   srcs = glob(["bin/**/*.dll" ]),  # windows 下是 .lib，Linux 下可以是 .a 或 .so
+COMM  srcs = glob(["bin/**/*.LIB" ]),  # windows 下是 .lib，Linux 下可以是 .a 或 .so
    hdrs = glob(["include/**/*.h"]),
    includes = ["include"],
 #   data = glob(["bin/**/*.dll"]),
@@ -32,7 +36,8 @@ cc_library(
                   }),
    visibility = ["//visibility:public"],
 )
-       """.replace("XXXXX", "{}/lib".format(path)).replace("YYYYY", path)
+       """.replace("XXXXX", "{}/lib".format(path)) \
+        .replace("YYYYY", path).replace("LIB", lib).replace("COMM", comm)
 
     new_local_repository(name = "vcpkg", build_file_content = build_file_content, path = path)
 

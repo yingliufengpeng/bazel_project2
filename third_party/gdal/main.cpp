@@ -10,14 +10,15 @@
 #include <filesystem>
 
 //#include "external/bazel_tools/tools/cpp/runfiles/runfiles.h"
-//#include "external/rules_cc+/cc/runfiles/_virtual_includes/runfiles/rules_cc/cc/runfiles/runfiles.h"
-#include "rules_cc/cc/runfiles/runfiles.h"
+// #include "rules_cc/cc/runfiles/runfiles.h"
+// #include "cc/runfiles/runfiles.h"
+
 
 #include "gdal.h"
 
 
 
-using rules_cc::cc::runfiles::Runfiles;
+// using rules_cc::cc::runfiles::Runfiles;
 
 
 
@@ -25,9 +26,10 @@ using rules_cc::cc::runfiles::Runfiles;
 
 int main(int argc, char *argv[]) {
     std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
-    std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));(argv[1]);
-    std::string real_path = runfiles->Rlocation(argv[1]);
-    auto file_name = real_path.c_str();
+    // std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));(argv[1]);
+    // std::string real_path = runfiles->Rlocation(argv[1]);
+    // auto file_name = real_path.c_str();
+    auto file_name = argv[1];
     std::cout << "arc " << argc << " 传递进来的文件为: " << file_name << std::endl;
 
     auto obj = AA();
