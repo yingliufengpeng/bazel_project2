@@ -4,8 +4,8 @@
 build:dbg  --strip=never
 
 # 禁用沙盒
-build --spawn_strategy=local
-test --strategy=TestRunner=local
+# build --spawn_strategy=local
+# test --strategy=TestRunner=local
 
 build --action_env=BAZEL_CXXOPTS="-std=c++17"
 

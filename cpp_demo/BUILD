@@ -9,36 +9,36 @@ package(
     #    default_visibility = ["//visibility:public"],
 )
 
-link(
-    "link2",
-    [":c2"],
-)
+#link(
+#    "link2",
+#    [":c2"],
+#)
+#
+#compile_cpp(
+#    name = "c1",
+#    srcs = [
+#        "src/Animal.cpp",
+#        "src/main.cpp",
+#    ],
+#    hsrcs = ["src/Animal.h"],
+#)
+#
+#link_cpp(
+#    name = "link1",
+#    out = "main1",
+#    objs = [":c1"],
+#)
 
-compile_cpp(
-    name = "c1",
-    srcs = [
-        "src/Animal.cpp",
-        "src/main.cpp",
-    ],
-    hsrcs = ["src/Animal.h"],
-)
+#zip_archive(
+#    name = "zip_cpp1",
+#    files = [
+#        "READMD.md",
+#        ":link1",
+#    ],
+#    output = "cpp.zip",
+#)
 
-link_cpp(
-    name = "link1",
-    out = "main1",
-    objs = [":c1"],
-)
-
-zip_archive(
-    name = "zip_cpp1",
-    files = [
-        "READMD.md",
-        ":link1",
-    ],
-    output = "cpp.zip",
-)
-
-nativate_app("e2")
+#nativate_app("e2")
 
 cc_binary(
     name = "e1",

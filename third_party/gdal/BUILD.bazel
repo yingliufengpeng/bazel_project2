@@ -1,0 +1,43 @@
+cc_library(
+    name = "basic_gdal",
+    srcs = glob(["*.cpp"]),
+    hdrs = glob(["*.h"]),
+    linkopts = [],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@vcpkg",
+    ],
+)
+
+filegroup(
+    name = "tif_file",
+    srcs = ["WI_Poynette_801263_1901_62500_geo.tif"],
+)
+
+filegroup(
+    name = "my_runfile",
+    srcs = [
+        "@rules_cc//cc/runfiles",
+    ],
+)
+
+cc_binary(
+    name = "main",
+    srcs = [
+        "main.cpp",
+    ],
+    args = [
+        "$(location :tif_file)",
+    ],
+    data = [
+        ":tif_file",
+    ],
+    linkopts = [
+        "gdal.lib",  # GDAL import lib
+    ],
+    deps = [
+        ":basic_gdal",
+        #        "@bazel_tools//tools/cpp/runfiles",  # Standard runfiles library
+        "@rules_cc//cc/runfiles",  # 假设你已经依赖 rules_cc runfiles
+    ],
+)

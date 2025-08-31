@@ -1,14 +1,14 @@
 load(":example_info.bzl", "ExampleInfo", "make_exampleinfo")
 
 def _my_rule_impl(ctx):
-    info = make_exampleinfo(
-        ["aaa"],
-        ["bbb"],
-    )
+    #    info = make_exampleinfo(
+    #        ["aaa"],
+    #        ["bbb"],
+    #    )
 
     return [
         DefaultInfo(),
-        info,
+        #        info,
     ]
 
 my_rule = rule(
