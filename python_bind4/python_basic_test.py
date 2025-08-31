@@ -78,5 +78,16 @@ class TestBasic(unittest.TestCase):
         ls = [2, 4, 5]
         basic_tools.print_values(ls)
 
+
+    def test_print_ints(self):
+        ls = [2, 4, 5]
+        basic_tools.print_int(*ls)
+
+
+
+    def test_printAllWrapper(self):
+        ls = [2, 4, 5, "中国人的性情"]
+        basic_tools.printAllWrapper(*ls)
+
 if __name__ == "__main__":
     unittest.main()

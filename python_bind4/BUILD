@@ -12,6 +12,7 @@ filegroup(
         "Pet.cpp",
         "Pet.h",
         "PolymorphhicPet.h",
+        "XY.h",
         "basic.cpp",
         "basic.h",
         "basic.pyi",
