@@ -23,6 +23,11 @@ using rules_cc::cc::runfiles::Runfiles;
 
 
 int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        std::cout << "参数传递错误  need file_name" << std::endl;
+        return 0;
+    }
+
     std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
     std::cout << "input file :" << argv[1] << std::endl;
      std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));
