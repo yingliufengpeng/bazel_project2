@@ -1,5 +1,5 @@
 #include <iostream>
-#include "AA.h"
+
 #include <filesystem>
 
 #include <iostream>
@@ -8,29 +8,29 @@
 #include <string>
 #include <unordered_map>
 #include <filesystem>
-#include "runfiles.h"
+
 //#include "external/bazel_tools/tools/cpp/runfiles/runfiles.h"
 //#include "external/bazel_tools/tools/cpp/runfiles/runfiles.h"
-// #include "cc/runfiles/runfiles.h"
+#include "tools/cpp/runfiles/runfiles.h"
 
-
+#include "third_party/gdal/impl/AA.h"
 #include "gdal.h"
 
+#include "impl/AA.h"
 
-
-// using rules_cc::cc::runfiles::Runfiles;
-
-
+using rules_cc::cc::runfiles::Runfiles;
 
 
 
 int main(int argc, char *argv[]) {
     std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
-    // std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));(argv[1]);
-    // std::string real_path = runfiles->Rlocation(argv[1]);
-    // auto file_name = real_path.c_str();
-    auto file_name = argv[1];
-    std::cout << "arc " << argc << " 传递进来的文件为: " << file_name << std::endl;
+    std::cout << "input file :" << argv[1] << std::endl;
+     std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));(argv[1]);
+//     std::string real_path = runfiles->Rlocation(argv[1]);
+     std::string real_path = runfiles->Rlocation("bazel_project2/thrid_party/gdal/WI_Poynette_801263_1901_62500_geo.tif");
+     auto file_name = real_path.c_str();
+//    auto file_name = argv[1];
+    std::cout << "arc 22 " << argc << " 传递进来的文件为: " << file_name << std::endl;
 
     auto obj = AA();
     auto res = obj.process(file_name);
