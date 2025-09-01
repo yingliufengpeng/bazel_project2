@@ -2,7 +2,7 @@
 // Created by peng on 31/8/2025.
 //
 
-#include "AA.h"
+#include "third_party/gdal/impl/AA.h"
 
 #include <iostream>
 #include "gdal_priv.h"
