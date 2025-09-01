@@ -15,7 +15,7 @@ build --action_env=BAZEL_CXXOPTS="-std=c++17"
 
 
 
-# 或者单独设置外部依赖缓存  以下的代码是放放到user的家目录xia
+# 或者单独设置外部依赖缓存  以下的代码是放放到user的家目录下
 # build --repository_cache=E:/bazel_local_repo
 # build --disk_cache=E:/bazel_local/disk
 
