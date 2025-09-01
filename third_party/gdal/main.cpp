@@ -21,15 +21,34 @@
 using rules_cc::cc::runfiles::Runfiles;
 
 
+void help() {
+#if defined(__clang__)
+    std::cout << "Compiled with Clang "
+              << __clang_major__ << "."
+              << __clang_minor__ << "."
+              << __clang_patchlevel__ << std::endl;
+#elif defined(_MSC_VER)
+    std::cout << "Compiled with MSVC, version " << _MSC_VER << std::endl;
+#elif defined(__GNUC__)
+    std::cout << "Compiled with GCC "
+              << __GNUC__ << "." << __GNUC_MINOR__ << std::endl;
+#else
+    std::cout << "Unknown compiler" << std::endl;
+#endif
+}
+
 
 int main(int argc, char *argv[]) {
+    help();
+
+    std::cout << "当前工作路径: " << std::filesystem::current_path() << std::endl;
+
     if (argc < 2) {
         std::cout << "参数传递错误  need file_name" << std::endl;
         return 0;
     }
 
-    std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
-    std::cout << "input file :" << argv[1] << std::endl;
+    std::cout << "输入文件 :" << argv[1] << std::endl;
      std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));
 //     std::string real_path = runfiles->Rlocation(argv[1]);
     const std::string workspace_prefix = "_main/";
