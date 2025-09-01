@@ -177,9 +177,22 @@ bazel_dep(name = "nanobind_bazel", version = "2.8.0")
 vcpkg = use_extension("//:extension.bzl", "vcpkg_repo")
 use_repo(vcpkg, "vcpkg")
 
-#local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "local_repository")
-#
-#local_repository(
-#    name = "vcpkg_gmp",
-#    path = "D:/apps/vcpkg/installed/x64-windows",
-#)
+# Register the xxxxxx_hello_world repository
+# 这块隐藏的代码不起作用,起作用的是下面的use_repo_rule
+
+#hello_ext = use_extension("//:repo_ext.bzl", "hello_ext")
+#hello_ext.door()
+#hello_ext.door()
+#hello_ext.door()
+#hello_ext.table()
+#hello_ext.add_hello()
+##use_repo(hello_ext, "xxxxxx_hello_world")
+
+hello_repo_rule = use_repo_rule(
+    "//:repo_ext.bzl",
+    "hello_repo",
+)
+
+hello_repo_rule(
+    name = "hello_mod_ext",
+)

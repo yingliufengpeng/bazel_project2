@@ -96,3 +96,6 @@ source ~/.bashrc
     pkg-config --libs gdal 
         output: -L/home/peng/apps/vcpkg/installed/x64-linux/lib/pkgconfig/../../lib -lgdal -lqhullstatic_r -lgeotiff -lLerc -lzstd -lpng16 -lgif -lnetcdf -lhdf5_hl -ltinyxml2 -lhdf5 -lsz -laec -lwebp -lsharpyuv -lopenjp2 -lkmlengine -lkmldom -lkmlbase -luriparser -lpcre2-8 -lspatialite -lfreexl -lminizip -lpq -lpgport -lpgcommon -lexpat -lxml2 -lc -lgeos_c -lgeos -lproj -lsqlite3 -ltiff -llzma -ljpeg -lcurl -lssl -lcrypto -ldl -lz -ljson-c -lstdc++ -lm 
 
+
+# 查询 target存储位置的
+bazelisk query --output=location @hello_mod_ext//:foo 

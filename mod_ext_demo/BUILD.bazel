@@ -1,0 +1,4 @@
+filegroup(
+    name = "main",
+    srcs = ["@hello_mod_ext//:foo"],
+)

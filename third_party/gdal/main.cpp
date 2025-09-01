@@ -49,19 +49,16 @@ int main(int argc, char *argv[]) {
     }
 
     std::cout << "输入文件 :" << argv[1] << std::endl;
-     std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));
-//     std::string real_path = runfiles->Rlocation(argv[1]);
+    std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0]));
     const std::string workspace_prefix = "_main/";
 
-     // std::string real_path = workspace_prefix + runfiles->Rlocation("third_party/gdal/WI_Poynette_801263_1901_62500_geo.tif");
-     std::string real_path = runfiles->Rlocation( workspace_prefix + argv[1]);
+    std::string real_path = runfiles->Rlocation( workspace_prefix + argv[1]);
      auto file_name = real_path.c_str();
 //    auto file_name = argv[1];
-    std::cout << "arc 22 " << argc << " 传递进来的文件为: " << file_name << std::endl;
+    std::cout << "arc 数量 " << argc << " 传递进来的文件为: " << file_name << std::endl;
 
     auto obj = AA();
     auto res = obj.process(file_name);
-//    auto res = obj.process("D:/repo/clion_repo/bazel_project2/third_party/gdal/WI_Poynette_801263_1901_62500_geo.tif");
     std::cout << "res is " << res << std::endl;
     return 0;
 }
