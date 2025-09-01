@@ -147,7 +147,7 @@ my_extension.lib(
 
 #  my_external_lib_1_0_0_ref is not what i think the reference of my_external_lib_1_0_0
 #
-use_repo(my_extension, "my_external_lib_1_0_0", "my_external_lib_1_0_0_ref")
+use_repo(my_extension, "my_external_lib_1_0_0")
 
 bazel_dep(name = "my-panio", version = "1.7.1")
 #bazel_dep(name = "rules_rust", version = "0.63.0")

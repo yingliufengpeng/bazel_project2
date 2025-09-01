@@ -2,3 +2,10 @@ filegroup(
     name = "main",
     srcs = ["@hello_mod_ext//:foo"],
 )
+
+filegroup(
+    name = "main2",
+    srcs = [
+        "@my_external_lib_1_0_0//:foo",
+    ],
+)
