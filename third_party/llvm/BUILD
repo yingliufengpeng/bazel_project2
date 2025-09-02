@@ -1,24 +1,36 @@
-load(":LLVM_MLIR_LIBS.bzl", "LIBS")
+load(":LINUX_LLVM_MLIR_LIBS.bzl", "LINUX_LIBS")
+load(":WIN_LLVM_MLIR_LIBS.bzl", "WIN_LIBS")
 
 cc_binary(
     name = "main",
     srcs = glob([
-        "*.cpp",
+        #        "*.cpp",
         "*.cc",
         "toy/*.h",
     ]),
-    #    copts = ["/MDd"],  # Debug CRT
     copts = select({
         "@platforms//os:windows": [
-            "/MDd",
+            "/MDd",  # debug mode
         ],
-        "//conditions:default": [],
+        "//conditions:default": [
+            "-fno-rtti",
+        ],
     }),
     linkopts = select({
         "@platforms//os:linux": [
-            "-lgdal",
+            "-lMLIRIR",
+            "-lMLIRSupport",
+            "-lMLIRParser",
+            "-lLLVMOption",
+            "-lLLVMCore",
+            "-lLLVMSupport",
+            "-lLLVMDemangle",
+            "-ltinfo",
+            "-ldl",
+            "-pthread",
+            "-fno-rtti",
         ],
-        "@platforms//os:windows": LIBS + [
+        "@platforms//os:windows": WIN_LIBS + [
             "ws2_32.lib",
             "msvcrtd.lib",
         ],
