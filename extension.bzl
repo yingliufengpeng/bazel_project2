@@ -33,7 +33,7 @@ COMM  srcs = glob(["DEBUG_PREbin/**/*.LIB_DLL" ]),  # windows 下是 .lib，Linu
 
                      ],  # Linux 下
                      "@platforms//os:linux": [
-                     "-LIPATH_IMPL",
+                     "-LLIPATH_IMPL",
 
                      ],
                   }),
