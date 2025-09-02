@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
     auto moduleAST = parseInputFile(inputFilename);
 
     if (!moduleAST) {
-        std::cout << "parser error!" << std::endl;
+        std::cout << "解析错误!" << std::endl;
         return 1;
 
     }
