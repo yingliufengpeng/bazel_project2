@@ -17,18 +17,18 @@ cc_binary(
         ],
     }),
     linkopts = select({
-        "@platforms//os:linux": [
-            "-lMLIRIR",
-            "-lMLIRSupport",
-            "-lMLIRParser",
-            "-lLLVMOption",
-            "-lLLVMCore",
-            "-lLLVMSupport",
+        "@platforms//os:linux": LINUX_LIBS + [
+            #            "-lMLIRIR",
+            #            "-lMLIRSupport",
+            #            "-lMLIRParser",
+            #            "-lLLVMOption",
+            #            "-lLLVMCore",
+            #            "-lLLVMSupport",
             "-lLLVMDemangle",
             "-ltinfo",
             "-ldl",
             "-pthread",
-            "-fno-rtti",
+            #            "-fno-rtti",
         ],
         "@platforms//os:windows": WIN_LIBS + [
             "ws2_32.lib",
