@@ -10,6 +10,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <iostream>
 #include "toy/AST.h"
 #include "toy/Lexer.h"
 #include "toy/Parser.h"
@@ -55,8 +56,11 @@ parseInputFile(llvm::StringRef filename) {
 
 int main(int argc, char **argv) {
     cl::ParseCommandLineOptions(argc, argv, "toy compiler\n");
+    std::cout << "初始化..." <<std::endl;
 
     auto moduleAST = parseInputFile(inputFilename);
+
+    std::cout << "ffsa" <<std::endl;
     if (!moduleAST)
         return 1;
 
