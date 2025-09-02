@@ -12,6 +12,7 @@ def _my_extension_impl(mctx):
         path = "/home/peng/apps/vcpkg/installed/x64-linux"
         lib = ""
         comm = "#"
+
         debug = ""
 
     print("fsfsfsf fsfs     {} {}".format(mctx.os.name, path))
@@ -22,7 +23,7 @@ def _my_extension_impl(mctx):
 cc_library(
    name = "vcpkg",
 COMM  srcs = glob(["DEBUG_PREbin/**/*.LIB_DLL" ]),  # windows 下是 .lib，Linux 下可以是 .a 或 .so
-   hdrs = glob(["include/**/*.h"]),
+   hdrs = glob(["include/**/*.h", "include/**/*.inc", "include/**/*.def"]),
    includes = ["include"],
 #   data = glob(["bin/**/*.dll"]),
    linkopts = select({

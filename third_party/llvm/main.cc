@@ -26,6 +26,7 @@
 
 using namespace toy;
 namespace cl = llvm::cl;
+using llvm::cl::Option;
 
 static cl::opt<std::string> inputFilename(cl::Positional,
                                           cl::desc("<input toy file>"),

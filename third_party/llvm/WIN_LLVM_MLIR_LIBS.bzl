@@ -1,4 +1,4 @@
-LIBS = [
+WIN_LIBS = [
     "LLVM-C.lib",
     "LLVMAggressiveInstCombine.lib",
     "LLVMAnalysis.lib",
