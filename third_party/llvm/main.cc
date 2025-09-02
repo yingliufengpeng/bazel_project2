@@ -57,13 +57,15 @@ parseInputFile(llvm::StringRef filename) {
 
 int main(int argc, char **argv) {
     cl::ParseCommandLineOptions(argc, argv, "toy compiler\n");
-    std::cout << "初始化..." <<std::endl;
+    std::cout << "初始化 ..." <<std::endl;
 
     auto moduleAST = parseInputFile(inputFilename);
 
-    std::cout << "ffsa" <<std::endl;
-    if (!moduleAST)
+    if (!moduleAST) {
+        std::cout << "parser error!" << std::endl;
         return 1;
+
+    }
 
     switch (emitAction) {
         case Action::DumpAST:
