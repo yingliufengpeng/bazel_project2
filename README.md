@@ -84,6 +84,10 @@ setx HTTP_PROXY "http://127.0.0.1:10809"
 setx HTTPS_PROXY "http://127.0.0.1:10809"
 
 
+# 有些模块没有bazel管理, 我们需要通过外部vcpkg仓库来做引用.
+VCPKG_HOME=/home/peng/apps/vcpkg    # linux
+VCPKG_HOME=/D:/apps/vcpkg           # windows
+
  
 # use vcpkg pkg_config
 echo 'export PKG_CONFIG_PATH=/home/peng/apps/vcpkg/installed/x64-linux/lib/pkgconfig:$PKG_CONFIG_PATH' >> ~/.bashrc
