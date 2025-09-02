@@ -159,6 +159,7 @@ local_path_override(
 )
 
 bazel_dep(name = "abseil-cpp", version = "20250814.0")
+bazel_dep(name = "llvm-project", version = "17.0.3")
 
 # Place this in your MODULE.bazel file.
 # The major version of nanobind-bazel is equal to the version

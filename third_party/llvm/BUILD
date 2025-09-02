@@ -2,7 +2,11 @@ load(":LLVM_MLIR_LIBS.bzl", "LIBS")
 
 cc_binary(
     name = "main",
-    srcs = ["main.cc"],
+    srcs = glob([
+        "*.cpp",
+        "*.cc",
+        "toy/*.h",
+    ]),
     #    copts = ["/MDd"],  # Debug CRT
     copts = select({
         "@platforms//os:windows": [
