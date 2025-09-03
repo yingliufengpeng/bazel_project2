@@ -1,0 +1,11 @@
+diff --git a/MODULE.bazel b/MODULE.bazel
+new file mode 100644
+index 0000000..b625d8b
+--- /dev/null
++++ b/MODULE.bazel
+@@ -0,0 +1,5 @@
++module(
++    name = "my_patch_demo",
++    version = "0.0.1",
++)
++
