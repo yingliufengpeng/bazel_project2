@@ -2,13 +2,11 @@ cc_binary(
     name = "main",
     srcs = ["main.cpp"],
     copts = [
-
     ],
     linkopts = [
-
-        "-lpthread",
-        "-ldl",
-        "-lz",
+        #        "-lpthread",
+        #        "-ldl",
+        #        "-lz",
     ],
     deps = [
         "@llvm-project//llvm:Core",  # LLVM Core

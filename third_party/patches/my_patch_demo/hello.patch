@@ -1,0 +1,64 @@
+diff --git a/hello.cc b/hello.cc
+index 76c9f83..62dc4da 100644
+--- a/hello.cc
++++ b/hello.cc
+@@ -3,8 +3,8 @@
+ #include "hello.h"
+ 
+ 
++int my_patch_add(int a, int b) {
+ 
+-int main() {
+-   auto m = add(4, 4);
+-   return 0;
++    return a + b;
+ }
++
+diff --git a/hello.h b/hello.h
+index 4312f4f..0b63049 100644
+--- a/hello.h
++++ b/hello.h
+@@ -6,7 +6,7 @@
+ #ifndef BAZEL_PROJECT1_MY_HEADER_H
+ #define BAZEL_PROJECT1_MY_HEADER_H
+ 
+-int add(int a, int  b);
++int my_patch_add(int a, int  b);
+ 
+ #endif //BAZEL_PROJECT1_MY_HEADER_H
+ 
+diff --git a/hello.patch b/hello.patch
+new file mode 100644
+index 0000000..041fc26
+--- /dev/null
++++ b/hello.patch
+@@ -0,0 +1,29 @@
++diff --git a/hello.cc b/hello.cc
++index 76c9f83..62dc4da 100644
++--- a/hello.cc
+++++ b/hello.cc
++@@ -3,8 +3,8 @@
++ #include "hello.h"
++ 
++ 
+++int my_patch_add(int a, int b) {
++ 
++-int main() {
++-   auto m = add(4, 4);
++-   return 0;
+++    return a + b;
++ }
+++
++diff --git a/hello.h b/hello.h
++index 4312f4f..530433e 100644
++--- a/hello.h
+++++ b/hello.h
++@@ -6,7 +6,7 @@
++ #ifndef BAZEL_PROJECT1_MY_HEADER_H
++ #define BAZEL_PROJECT1_MY_HEADER_H
++ 
++-int add(int a, int  b);
+++int my_path_add(int a, int  b);
++ 
++ #endif //BAZEL_PROJECT1_MY_HEADER_H
++ 

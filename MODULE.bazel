@@ -163,8 +163,20 @@ bazel_dep(name = "llvm-project", version = "17.0.3")
 local_path_override(
     module_name = "llvm-project",
     #    build_file = "java_demo/BUILD.panio",
+    #    path = "third_party/llvmorg-17.0.3",
     path = "/home/peng/src_repo/llvm_src/llvmorg-17.0.3",
 )
+
+#git_override(
+#    module_name = "llvm-project",
+#    commit = "888437e1b60011b8a375dd30928ec925b448da57",
+#    patch_strip = 1,
+#    patches = [
+#        "third_party/patches/llvm/llvm_17.0.3.patch",
+#    ],  # 补丁文件路径
+#    #    remote = "file:///home/peng/src_repo/clion_repo/bazel_project2/third_party/my_patch_demo_git",  # ✅ 直接路径
+#    remote = "https://github.com/llvm/llvm-project.git",  # ✅ 直接路径
+#)
 
 # Place this in your MODULE.bazel file.
 # The major version of nanobind-bazel is equal to the version
@@ -201,4 +213,37 @@ hello_repo_rule = use_repo_rule(
 
 hello_repo_rule(
     name = "hello_mod_ext",
+)
+
+#
+bazel_dep(name = "my_patch_demo", version = "0.0.1")
+
+#local_path_override(
+#    module_name = "my_patch_demo",
+#    #    build_file = "third_party/BUILDS/my_patch_demo.bazel",
+#    path = "//third_party/my_patch_demo",
+#)
+#
+#single_version_override(
+#    module_name = "my_patch_demo",
+#    patch_strip = 1,  # 剥离路径前缀的层级
+#    patches = [
+#        "//third_party/patches/my_patch_demo/BUILD.patch",
+#        "//third_party/patches/my_patch_demo/hello.patch",
+#        "//third_party/patches/my_patch_demo/MODULE.patch",
+#    ],  # 补丁文件路径
+#    version = "0.0.1",
+#)
+
+git_override(
+    module_name = "my_patch_demo",
+    commit = "4de3aa7ea83acaa2b8ce1f2ab1ec29c618052d91",
+    patch_strip = 1,
+    patches = [
+        "third_party/patches/my_patch_demo/BUILD.patch",
+        "third_party/patches/my_patch_demo/hello.patch",
+        "third_party/patches/my_patch_demo/MODULE.patch",
+    ],  # 补丁文件路径
+    #    remote = "file:///home/peng/src_repo/clion_repo/bazel_project2/third_party/my_patch_demo_git",  # ✅ 直接路径
+    remote = "https://github.com/yingliufengpeng/my_patch_demo.git",  # ✅ 直接路径
 )
