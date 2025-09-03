@@ -1,0 +1,19 @@
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    copts = [
+
+    ],
+    linkopts = [
+
+        "-lpthread",
+        "-ldl",
+        "-lz",
+    ],
+    deps = [
+        "@llvm-project//llvm:Core",  # LLVM Core
+        "@llvm-project//llvm:Support",  # LLVM Support
+        "@llvm-project//mlir:IR",  # MLIR IR 库
+        "@llvm-project//mlir:Support",  # MLIR Support
+    ],
+)
