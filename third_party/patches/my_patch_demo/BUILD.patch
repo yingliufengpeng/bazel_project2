@@ -1,0 +1,17 @@
+diff --git a/BUILD.bazel b/BUILD.bazel
+new file mode 100644
+index 0000000..3a5792d
+--- /dev/null
++++ b/BUILD.bazel
+@@ -0,0 +1,11 @@
++cc_library(
++    name = "main",
++    hdrs = glob([
++        "*.h",
++    ]),
++   # include_prefix = "my_pathch_demo",
++    srcs = glob(['*.cc']),
++    visibility = [
++        "//visibility:public",
++],
++)
