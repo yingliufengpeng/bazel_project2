@@ -159,7 +159,12 @@ local_path_override(
 )
 
 bazel_dep(name = "abseil-cpp", version = "20250814.0")
-#bazel_dep(name = "llvm-project", version = "17.0.3")
+bazel_dep(name = "llvm-project", version = "17.0.3")
+local_path_override(
+    module_name = "llvm-project",
+    #    build_file = "java_demo/BUILD.panio",
+    path = "/home/peng/src_repo/llvm_src/llvmorg-17.0.3",
+)
 
 # Place this in your MODULE.bazel file.
 # The major version of nanobind-bazel is equal to the version
