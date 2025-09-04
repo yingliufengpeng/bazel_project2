@@ -194,7 +194,7 @@ bazel_dep(name = "nanobind_bazel", version = "2.8.0")
 #)
 
 # 加载自定义扩展
-vcpkg = use_extension("//:extension.bzl", "vcpkg_repo")
+vcpkg = use_extension("//:vcpkg_extension.bzl", "vcpkg")
 use_repo(vcpkg, "vcpkg")
 
 # Register the xxxxxx_hello_world repository
