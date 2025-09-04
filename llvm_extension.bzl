@@ -10,7 +10,7 @@ def _my_extension_impl(mctx):
     else:
         path = "/home/peng/src_repo/llvm_src/llvmorg-17.0.3"
 
-    print("fsfsfsf fsfs     {} {}".format(mctx.os.name, path))
+    print("llvm info:    {} {}".format(mctx.os.name, path))
 
     local_repository(name = "llvm-project", path = path)
 
