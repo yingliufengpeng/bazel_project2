@@ -44,7 +44,7 @@ def copy_to_dest(src, dest):
 
 
 
-if __file__ == '__main__':
+if __name__ == '__main__':
     copy_to_dest(args.src, args.to)
 
 
