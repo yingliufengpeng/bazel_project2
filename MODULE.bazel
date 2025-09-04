@@ -159,13 +159,15 @@ local_path_override(
 )
 
 bazel_dep(name = "abseil-cpp", version = "20250814.0")
-bazel_dep(name = "llvm-project", version = "17.0.3")
-local_path_override(
-    module_name = "llvm-project",
-    #    build_file = "java_demo/BUILD.panio",
-    #    path = "third_party/llvmorg-17.0.3",
-    path = "/home/peng/src_repo/llvm_src/llvmorg-17.0.3",
-)
+
+llvm = use_extension("//:llvm_extension.bzl", "llvm")
+use_repo(llvm, "llvm-project")
+
+#bazel_dep(name = "llvm-project", version = "17.0.3")
+#local_path_override(
+#    module_name = "llvm-project",
+#    path = path,
+#)
 
 #git_override(
 #    module_name = "llvm-project",
