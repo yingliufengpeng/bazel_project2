@@ -1,3 +1,21 @@
+ # 在运行该代码之前, 需要做如下的约定,自己可以做酌情修改.
+ 
+```bash
+
+    bazel 仓库的目录为  E:/bazel_local_repo
+    
+    vcpkg 的目录为
+    linux    /home/peng/apps/vcpkg
+    windows  D:/apps/vcpkg
+    
+    llvmorg-17.0.3的目录为
+    linux    /home/peng/src_repo/llvm_src/llvmorg-17.0.3
+    windows  D:/repo/llvm_repo/llvmorg-17.0.3
+    
+    llvm相关的配置逻辑在LLVM.md文件中
+
+```
+
 
 # 或者单独设置外部依赖缓存
 build --repository_cache=E:/bazel_local_repo

@@ -46,4 +46,4 @@ COMM  srcs = glob(["DEBUG_PREbin/**/*.LIB_DLL" ]),  # windows 下是 .lib，Linu
 
     new_local_repository(name = "vcpkg", build_file_content = build_file_content, path = path)
 
-vcpkg_repo = module_extension(implementation = _my_extension_impl)
+vcpkg = module_extension(implementation = _my_extension_impl)
