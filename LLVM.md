@@ -1,6 +1,7 @@
 
 # llvm搭建 
  注意: 该搭建逻辑是基于llvm源码就行搭建. 并非是基于vcpkg管理的逻辑. 
+     windows上要使用  powershell
  
 # 第一步
 ``` bash  
