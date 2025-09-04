@@ -15,7 +15,7 @@ def _my_extension_impl(mctx):
 
         debug = ""
 
-    print("fsfsfsf fsfs     {} {}".format(mctx.os.name, path))
+    print("vcpkg info:    {} {}".format(mctx.os.name, path))
 
     build_file = mctx.file("MODULE.bazel", """""")
 
