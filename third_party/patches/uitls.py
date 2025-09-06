@@ -31,7 +31,7 @@ def copy_to_dest(src, dest):
     dst = Path(rf'{dest}')
 
     #breakpoint()
-    for pattern in ['*.origin', '*.bzl']:
+    for pattern in ['*.origin', '*.bzl', '*.bazel']:
         print(f'pattern is {pattern}')
         for f in src.rglob(pattern):
             path = f.relative_to(src)
@@ -41,6 +41,25 @@ def copy_to_dest(src, dest):
             shutil.copy(f, dst / path)
 
 
+    #breakpoint()
+    for pattern in [ '.bazelignore', 'gast_rename_bazel.py']:
+        print(f'pattern is {pattern}')
+        for f in src.glob(pattern):
+            path = f.relative_to(src)
+            print(f'copying  {f} to {dest/path}')
+            dest_f = dst / path
+            dest_f.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(f, dst / path)
+
+        #breakpoint()
+    for pattern in [ 'MODULE.template']:
+        print(f'pattern is {pattern}')
+        for f in src.glob(pattern):
+            path = f.relative_to(src)
+            print(f'copying  {f} to {dest/path}')
+            dest_f = dst / path
+            dest_f.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(f, dest_f.parent / (dest_f.stem + '.bazel'))
 
 
 
