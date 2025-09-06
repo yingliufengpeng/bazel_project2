@@ -1,6 +1,6 @@
 module(
     name = "llvm-project",
-    version = "17.0.3",
+    version = "cd708029e0b2869e80abe31ddb175f7c35361f90",
 )
 
 # Skylark depedndencies
