@@ -166,13 +166,14 @@ use_repo(
     "llvm_zstd",
 )
 
-# The subset of LLVM backend targets that should be compiled
-_LLVM_TARGETS = [
-    "X86",
-]
+
 
 # 以下的语句是llvm中的文件会帮着生成一系列的*.bazel *.bzl的文件, 因为他本身只支持linux环境, 所以, 我们
 # 需要自己去配置这些信息
+# The subset of LLVM backend targets that should be compiled
+#_LLVM_TARGETS = [
+#   "X86",
+#]
 # Configure LLVM project using use_repo_rule
 #llvm_configure = use_repo_rule("@llvm-raw//utils/bazel:configure.bzl", "llvm_configure")
 #
@@ -182,13 +183,6 @@ _LLVM_TARGETS = [
 #)
 
 bazel_dep(name = "nanobind_bazel", version = "2.8.0")
-
-#bazel_dep(name = "vcpkg", version = "2.8.0")
-#local_path_override(
-#    module_name = "vcpkg",
-#    #    build_file = "java_demo/BUILD.panio",
-#    path = "third_party/gdal",
-#)
 
 # 加载自定义扩展
 vcpkg = use_extension("//:vcpkg_extension.bzl", "vcpkg")
