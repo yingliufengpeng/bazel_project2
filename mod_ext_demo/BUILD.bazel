@@ -6,6 +6,6 @@ filegroup(
 filegroup(
     name = "main2",
     srcs = [
-        "@my_external_lib_1_0_0//:foo",
+        "@my_external_lib_1_0_0//googletest-1.17.0:gtest_main",
     ],
 )
