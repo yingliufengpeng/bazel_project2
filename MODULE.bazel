@@ -166,8 +166,6 @@ use_repo(
     "llvm_zstd",
 )
 
-
-
 # 以下的语句是llvm中的文件会帮着生成一系列的*.bazel *.bzl的文件, 因为他本身只支持linux环境, 所以, 我们
 # 需要自己去配置这些信息
 # The subset of LLVM backend targets that should be compiled
