@@ -38,7 +38,7 @@
 ```bash 
   
  
-   python ./third_party/patches/uitls.py  --src  ./third_party/patches/llvm-project-19.1.7     --to  llvm_dir  
+   python ./third_party/patches/uitls.py  --src  ./third_party/patches/cd708029e0b2869e80abe31ddb175f7c35361f90    --to  llvm_dir  
    
 #   cd llvm_dir
 #   
