@@ -235,6 +235,5 @@ git_override(
         "third_party/patches/my_patch_demo/hello.patch",
         "third_party/patches/my_patch_demo/MODULE.patch",
     ],  # 补丁文件路径
-    #    remote = "file:///home/peng/src_repo/clion_repo/bazel_project2/third_party/my_patch_demo_git",  # ✅ 直接路径
     remote = "https://github.com/yingliufengpeng/my_patch_demo.git",  # ✅ 直接路径
 )
