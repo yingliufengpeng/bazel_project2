@@ -46,7 +46,7 @@ python.toolchain(
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
-    #    name = "pip_deps",
+
     hub_name = "pip_deps2",
     #    overrides = {
     #        "fastapi": {
