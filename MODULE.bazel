@@ -99,7 +99,6 @@ local_path_override(
     path = "./extern_repo/lib_a",
 )
 
-# MODULE.bazel
 
 # 使用我们定义的模块扩展
 my_ext = use_extension("//module_extension:extensions.bzl", "my_extension")
