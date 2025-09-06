@@ -34,8 +34,6 @@ bazel_dep(name = "platforms", version = "1.0.0")
 # 引入 rules_nodejs
 bazel_dep(name = "rules_nodejs", version = "6.5.0")
 
-# NodeJS 扩展
-
 PYTHON_VERSION = "3.12"
 
 # Configure Python toolchain
