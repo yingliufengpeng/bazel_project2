@@ -35,7 +35,7 @@ def PengTensor : Peng_Type<"PTensor", "p_tensor"> {
 //      }]>
 //    ];
   let genStorageClass = 1;
-//  let hasCustomAssemblyFormat = 0;
+//  let hasCustomAssemblyFormat = 1;
 
   let assemblyFormat = "`<`$shape`,`$elementType`,`$device_id`>`";
 

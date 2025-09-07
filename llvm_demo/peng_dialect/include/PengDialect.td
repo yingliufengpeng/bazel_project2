@@ -21,7 +21,7 @@ def PengDialect : Dialect {
       static void sayHello3();
     }];
 
-
+    let useDefaultTypePrinterParser  = 1;
 
 
 }
