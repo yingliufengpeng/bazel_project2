@@ -51,3 +51,13 @@ cc_library(
         "@llvm-project//mlir:Support",
     ],
 )
+
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    deps = [
+        ":peng_dialect_lib",
+
+    ],
+)

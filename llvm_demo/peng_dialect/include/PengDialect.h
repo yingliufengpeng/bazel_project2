@@ -12,20 +12,7 @@
 namespace mlir {
     namespace Peng {
 
-        void PengDialect::sayHello() {
-            std::cout << "AAA" << std::endl;
 
-        }
-
-        void PengDialect::sayHello2() {
-            std::cout << "AAA" << std::endl;
-
-        }
-
-        void PengDialect::sayHello3() {
-            std::cout << "BBB" << std::endl;
-
-        }
 
 
     }
