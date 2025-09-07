@@ -10,7 +10,7 @@
 #include "llvm_demo/peng_dialect/PengDialect.h.inc"
 
 namespace mlir {
-    namespace Peng {
+    namespace peng {
 
 
 

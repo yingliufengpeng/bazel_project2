@@ -13,7 +13,7 @@ def PengDialect : Dialect {
 
     let description = "";
 
-    let cppNamespace = "::mlir::Peng";
+    let cppNamespace = "::mlir::peng";
 
     let extraClassDeclaration = [{
       static void sayHello();
