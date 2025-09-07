@@ -1,0 +1,35 @@
+load("@llvm-project//mlir:tblgen.bzl", "gentbl_cc_library", "td_library")
+
+
+td_library(
+    name = "td_files",
+    srcs = [
+         "include/PengDialect.td"
+    ],
+    deps = [
+        "@llvm-project//mlir:BuiltinDialectTdFiles",
+        "@llvm-project//mlir:InferIntRangeInterfaceTdFiles",
+        "@llvm-project//mlir:InferTypeOpInterfaceTdFiles",
+        "@llvm-project//mlir:OpBaseTdFiles",
+        "@llvm-project//mlir:SideEffectInterfacesTdFiles",
+    ],
+)
+
+gentbl_cc_library(
+    name = "dialect_inc_gen",
+    tbl_outs = [
+        (
+            ["-gen-dialect-decls"],
+            "PengDialect.h.inc",
+        ),
+        (
+            ["-gen-dialect-defs"],
+            "PengDialect.cpp.inc",
+        ),
+    ],
+    tblgen = "@llvm-project//mlir:mlir-tblgen",
+    td_file = "include/PengDialect.td",
+    deps = [
+        ":td_files",
+    ],
+)
