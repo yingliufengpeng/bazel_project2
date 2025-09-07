@@ -19,7 +19,7 @@ int main() {
     auto f32 = mlir::Float32Type::get(&context);
     llvm::outs() << f32;
     auto peng_tensor = mlir::peng::PTensorType::get(&context, {3, 4}, mlir::Float64Type::get(&context), 3);
-    llvm::outs() << peng_tensor << "\t";
+    llvm::outs() << "peng_tensor" << "\t";
     peng_tensor.dump();
 
     return 0;
