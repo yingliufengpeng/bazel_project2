@@ -1,10 +1,9 @@
 load("@llvm-project//mlir:tblgen.bzl", "gentbl_cc_library", "td_library")
 
-
 td_library(
     name = "td_files",
     srcs = [
-         "include/PengDialect.td"
+        "include/PengDialect.td",
     ],
     deps = [
         "@llvm-project//mlir:BuiltinDialectTdFiles",
@@ -31,5 +30,24 @@ gentbl_cc_library(
     td_file = "include/PengDialect.td",
     deps = [
         ":td_files",
+    ],
+)
+
+cc_library(
+    name = "peng_dialect_lib",
+    srcs = [
+        "PengDialect.cpp",
+    ],
+    hdrs = [
+        "include/PengDialect.h",
+    ],
+    deps = [
+        ":dialect_inc_gen",
+        "@llvm-project//mlir:ComplexDialect",
+        "@llvm-project//mlir:Dialect",
+        "@llvm-project//mlir:IR",
+        "@llvm-project//mlir:InferIntRangeInterface",
+        "@llvm-project//mlir:InferTypeOpInterface",
+        "@llvm-project//mlir:Support",
     ],
 )

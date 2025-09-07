@@ -15,6 +15,11 @@ def PengDialect : Dialect {
 
     let cppNamespace = "::mlir::Peng";
 
+    let extraClassDeclaration = [{
+      static void sayHello();
+      static void sayHello2();
+      static void sayHello3();
+    }];
 
 }
 
