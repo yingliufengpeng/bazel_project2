@@ -5,6 +5,7 @@ td_library(
     srcs = [
         "include/PengDialect.td",
         "include/PengTypes.td",
+        "include/PengEnums.td",
     ],
     deps = [
         "@llvm-project//mlir:BuiltinDialectTdFiles",
@@ -55,19 +56,42 @@ gentbl_cc_library(
     ],
 )
 
+gentbl_cc_library(
+    name = "attrs_inc_gen",
+    tbl_outs = [
+        (
+            ["-gen-enum-decls"],
+            "PengEnums.h.inc",
+        ),
+        (
+            ["-gen-enum-defs"],
+            "PengEnums.cpp.inc",
+        ),
+    ],
+    tblgen = "@llvm-project//mlir:mlir-tblgen",
+    td_file = "include/PengEnums.td",
+    deps = [
+        ":dialect_inc_gen",
+        ":td_files",
+    ],
+)
+
 cc_library(
     name = "peng_dialect_lib",
     srcs = [
         "PengDialect.cpp",
-#        "PengTypes.cpp",
+        "PengTypes.cpp",
+        "PengEnums.cpp",
     ],
     hdrs = [
         "include/PengDialect.h",
         "include/PengTypes.h",
-    ],
+        "include/PengEnums.h",
+     ],
     deps = [
         ":dialect_inc_gen",
         ":types_inc_gen",
+        ":attrs_inc_gen",
         "@llvm-project//mlir:ComplexDialect",
         "@llvm-project//mlir:Dialect",
         "@llvm-project//mlir:IR",

@@ -2,12 +2,10 @@
 // Created by peng on 9/7/25.
 //
 
-#ifndef BAZEL_PROJECT2_PENGTYPES_TD_H
-#define BAZEL_PROJECT2_PENGTYPES_TD_H
 include "PengDialect.td"
 include "mlir/IR/AttrTypeBase.td"
 
-class Peng_Type<string name, string typeMnemonic> : TypeDef<PengDialect, name> {
+class Peng_Type<string name, string typeMnemonic> : TypeDef<Peng_Dialect, name> {
   let mnemonic = typeMnemonic;
   let typeName = dialect.name# "." #typeMnemonic;
 }
@@ -66,6 +64,3 @@ def PengTensor : Peng_Type<"PTensor", "p_tensor"> {
 
 
 
-
-
-#endif //BAZEL_PROJECT2_PENGTYPES_TD_H

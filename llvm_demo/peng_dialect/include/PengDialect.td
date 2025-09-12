@@ -1,11 +1,7 @@
-#ifndef Peng_Dialect
-
-#define Peng_Dialect
-
 
 include "mlir/IR/DialectBase.td"
 
-def PengDialect : Dialect {
+def Peng_Dialect : Dialect {
 
     let name = "Peng";
 
@@ -16,9 +12,8 @@ def PengDialect : Dialect {
     let cppNamespace = "::mlir::peng";
 
     let extraClassDeclaration = [{
-      static void sayHello();
-      static void sayHello2();
-      static void sayHello3();
+
+      void registerTypes();
     }];
 
     let useDefaultTypePrinterParser  = 1;
@@ -27,5 +22,3 @@ def PengDialect : Dialect {
 }
 
 
-
-#endif //Peng_Dialect
