@@ -8,9 +8,9 @@
     linux    /home/peng/apps/vcpkg
     windows  D:/apps/vcpkg
     
-    llvmorg-17.0.3的目录为
-    linux    /home/peng/src_repo/llvm_src/llvmorg-17.0.3
-    windows  D:/repo/llvm_repo/llvmorg-17.0.3
+    cd708029e0b2869e80abe31ddb175f7c35361f90的目录为
+    linux    /home/peng/src_repo/llvm_src/cd708029e0b2869e80abe31ddb175f7c35361f90
+    windows  D:/repo/llvm_repo/cd708029e0b2869e80abe31ddb175f7c35361f90
     
     llvm相关的配置逻辑在LLVM.md文件中
 
