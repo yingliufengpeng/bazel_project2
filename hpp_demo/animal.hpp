@@ -3,7 +3,9 @@
 #define ANIMAL_H
 
 #include <iostream>
+#include <memory>
 #include <ostream>
+
 
 
 namespace animal {
