@@ -46,7 +46,6 @@ python.toolchain(
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
-
     hub_name = "pip_deps2",
     #    overrides = {
     #        "fastapi": {
@@ -226,7 +225,7 @@ bazel_dep(name = "my_patch_demo", version = "0.0.1")
 
 git_override(
     module_name = "my_patch_demo",
-    commit = "4de3aa7ea83acaa2b8ce1f2ab1ec29c618052d91",
+    commit = "7826af9441adf7176943eba15912a183ce8ae272",
     patch_strip = 1,
     patches = [
         "third_party/patches/my_patch_demo/BUILD.patch",
