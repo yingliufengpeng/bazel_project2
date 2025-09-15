@@ -9,7 +9,7 @@ def _my_extension_impl(mctx):
         lib = "dll"
         comm = ""
     else:
-        path = "/home/peng/apps/vcpkg/installed/x64-linux"
+        path = "/home/peng/apps/vcpkg/installed/x64-linux-release"
         lib = ""
         comm = "#"
 

@@ -1,9 +1,68 @@
-#cc_library(
-#    name = "my_ffmpeg_app",
-#    srcs = ["my_ffmpeg_app.cc"],
-#    deps = [
-#        "@ffmpeg_bazel_build//:libavcodec",
-#        "@ffmpeg_bazel_build//:libavformat",
-#        "@ffmpeg_bazel_build//:libavutil",
-#    ],
-#)
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    # 如果头文件在系统默认位置（/usr/include）可以不用 includes
+    # copts = ["-I/usr/include"],  # 可选 — 视系统而定
+    visibility = ["//visibility:public"],
+
+    linkopts = select({
+        "@platforms//os:linux": [
+             '-lm',
+             '-lavformat',
+             '-lxml2',
+             '-lbz2',
+             '-lmodplug',
+             '-lopenmpt',
+             '-lvorbisfile',
+             '-lmpg123',
+             '-lsrt',
+             '-lssl',
+             '-lssh',
+             '-lcrypto',
+             '-lavcodec',
+             '-lvpx',
+             '-lpthread',
+             '-lwebpmux',
+             '-llzma',
+             '-ldav1d',
+             '-lsnappy',
+             '-laom',
+             '-lilbc',
+             '-lmp3lame',
+             '-lopenjp2',
+             '-lopus',
+             '-lspeex',
+             '-ltheoraenc',
+             '-ltheoradec',
+             '-lvorbisenc',
+             '-lvorbis',
+             '-logg',
+             '-lwebp',
+             '-lsharpyuv',
+             '-lopenh264',
+             '-lz',
+             '-lswresample',
+             '-lsoxr',
+             '-lavutil',
+             '-pthread',
+             '-lmfx',
+             '-lstdc++',
+             '-ldl',
+             '-lOpenCL',
+             '-latomic'
+        ],
+        "@platforms//os:windows": [
+            "avcodec.lib","avformat.lib", "avutil.lib", "swscale.lib", "swresample.lib"
+        ],
+        "//conditions:default": [],
+    }),
+    deps = [
+         "@vcpkg",
+        "@bazel_tools//tools/cpp/runfiles",
+
+        #                "@bazel_tools//tools/cpp/runfiles",  # Standard runfiles library
+        #        "@rules_cc//cc/runfiles",  # 假设你已经依赖 rules_cc runfiles
+    ],
+)
+
+
