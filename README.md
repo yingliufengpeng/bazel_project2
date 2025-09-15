@@ -7,6 +7,7 @@
     vcpkg 的目录为
     linux    /home/peng/apps/vcpkg
     windows  D:/apps/vcpkg
+    而且 windows默认使用debug相关库和include资源.
     
     cd708029e0b2869e80abe31ddb175f7c35361f90的目录为
     linux    /home/peng/src_repo/llvm_src/cd708029e0b2869e80abe31ddb175f7c35361f90
