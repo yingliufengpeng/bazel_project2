@@ -3,4 +3,7 @@
 
 # 需要再 vcpkg中安装  llvm 
     
-    vcpkg install gdal
+    linux:
+        vcpkg  install gdal:x64-linux-release
+    windows:
+        vcpkg  install gdal:x64-windows
