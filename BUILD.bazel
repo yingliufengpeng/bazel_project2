@@ -12,4 +12,6 @@ compile_pip_requirements(
     name = "requirements",
     src = "pyproject.toml",
     requirements_txt = "requirements_lock_3_12.txt",
+    data = ["README.md"],
+
 )

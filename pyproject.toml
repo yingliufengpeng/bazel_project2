@@ -1,12 +1,12 @@
-[project]
-name = "bazel_project2"
-version = "0.2.0"
+#[project]
+#name = "bazel_project2"
+#version = "0.2.0"
 
 [tool.poetry]
 name = "bazel_project2"
 version = "0.1.0"
 description = "A Python project with Bazel"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["yingliufengpeng"]
 license = "MIT"
 readme = "README.md"
 
