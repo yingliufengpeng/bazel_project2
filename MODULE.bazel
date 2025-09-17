@@ -234,3 +234,22 @@ git_override(
     ],  # 补丁文件路径
     remote = "https://github.com/yingliufengpeng/my_patch_demo.git",  # ✅ 直接路径
 )
+bazel_dep(name = "rules_rust", version = "0.65.0")
+
+# 启用扩展，导入工具链
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(edition = "2021")
+use_repo(rust, "rust_toolchains")
+
+
+# 启用 crate_universe 扩展（用来引入 crates.io 包）
+crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+
+crate.from_cargo(
+    name = "my_crates",
+    manifests = ["rust_demo/Cargo.toml"],   # 指定一个 Cargo.toml，里面写依赖
+    cargo_lockfile = "rust_demo/Cargo.lock",
+
+)
+
+use_repo(crate, "my_crates")
