@@ -11,3 +11,4 @@ bazel-bazel_project2
 
 MODULE.bazel.lock
 .__atomic-*
+rust_demo/target
