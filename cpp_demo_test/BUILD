@@ -21,3 +21,5 @@ cc_test(
 )
 
 show(4)
+
+exports_files(["cpp_demo_readme.md"])
