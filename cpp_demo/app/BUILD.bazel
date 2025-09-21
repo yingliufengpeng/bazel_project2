@@ -1,0 +1,12 @@
+cc_library(
+    name = "foo",
+    srcs = ["foo.cpp"],
+    hdrs = ["foo.h"],              # 普通头文件
+    textual_hdrs = ["macros.h"],   # 宏定义、模板类头文件
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    deps = [":foo"],
+)
