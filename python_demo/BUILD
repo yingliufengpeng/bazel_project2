@@ -15,9 +15,9 @@ py_test(
     deps = [":basic_lib"],
 )
 
-
-
 my_py_binary(
     name = "hello",
-    srcs = ["hello.py"],
+    srcs = [
+        "hello.py",
+    ],
 )
