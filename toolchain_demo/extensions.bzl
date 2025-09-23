@@ -1,15 +1,16 @@
-load("//toolchain_demo:toolchain.bzl", "py_toolchain_impl")
 load("@bazel_tools//tools/build_defs/repo:local.bzl", "local_repository", "new_local_repository")
+load("//toolchain_demo:toolchain.bzl", "py_toolchain_impl")
 
 def _python_repo_impl(ctx):
     ctx.file("BUILD.bazel", ctx.attr.build_file_content)
+
 #    ctx.file("python_tool.py", "#!/usr/bin/env python3\nprint('hello from toolchain')\n")
 
 python_repo = repository_rule(
     implementation = _python_repo_impl,
     attrs = {
         "build_file_content": attr.string(mandatory = True, doc = "build_file_content string."),
-     },
+    },
 )
 
 def _python_toolchain_ext_impl(module_ctx):
@@ -20,8 +21,8 @@ load("@bazel_project2//toolchain_demo:toolchain.bzl", "py_toolchain_impl")
 
 py_toolchain_impl(
   name = "py_impl",
-  interpreter = "python3",
-  version = "python3",
+  interpreter = "python",
+  version = "3.13",
 )
 
 toolchain(
@@ -32,12 +33,10 @@ toolchain(
 
 """
 
-
     python_repo(
-        name = 'py_toolchain_repo',
-        build_file_content=build_file_content
+        name = "py_toolchain_repo",
+        build_file_content = build_file_content,
     )
-
 
 python_toolchain_ext = module_extension(
     implementation = _python_toolchain_ext_impl,

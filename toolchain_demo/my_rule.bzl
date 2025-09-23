@@ -3,6 +3,8 @@ load(":toolchain.bzl", "PyToolchainInfo")
 def _my_py_binary_impl(ctx):
     py_toolchain = ctx.toolchains["//toolchain_demo:py_toolchain_type"]
     interpreter = py_toolchain.info.interpreter
+    main = ctx.files.srcs[0]
+    print("main   ", main)
 
     #    py_toolchain = ctx.toolchains["@rules_python//python:toolchain_type"]
     #
@@ -36,9 +38,11 @@ def _my_py_binary_impl(ctx):
     else:
         sh = ctx.actions.declare_file(ctx.label.name + ".sh")
 
+    test_f = "D:\\repo\\clion_repo\\bazel_project2\\python_demo\\hello.py"
     ctx.actions.write(
         output = sh,
-        content = "{} {}\n".format(interpreter, ctx.files.srcs[0].path),
+        #        content = "{} {}\n".format(interpreter, ctx.files.srcs[0].short_path),
+        content = "{} {}\n".format(interpreter, test_f),
         is_executable = True,
     )
 
@@ -47,7 +51,7 @@ def _my_py_binary_impl(ctx):
     #        inputs = [sh] + ctx.files.srcs,
     #        outputs = [out],
     #        executable = sh,  # File 对象直接传
-    #        arguments = [ctx.files.srcs[0].path],  # Bazel 会自动解析路径
+    #        arguments = [test_f],  # Bazel 会自动解析路径
     #    )
 
     return [DefaultInfo(
