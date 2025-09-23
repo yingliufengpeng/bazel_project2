@@ -21,7 +21,7 @@ load("@bazel_project2//toolchain_demo:toolchain.bzl", "py_toolchain_impl")
 
 py_toolchain_impl(
   name = "py_impl",
-  interpreter = "python3",
+  interpreter = "python",
   version = "3.13",
 )
 
