@@ -1,0 +1,6 @@
+package(default_visibility = ["//visibility:public"])
+
+# 声明 Python toolchain 类型
+toolchain_type(
+    name = "py_toolchain_type",
+)

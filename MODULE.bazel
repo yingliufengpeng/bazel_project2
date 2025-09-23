@@ -253,3 +253,11 @@ crate.from_cargo(
     manifests = ["rust_demo/Cargo.toml"],  # 指定一个 Cargo.toml，里面写依赖
 )
 use_repo(crate, "my_crates")
+
+
+# 引入我们自定义的工具链扩展
+python_toolchain_ext = use_extension("//toolchain_demo:extensions.bzl", "python_toolchain_ext")
+use_repo(python_toolchain_ext, "py_toolchain_repo")
+
+# 自动注册工具链
+register_toolchains("@py_toolchain_repo//:all")
