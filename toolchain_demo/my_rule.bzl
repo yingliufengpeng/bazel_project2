@@ -41,8 +41,8 @@ def _my_py_binary_impl(ctx):
     test_f = "D:\\repo\\clion_repo\\bazel_project2\\python_demo\\hello.py"
     ctx.actions.write(
         output = sh,
-        #        content = "{} {}\n".format(interpreter, ctx.files.srcs[0].short_path),
-        content = "{} {}\n".format(interpreter, test_f),
+                content = "{} {}\n".format(interpreter, ctx.files.srcs[0].short_path),
+#        content = "{} {}\n".format(interpreter, test_f),
         is_executable = True,
     )
 
