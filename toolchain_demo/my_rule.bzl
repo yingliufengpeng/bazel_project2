@@ -42,17 +42,9 @@ def _my_py_binary_impl(ctx):
     ctx.actions.write(
         output = sh,
                 content = "{} {}\n".format(interpreter, ctx.files.srcs[0].short_path),
-#        content = "{} {}\n".format(interpreter, test_f),
         is_executable = True,
     )
 
-    #    out = ctx.actions.declare_file(ctx.label.name + ".out")
-    #    ctx.actions.run(
-    #        inputs = [sh] + ctx.files.srcs,
-    #        outputs = [out],
-    #        executable = sh,  # File 对象直接传
-    #        arguments = [test_f],  # Bazel 会自动解析路径
-    #    )
 
     return [DefaultInfo(
         executable = sh,
