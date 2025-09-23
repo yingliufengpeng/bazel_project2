@@ -1,30 +1,73 @@
 load(":toolchain.bzl", "PyToolchainInfo")
 
-
 def _my_py_binary_impl(ctx):
     py_toolchain = ctx.toolchains["//toolchain_demo:py_toolchain_type"]
     interpreter = py_toolchain.info.interpreter
 
-    sh = ctx.actions.declare_file(ctx.label.name + ".sh")
+    #    py_toolchain = ctx.toolchains["@rules_python//python:toolchain_type"]
+    #
+    #    #    print("dir(ctx) ", dir(ctx))
+    #    #    print("xxxx ", dir(py_toolchain))
+    #    #    print("yyyy ", dir(py_toolchain.py3_runtime))
+    #    print("jjjj", dir(ctx.fragments.bazel_py))
+    #    python = ctx.fragments.bazel_py.python_path  # Python 可执行文件路径
+    #    print("zzz", python, type(python))
+    #    interpreter = py_toolchain.py3_runtime.interpreter  # 获取 Python 可执行文件
+    #    python_exec_path = ctx.runfiles(files = [interpreter])
+    #    #    print("2dir(python_exec_path)", dir(python_exec_path))
+    #    #    print("2dir(python_exec_path.files)", dir(python_exec_path.files))
+    #    #    print("yy", python_exec_path.files.to_list()[0].path)
+    #
+    #    path = python_exec_path.files.to_list()[0].path
+    #    interpreter_path = py_toolchain.py3_runtime.interpreter_path  # 获取 Python 可执行文件
+
+    #    print("dir333", dir(interpreter))
+    #    print("root", interpreter.root.path)
+    #    print("path", interpreter.path)
+    #    print("basename", interpreter.basename)
+    #    print("short_path", interpreter.short_path)
+    #    print("interpreter_path", interpreter_path)
+    #    print("VAR value is", ctx.var)
+    is_windows = ctx.var["TARGET_CPU"] == "x64_windows"
+
+    if is_windows:
+        sh = ctx.actions.declare_file(ctx.label.name + ".cmd")
+        interpreter = '"{}"'.format(interpreter)
+    else:
+        sh = ctx.actions.declare_file(ctx.label.name + ".sh")
 
     ctx.actions.write(
-        output=sh,
-        content="{} {}\n".format(interpreter, ctx.files.srcs[0].path),
-        is_executable=True,
+        output = sh,
+        content = "{} {}\n".format(interpreter, ctx.files.srcs[0].path),
+        is_executable = True,
     )
 
-    return [DefaultInfo(
-        executable=sh,
-        files=depset(ctx.files.srcs),
-        runfiles=ctx.runfiles(files=ctx.files.srcs)
-    )]
+    #    out = ctx.actions.declare_file(ctx.label.name + ".out")
+    #    ctx.actions.run(
+    #        inputs = [sh] + ctx.files.srcs,
+    #        outputs = [out],
+    #        executable = sh,  # File 对象直接传
+    #        arguments = [ctx.files.srcs[0].path],  # Bazel 会自动解析路径
+    #    )
 
+    return [DefaultInfo(
+        executable = sh,
+        files = depset(ctx.files.srcs),
+        runfiles = ctx.runfiles(files = ctx.files.srcs),
+    )]
 
 my_py_binary = rule(
     implementation = _my_py_binary_impl,
     attrs = {
         "srcs": attr.label_list(allow_files = [".py"]),
     },
-    toolchains = ["//toolchain_demo:py_toolchain_type"],
+    fragments = [
+        "platform",
+        "bazel_py",
+    ],  # 引入 platform fragment
+    toolchains = [
+        "@rules_python//python:toolchain_type",
+        "//toolchain_demo:py_toolchain_type",
+    ],
     executable = True,
 )
