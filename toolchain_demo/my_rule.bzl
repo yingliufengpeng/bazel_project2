@@ -107,14 +107,18 @@ exec(compile(code, main_py, 'exec'))
     if is_windows:
         launcher = ctx.actions.declare_file(ctx.label.name + ".cmd")
         interpreter = '"{}"'.format(interpreter)
+
+        content = """{}  ../{}  {}
+                      """.format(interpreter, wrapper.basename,
+                      " ".join([e.short_path for e in ctx.files.srcs]))
     else:
         launcher = ctx.actions.declare_file(ctx.label.name + ".sh")
+        content = """{} {} """.format(interpreter, main.path)
 
     ctx.actions.write(wrapper, wrapper_content, is_executable = True)
 
     #    launcher = ctx.actions.declare_file(ctx.attr.name + ".cmd")
-    ctx.actions.write(launcher, """{}  ../{}  {}
-    """.format(interpreter, wrapper.basename, " ".join([e.short_path for e in ctx.files.srcs])), is_executable = True)
+    ctx.actions.write(launcher, content, is_executable = True)
     #    print("dddd", """ {} "../{}" %* """.format(interpreter, wrapper.basename))
     #    print("dddd", dir(wrapper))
     #    print("root", wrapper.root.path)
