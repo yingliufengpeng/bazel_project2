@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 template <typename X, typename X2, typename Y>
 auto fn(Y&& y) {
@@ -42,10 +43,69 @@ auto createDeriveT() {
 }
 
 
+
+namespace A {
+
+template <typename F>
+struct Age {
+    template <typename... Args>
+    inline F& apply() {
+        return self();
+    }
+
+    template <typename T >
+    F& operator()(T&& a) {
+        std::cout << "Age  a is " << a << std::endl;
+        return self();
+    }
+
+    constexpr bool short_circuit() const {
+            return false;
+     }
+    template <typename T>
+    void operator()(const std::vector<T>&& args) {
+        for (const auto& arg : args) {
+            self()(arg);
+            if (self().short_circuit())
+                return;
+        }
+    }
+    template <typename T, typename... Args>
+    inline F& apply(T&& arg, Args&&... args) {
+            self()(std::forward<T>(arg));
+            if (self().short_circuit()) {
+                return self();
+            } else {
+                return apply(std::forward<Args>(args)...);
+            }
+        }
+
+
+    private:
+        inline F& self() {
+            return *static_cast<F*>(this);
+        }
+
+    };
+
+
+    struct CusAge : Age<CusAge> {
+
+    };
+}
+
 struct FooImpl: T::Foo<FooImpl> {};
 // struct FooImpl2: T::Foo<FooImpl2> {};
 
+
+void test() {
+    auto m = A::CusAge();
+    m(3 );
+    m.apply(34, 46);
+}
+
 int main() {
+    test();
     std::cout << "3 + 4 = "  << add(3, 4) << std::endl;
     add(3, 4);
 
