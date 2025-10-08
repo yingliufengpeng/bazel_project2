@@ -90,3 +90,8 @@ cc_binary(
     srcs = ["main2.cpp"],
     deps = ["//third_party/my_lib:my_lib2"],
 )
+
+cc_binary(
+    name = "my_app3",
+    srcs = ["main3.cpp"],
+)
