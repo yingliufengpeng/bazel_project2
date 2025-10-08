@@ -13,6 +13,8 @@
 #define C10_UNLIKELY(expr) (expr)
 #endif
 
+#define TORCH_INTERNAL_ASSERT_DEBUG_ONLY(...) \
+C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(__VA_ARGS__))
 
 
 
@@ -52,7 +54,7 @@ struct MaybeOwnedTraitsGenericImpl {
 /// intrusive_ptr.h and TensorBody.h.
 
 template <typename T>
-struct MaybeOwnedTraits;
+struct MaybeOwnedTraits  ;
 
 // Explicitly enable MaybeOwned<shared_ptr<T>>, rather than allowing
 // MaybeOwned to be used for any type right away.
@@ -128,7 +130,7 @@ class MaybeOwned final {
         isBorrowed_ = false;
       }
     }
-    TORCH_INTERNAL_ASSERT_DEBUG_ONLY(isBorrowed_ == rhs.isBorrowed_);
+    static_assert(isBorrowed_ == rhs.isBorrowed_);
     return *this;
   }
 
@@ -208,7 +210,7 @@ class MaybeOwned final {
 
   const T& operator*() const& {
     if (isBorrowed_) {
-      TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
+      static_assert(
           MaybeOwnedTraits<T>::debugBorrowIsValid(borrow_));
     }
     return C10_LIKELY(isBorrowed_)
@@ -218,7 +220,7 @@ class MaybeOwned final {
 
   const T* operator->() const {
     if (isBorrowed_) {
-      TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
+      static_assert(
           MaybeOwnedTraits<T>::debugBorrowIsValid(borrow_));
     }
     return C10_LIKELY(isBorrowed_)
@@ -232,7 +234,7 @@ class MaybeOwned final {
   // T.
   T operator*() && {
     if (isBorrowed_) {
-      TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
+      static_assert(
           MaybeOwnedTraits<T>::debugBorrowIsValid(borrow_));
       return MaybeOwnedTraits<T>::referenceFromBorrow(borrow_);
     } else {
@@ -248,12 +250,15 @@ struct Mn {
 
 };
 
+template <>
+struct MaybeOwnedTraits<Mn> : public MaybeOwnedTraitsGenericImpl<Mn>   {};
 
 int main() {
   auto mn1 = std::make_unique<Mn>(Mn());
   auto mn2 = std::make_shared<Mn>(Mn());
   auto mn3 = Mn();
   auto r1 = MaybeOwned<Mn>::borrowed(mn3);
-  auto r2 = MaybeOwned<Mn>::owned(mn3);
+  auto r2 = MaybeOwned<Mn>::owned(Mn());
+  auto r3 = MaybeOwned<std::shared_ptr<Mn>>::borrowed(mn2);
   return 0;
 }
