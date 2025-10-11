@@ -1,10 +1,14 @@
 import unittest
-from peng_demo import peng
+import libpeng_demo
 
+print(f'xxxx {dir(libpeng_demo)} --- {dir(libpeng_demo.DemoObject)} >>>> {libpeng_demo.DemoObject.__name__}')
+
+print(f'zzzz {libpeng_demo.__name__}')
 class TestMyExtension(unittest.TestCase):
     def test_add(self):
-        self.assertEqual(my_extension.add(1, 2), 3)
-        self.assertEqual(my_extension.add(10, 20), 30)
+        a = libpeng_demo.DemoObject()
+        a.increment()
+        print(f'a is {a.value}')
 
 if __name__ == "__main__":
     unittest.main()

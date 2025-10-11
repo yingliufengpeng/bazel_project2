@@ -6,7 +6,7 @@ load("@rules_python//python/cc:py_cc_toolchain.bzl", "py_cc_toolchain")
 
 # 构建C扩展的共享库
 cc_library(
-    name = "peng_demo.so",  # 输出文件名为 my_extension.so
+    name = "peng_demo",  # 输出文件名为 my_extension.so
     srcs = [
         "lib/demo_type.cc",
         "lib/demo_type.h",
@@ -17,13 +17,14 @@ cc_library(
         "//conditions:default": [],
     }),
     data = [
-        "peng_demo.pyi",
+        "libpeng_demo.pyi",
     ],
     deps = [
         "@rules_python//python/cc:current_py_cc_headers",
         "@rules_python//python/cc:current_py_cc_libs",
     ],
-)
+
+ )
 
 # 使用 py_library 将 C 扩展包装成 Python 模块
 py_library(
@@ -31,7 +32,7 @@ py_library(
     srcs = [],
     # 将编译好的 .so 文件作为数据依赖
     data = [
-        ":peng_demo.so",
+        ":peng_demo",
     ],
     imports = ["."],  # 允许从当前目录导入
     visibility = ["//visibility:public"],

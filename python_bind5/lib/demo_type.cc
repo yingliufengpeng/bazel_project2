@@ -40,7 +40,7 @@ static PyGetSetDef Demo_getset[] = {
 static PyTypeObject DemoType = {
     PyVarObject_HEAD_INIT(nullptr, 0)
 
-    "demo.Demo_A",               // tp_name
+    "Demo_A2",               // tp_name
     sizeof(DemoObject),              // tp_basicsize
     0,                               // tp_itemsize
     0,                               // tp_dealloc
@@ -84,12 +84,12 @@ static PyTypeObject DemoType = {
 /* 模块初始化 */
 static PyModuleDef demomodule = {
     .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "peng",
+    .m_name = "zzz.peng",
     .m_doc = "Demo module with custom type",
     .m_size = -1,
 };
 
-PyMODINIT_FUNC PyInit_demo(void) {
+PyMODINIT_FUNC PyInit_libpeng_demo(void) {
     PyObject* m;
     if (PyType_Ready(&DemoType) < 0)
         return NULL;
