@@ -2,8 +2,10 @@
 
 
 #include <memory>
+#include <iostream>
 #include <type_traits>
 #include <utility>
+
 
 #if defined(__GNUC__) || defined(__ICL) || defined(__clang__)
 #define C10_LIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 1))
@@ -253,7 +255,16 @@ struct Mn {
 template <>
 struct MaybeOwnedTraits<Mn> : public MaybeOwnedTraitsGenericImpl<Mn>   {};
 
+template <typename T>
+struct O {
+
+};
+
 int main() {
+
+  auto o1 = O<O<O<int8_t>>>();
+  std::cout << &o1 << std::endl;
+
   auto mn1 = std::make_unique<Mn>(Mn());
   auto mn2 = std::make_shared<Mn>(Mn());
   auto mn3 = Mn();
