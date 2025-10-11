@@ -1,80 +1,50 @@
-load("@rules_python//python:py_runtime.bzl", "py_runtime")
-load("@rules_python//python/cc:py_cc_toolchain.bzl", "py_cc_toolchain")
+# In a BUILD file, e.g. my_project/BUILD
+load("@nanobind_bazel//:build_defs.bzl", "nanobind_extension")
 
-# 可选：声明 py_cc_toolchain 目标，如果你希望自定义
-# But rules_python 自己会创建一个 py_cc_toolchain，使你能访问 headers / libs via toolchain
-
-# 构建C扩展的共享库
-cc_library(
-    name = "peng_demo",  # 输出文件名为 my_extension.so
+filegroup(
+    name = "_basic",
     srcs = [
+        "basic.pyi",
         "lib/demo_type.cc",
         "lib/demo_type.h",
+    ],
+)
+
+nanobind_extension(
+    name = "basic",
+    srcs = [
+        "nanobind_python.cpp",
+        ":_basic",
     ],
     copts = select({
         "@platforms//os:windows": ["/std:c++20"],  # MSVC
         "@platforms//os:linux": ["-std=c++20"],  # GCC/Clang
         "//conditions:default": [],
     }),
-    data = [
-        "libpeng_demo.pyi",
-    ],
     deps = [
-        "@rules_python//python/cc:current_py_cc_headers",
-        "@rules_python//python/cc:current_py_cc_libs",
+        "@fmt",
     ],
+)
 
- )
-
-# 使用 py_library 将 C 扩展包装成 Python 模块
-py_library(
-    name = "my_module",
-    srcs = [],
-    # 将编译好的 .so 文件作为数据依赖
-    data = [
-        ":peng_demo",
-    ],
-    imports = ["."],  # 允许从当前目录导入
+filegroup(
+    name = "basic_ext",
+    srcs = [":basic"],  # 原来生成的 .pyd 目标
     visibility = ["//visibility:public"],
 )
 
-# 用于测试的 Python 脚本
-py_test(
-    name = "my_module_test",
-    srcs = ["my_module_test.py"],
-    deps = [
-        ":my_module",
+py_library(
+    name = "basic_lib",
+    srcs = [
+        "basic_tools.py",
     ],
+    data = [
+        ":basic_ext",
+    ],
+    imports = ["."],
 )
 
-#cc_library(
-#    name = "embed_lib",
-#    srcs = glob([
-#        "lib/*.cc",
-#        "lib/*.h",
-#    ]),
-#    copts = select({
-#        "@platforms//os:windows": ["/std:c++20"],  # MSVC
-#        "@platforms//os:linux": ["-std=c++20"],  # GCC/Clang
-#        "//conditions:default": [],
-#    }),
-#    deps = [
-#        "@rules_python//python/cc:current_py_cc_headers",
-#        "@rules_python//python/cc:current_py_cc_libs",
-#    ],
-#)
-#
-#cc_binary(
-#    name = "embed_py",
-#    srcs = [
-#        "main.cc",
-#    ],
-#    #    copts = select({
-#    #        "@platforms//os:windows": ["/std:c++20"],  # MSVC
-#    #        "@platforms//os:linux": ["-std=c++20"],  # GCC/Clang
-#    #        "//conditions:default": [],
-#    #    }),
-#    deps = [
-#        ":embed_lib",
-#    ],
-#)
+py_test(
+    name = "python_basic_test",
+    srcs = ["python_basic_test.py"],
+    deps = [":basic_lib"],
+)

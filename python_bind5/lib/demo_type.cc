@@ -1,5 +1,9 @@
 
 #include "demo_type.h"
+
+#include <iostream>
+#include <ostream>
+
 /* 定义一个简单对象结构 */
 typedef struct {
     PyObject_HEAD
@@ -89,14 +93,25 @@ static PyModuleDef demomodule = {
     .m_size = -1,
 };
 
-PyMODINIT_FUNC PyInit_libpeng_demo(void) {
-    PyObject* m;
+PyMODINIT_FUNC PyInit_demo(PyObject* m) {
+    // PyObject* m;
+
+    // static PyModuleDef moduledef = {
+    //     PyModuleDef_HEAD_INIT,
+    //     "demo",         // 模块名，对应 import demo
+    //     "Demo module",  // 模块文档
+    //     -1,             // m_size（-1 表示全局状态）
+    //     NULL, NULL, NULL, NULL, NULL
+    // };
+    //
+    // m = PyModule_Create(&moduledef);
+    // if (m == NULL)
+    //     return NULL;
+
     if (PyType_Ready(&DemoType) < 0)
         return NULL;
 
-    m = PyModule_Create(&demomodule);
-    if (!m)
-        return NULL;
+    std::cout << "自定义的模块的初始化..." << std::endl;
 
     Py_INCREF(&DemoType);
     if (PyModule_AddObject(m, "DemoObject", (PyObject *)&DemoType) < 0) {
@@ -107,3 +122,4 @@ PyMODINIT_FUNC PyInit_libpeng_demo(void) {
 
     return m;
 }
+
