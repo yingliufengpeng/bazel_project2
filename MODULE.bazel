@@ -34,7 +34,7 @@ bazel_dep(name = "platforms", version = "1.0.0")
 # 引入 rules_nodejs
 bazel_dep(name = "rules_nodejs", version = "6.5.0")
 
-PYTHON_VERSION = "3.12"
+PYTHON_VERSION = "3.13"
 
 # Configure Python toolchain
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
@@ -253,7 +253,6 @@ crate.from_cargo(
     manifests = ["rust_demo/Cargo.toml"],  # 指定一个 Cargo.toml，里面写依赖
 )
 use_repo(crate, "my_crates")
-
 
 # 引入我们自定义的工具链扩展
 python_toolchain_ext = use_extension("//toolchain_demo:extensions.bzl", "python_toolchain_ext")
