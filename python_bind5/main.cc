@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
     std::cout << "Python initialized" << std::endl;
     PyRun_SimpleString("print('Hello from embedded Python with Bazel module mode!')");
     PyRun_SimpleString("import sys; print('Python version:', sys.version)");
+    PyRun_SimpleString("import os; print('os __file__:', os.__file__)");
     Py_Finalize();
     return 0;
 }

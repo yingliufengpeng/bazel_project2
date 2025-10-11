@@ -7,11 +7,21 @@ load("@rules_python//python/cc:py_cc_toolchain.bzl", "py_cc_toolchain")
 cc_binary(
     name = "embed_py",
     srcs = ["main.cc"],
-    # 引用 rules_python 所配置的 python C API headers 和 libs
-      copts = ["-I/usr/include/python3.13"],
-        linkopts = ["-lpython3.13"],
-#    deps = [
-#        "@rules_python//python/cc:current_py_cc_headers",
-#        "@rules_python//python/cc:current_py_cc_libs",
-#    ],
+    #    copts = select({
+    #        "@platforms//os:windows": [
+    #            "-IC:/Users/peng/.conda/envs/py13/include",
+    #        ],
+    #        "@platforms//os:linux": ["-I/usr/include/python3.13"],
+    #    }),
+    #    linkopts = select({
+    #        "@platforms//os:windows": [
+    #            "/LIBPATH:C:/Users/peng/.conda/envs/py13/libs",
+    #            "python313.lib",
+    #        ],
+    #        "@platforms//os:linux": ["-lpython3.13"],
+    #    }),
+    deps = [
+        "@rules_python//python/cc:current_py_cc_headers",
+        "@rules_python//python/cc:current_py_cc_libs",
+    ],
 )
