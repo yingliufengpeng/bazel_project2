@@ -7,6 +7,7 @@ int main(int argc, char** argv) {
         std::cerr << "Failed to initialize Python" << std::endl;
         return 1;
     }
+    std::cout << "Python initialized" << std::endl;
     PyRun_SimpleString("print('Hello from embedded Python with Bazel module mode!')");
     PyRun_SimpleString("import sys; print('Python version:', sys.version)");
     Py_Finalize();

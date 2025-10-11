@@ -8,8 +8,10 @@ cc_binary(
     name = "embed_py",
     srcs = ["main.cc"],
     # 引用 rules_python 所配置的 python C API headers 和 libs
-    deps = [
-        "@rules_python//python/cc:current_py_cc_headers",
-        "@rules_python//python/cc:current_py_cc_libs",
-    ],
+      copts = ["-I/usr/include/python3.13"],
+        linkopts = ["-lpython3.13"],
+#    deps = [
+#        "@rules_python//python/cc:current_py_cc_headers",
+#        "@rules_python//python/cc:current_py_cc_libs",
+#    ],
 )
