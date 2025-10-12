@@ -15,7 +15,9 @@ class TestBasic(unittest.TestCase):
         v.increment()
         print(f'v is {v}')
 
-        for e in v:
+        it = iter(v)
+        print(f'iter is {it}')
+        for e in it:
             print(f'e is {e}')
 
         v.increment()

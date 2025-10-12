@@ -244,6 +244,12 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
         Py_DECREF(m);
         return NULL;
     }
+    if (PyModule_AddObject(m, "Demo_Iter", (PyObject *)&DemoIterType) < 0) {
+        Py_DECREF(&DemoType);
+        Py_DECREF(m);
+        return NULL;
+    }
+
     std::cout << "自定义的模块的初始化成功..." << std::endl;
 
     return m;
