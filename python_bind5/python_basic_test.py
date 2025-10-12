@@ -9,11 +9,16 @@ class TestBasic(unittest.TestCase):
 
         print(basic.hello())
         # print(basic.DemoObject())
-        v = basic.DemoObject()
+        v = basic.Demo_A2()
+        print(f'v is {v}')
         v.increment()
         v.increment()
         print(v.value)
 
+        sub_m = basic.sub_m
+        print(f'sub_m = {sub_m}')
+
+        sub_m.hello( )
 
 
 

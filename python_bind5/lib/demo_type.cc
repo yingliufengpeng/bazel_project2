@@ -85,28 +85,57 @@ static PyTypeObject DemoType = {
 
 
 
-/* 模块初始化 */
-static PyModuleDef demomodule = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "zzz.peng",
-    .m_doc = "Demo module with custom type",
-    .m_size = -1,
+static PyObject* sub_hello(PyObject* self, PyObject* args) {
+    // 打印类型名
+    PySys_WriteStdout("self type: %s\n", Py_TYPE(self)->tp_name);
+
+    // 打印 repr(self)
+    PyObject* repr = PyObject_Repr(self);
+    if (repr) {
+        PySys_WriteStdout("self = %s\n", PyUnicode_AsUTF8(repr));
+        Py_DECREF(repr);
+    } else {
+        PySys_WriteStderr("Failed to get repr(self)\n");
+        PyErr_Clear();  // 防止异常干扰
+    }
+
+    // 如果是模块，打印模块名
+    if (PyModule_Check(self)) {
+        PyObject* name = PyObject_GetAttrString(self, "__name__");
+        if (name) {
+            PySys_WriteStdout("module name = %s\n", PyUnicode_AsUTF8(name));
+            Py_DECREF(name);
+        }
+    }
+    Py_RETURN_NONE;
+}
+
+static PyMethodDef SubMethods[] = {
+    {"hello", sub_hello, METH_NOARGS, "Print hello from C++ submodule"},
+    {NULL, NULL, 0, NULL}
 };
 
-PyMODINIT_FUNC PyInit_demo(PyObject* m) {
-    // PyObject* m;
+static struct PyModuleDef submodule_def = {
+    PyModuleDef_HEAD_INIT,
+    "demo.submodule",  // 全限定名
+    "C++ implemented submodule",
+    -1,
+    SubMethods,
+};
 
-    // static PyModuleDef moduledef = {
-    //     PyModuleDef_HEAD_INIT,
-    //     "demo",         // 模块名，对应 import demo
-    //     "Demo module",  // 模块文档
-    //     -1,             // m_size（-1 表示全局状态）
-    //     NULL, NULL, NULL, NULL, NULL
-    // };
-    //
-    // m = PyModule_Create(&moduledef);
-    // if (m == NULL)
-    //     return NULL;
+
+
+
+
+
+
+PyMODINIT_FUNC PyInit_demo(PyObject* m) {
+    PyObject* sub_m;
+
+
+    sub_m = PyModule_Create(&submodule_def);
+    if (sub_m == NULL)
+        return NULL;
 
     if (PyType_Ready(&DemoType) < 0)
         return NULL;
@@ -114,7 +143,12 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
     std::cout << "自定义的模块的初始化..." << std::endl;
 
     Py_INCREF(&DemoType);
-    if (PyModule_AddObject(m, "DemoObject", (PyObject *)&DemoType) < 0) {
+    if (PyModule_AddObject(m, "sub_m",  sub_m)) {
+        Py_DECREF(&sub_m);
+        return NULL;
+    }
+
+    if (PyModule_AddObject(m, "Demo_A2", (PyObject *)&DemoType) < 0) {
         Py_DECREF(&DemoType);
         Py_DECREF(m);
         return NULL;
