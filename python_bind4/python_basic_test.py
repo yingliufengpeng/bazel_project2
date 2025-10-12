@@ -5,14 +5,21 @@ import basic_tools
 class TestBasic(unittest.TestCase):
   
     def test_add(self):
-        m = 3 + 4
+
+        v = basic_tools.add(3,4)
+
+        print(f'add value is {v}')
+
+        v2 = basic_tools.add('333', '44')
+        print(f'add value is {v2}')
+
+        v = basic_tools.hello2('dddd')
+        print(f'v xxxx is {v}')
 
 
 
     def test_Pet(self):
         pet = basic_tools.Pet("44")
-
-
 
         pet.show()
         pet.name = "444"

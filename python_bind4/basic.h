@@ -8,6 +8,7 @@
 
 
 int add(int, int);
+std::string add_str(const std::string&, const std::string&);
 
 
 

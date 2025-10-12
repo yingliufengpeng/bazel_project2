@@ -74,10 +74,16 @@ void printAllWrapper(nb::args py_args) {
     }
     std::cout << ">>>>  \n";
 }
-
+std::string hello2(const std::string& s) {
+    return s.substr(0, s.find(":")) + "Hello, " + s;
+}
 NB_MODULE(basic, module) {
     module.doc() = "A basic pybind11 extension";
-    module.def("add", &add, "A function that adds two numbers");
+    module.def("add", nb::overload_cast<int, int>(&add), "Add two integers");
+    module.def("add", nb::overload_cast<const std::string&, const std::string&>(&add_str),
+               "Concatenate two strings");
+    module.def("hello2", &hello2, "fdsfsf");
+
     module.attr("the_answer") = 42;
     nb::object world = nb::cast("World");
     module.attr("world") = world;
