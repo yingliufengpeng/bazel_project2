@@ -1,5 +1,6 @@
 
 #include "demo_type.h"
+#include <structmember.h>  // 必须包含这个头文件，否则 PyMemberDef 未定义
 
 #include <iostream>
 #include <ostream>
@@ -8,6 +9,8 @@
 typedef struct {
     PyObject_HEAD
     int value;  // 一个简单属性
+    double scale;
+    PyObject* name;
 } DemoObject;
 
 // 迭代器结构
@@ -131,6 +134,18 @@ static PyObject* Demo_iter(DemoObject* self) {
     iter->stop = self->value;
     return (PyObject*) iter;
 }
+static PyMemberDef Demo_members[] = {
+    {"value", T_INT, offsetof(DemoObject, value), 0, "the numeric value"},
+    {"scale", T_DOUBLE, offsetof(DemoObject, scale), 0, "scaling factor"},
+    {"name",  T_OBJECT_EX, offsetof(DemoObject, name), 0, "name (str)"},
+    {NULL}  // 哨兵，必须以 NULL 结尾
+};
+static void Demo_dealloc(DemoObject* self) {
+    PySys_FormatStdout("Demo dealloc ...");
+    Py_XDECREF(self->name);  // 释放引用
+    Py_TYPE(self)->tp_free((PyObject*)self);  // 调用默认析构逻辑
+}
+
 
 PyTypeObject DemoType = {
     PyVarObject_HEAD_INIT(nullptr, 0)
@@ -138,7 +153,7 @@ PyTypeObject DemoType = {
     "Demo_A2",               // tp_name
     sizeof(DemoObject),              // tp_basicsize
     0,                               // tp_itemsize
-    0,                               // tp_dealloc
+    (destructor) Demo_dealloc,                               // tp_dealloc
     0,                               // tp_vectorcall_offset
     0,                               // tp_getattr
     0,                               // tp_setattr
@@ -162,7 +177,7 @@ PyTypeObject DemoType = {
     (getiterfunc) Demo_iter,                               // tp_iter
     0,                               // tp_iternext
     Demo_methods,                    // tp_methods
-    0,                               // tp_members
+    Demo_members,                               // tp_members
     Demo_getset,                     // tp_getset
     0,                               // tp_base
     0,                               // tp_dict

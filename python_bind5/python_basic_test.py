@@ -10,6 +10,8 @@ class TestBasic(unittest.TestCase):
         print(basic.hello('33'))
         # print(basic.DemoObject())
         v = basic.Demo_A2()
+
+        v.value = 43
         v.increment()
         v.increment()
         v.increment()
