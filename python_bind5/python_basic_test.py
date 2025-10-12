@@ -1,13 +1,18 @@
 import unittest
 import basic
+import os
 
 class TestBasic(unittest.TestCase):
   
     def test_add(self):
+        print(f'current pwd is {os.getcwd()}')
 
         print(basic.hello('33'))
         # print(basic.DemoObject())
         v = basic.Demo_A2()
+        v.increment()
+        v.increment()
+        v.increment()
         print(f'v is {v}')
         v.increment()
         v.increment()

@@ -10,6 +10,9 @@ typedef struct {
     int value;  // 一个简单属性
 } DemoObject;
 
+extern PyTypeObject DemoType;  // ✅ 声明，不定义
+
+
 /* 方法示例 */
 static PyObject* demo_increment(DemoObject* self, PyObject* args) {
     self->value += 1;
@@ -35,6 +38,18 @@ static int demo_set_value(DemoObject* self, PyObject* value, void* closure) {
     return 0;
 }
 
+static PyObject* Demo_str(PyObject* self) {
+
+    if (!PyObject_TypeCheck(self, &DemoType)) {
+        PyErr_SetString(PyExc_TypeError, "Expected a Demo object");
+        return NULL;
+    }
+    DemoObject* r = (DemoObject*) self;
+    // safe to use self->value
+    return PyUnicode_FromFormat("%d", r->value);
+
+}
+
 /* 属性表 */
 static PyGetSetDef Demo_getset[] = {
     {"value", (getter)demo_get_value, (setter)demo_set_value, "value property", NULL},
@@ -58,7 +73,7 @@ static PyTypeObject DemoType = {
     0,                               // tp_as_mapping
     0,                               // tp_hash
     0,                               // tp_call
-    0,                               // tp_str
+    &Demo_str,                               // tp_str
     0,                               // tp_getattro
     0,                               // tp_setattro
     0,                               // tp_as_buffer

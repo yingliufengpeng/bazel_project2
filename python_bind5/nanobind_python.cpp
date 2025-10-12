@@ -29,15 +29,12 @@ void trigger_callback(int x) {
 void clear_callback() {
     global_callback = nullptr;  // 手动释放引用
 }
-void init(PyObject* m) {
-    PyInit_demo(m);
-}
 
 
 
 
 NB_MODULE(basic, m) {
-    init(m.ptr());
+    PyInit_demo(m.ptr());
 
     m.def("hello", [](const std::string& s) -> std::string { return "basic module ready"; });
     m.def("set_callback", &set_callback, "Register a Python callback");
