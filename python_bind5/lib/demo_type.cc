@@ -56,7 +56,7 @@ static PyGetSetDef Demo_getset[] = {
     {NULL} /* Sentinel */
 };
 
-static PyTypeObject DemoType = {
+PyTypeObject DemoType = {
     PyVarObject_HEAD_INIT(nullptr, 0)
 
     "Demo_A2",               // tp_name
