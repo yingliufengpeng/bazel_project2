@@ -2,8 +2,8 @@
 #include <iostream>
 #include <filesystem>
 
-// #include "lib/Stu.h"
-#include "lib/demo_type.h"
+
+#include "tools.h"
 
 static PyObject* sub_hello(PyObject* self, PyObject* args) {
     // 打印类型名
@@ -88,11 +88,17 @@ int main(int argc, char** argv) {
 
 
     std::cout << "Python initialized" << std::endl;
-    PyRun_SimpleString("print('Hello from embedded Python with Bazel module mode!')");
-    PyRun_SimpleString("import sys; print('Python version:', sys.version)");
-    PyRun_SimpleString("import os; print('os __file__:', os.__file__)");
-    PyRun_SimpleString("import basic; print('basic __name__:', basic.__name__)");
-    PyRun_SimpleString("import basic; print('basic.sub_m __name__:', basic.sub_m.__name__)");
+    PyRun_SimpleString("print('Hello from embedded Python with Bazel module mode!', flush=True)");
+    // PyRun_SimpleString("import sys; print('Python version:', sys.version)");
+    // PyRun_SimpleString("import os; print('os __file__:', os.__file__)");
+    // PyRun_SimpleString("import basic; print('basic __name__:', basic.__name__)");
+    // PyRun_SimpleString("import basic; print(dir(basic))");
+    // // PyRun_SimpleString("import basic_tools;  basic_tools.greet(23, '33')");
+    // PyRun_SimpleString("import basic; print('basic.sub_m __name__:', basic.sub_m.__name__)");
+
+    import_and_call_with_args("basic_tools", "greet", 3, "44");
+
+
     Py_Finalize();
 
     return 0;

@@ -17,20 +17,28 @@ cc_library(
         "lib/demo_type.cc",
         "lib/demo_type.h",
         ],
-    data = glob([ "basic/*.pyi"]),
     deps = [
        "@rules_python//python/cc:current_py_cc_headers",
        "@rules_python//python/cc:current_py_cc_libs",
-
     ],
 )
+
+cc_library(
+    name = "tools_lib",
+    srcs = ["tools.cpp"],
+    hdrs = ["tools.h"],
+    deps = [
+        ":_basic_lib",
+       "@nanobind_bazel//:nanobind",  # ✅ 关键：添加 nanobind 依赖
+    ]
+)
+
 
 
 nanobind_extension(
     name = "basic",
     srcs = [
         "nanobind_python.cpp",
-
     ],
 
     copts = select({
@@ -39,14 +47,14 @@ nanobind_extension(
         "//conditions:default": [],
     }),
     deps = [
-        ":_basic_lib",
+        ":tools_lib",
         "@fmt",
     ],
 )
 
 filegroup(
     name = "basic_ext",
-    srcs = [":basic",],  # 原来生成的 .pyd 目标
+    srcs = [":basic",] + glob(["basic/*.pyi"]),  # 原来生成的 .pyd 目标
     visibility = ["//visibility:public"],
 )
 
@@ -71,9 +79,11 @@ py_test(
 cc_binary(
     name = "main",
     srcs = ["main.cc"],
+    data = [
+        ":basic_lib"
+    ],
     deps = [
-        ":basic",
-#         "@nanobind_bazel//:nanobind",
+        ":tools_lib",
 
         "@rules_python//python/cc:current_py_cc_headers",
         "@rules_python//python/cc:current_py_cc_libs",
