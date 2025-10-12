@@ -10,3 +10,14 @@ class Demo_A2:
         ...
 
     value: int
+
+
+def set_callback():
+    ...
+
+def clear_callback():
+    ...
+
+
+def trigger_callback(arg):
+    ...
