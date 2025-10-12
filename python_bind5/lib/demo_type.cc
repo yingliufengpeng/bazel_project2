@@ -117,14 +117,11 @@ static PyMethodDef SubMethods[] = {
 
 static struct PyModuleDef submodule_def = {
     PyModuleDef_HEAD_INIT,
-    "demo.submodule",  // 全限定名
+    "basic.sub_m",  // 全限定名
     "C++ implemented submodule",
     -1,
     SubMethods,
 };
-
-
-
 
 
 
@@ -153,6 +150,7 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
         Py_DECREF(m);
         return NULL;
     }
+    std::cout << "自定义的模块的初始化成功..." << std::endl;
 
     return m;
 }

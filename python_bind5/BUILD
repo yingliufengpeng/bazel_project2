@@ -17,6 +17,7 @@ cc_library(
         "lib/demo_type.cc",
         "lib/demo_type.h",
         ],
+    data = glob([ "basic/*.pyi"]),
     deps = [
        "@rules_python//python/cc:current_py_cc_headers",
        "@rules_python//python/cc:current_py_cc_libs",
@@ -45,7 +46,7 @@ nanobind_extension(
 
 filegroup(
     name = "basic_ext",
-    srcs = [":basic",] + glob([ "basic/*.pyi"]),  # 原来生成的 .pyd 目标
+    srcs = [":basic",],  # 原来生成的 .pyd 目标
     visibility = ["//visibility:public"],
 )
 
@@ -71,7 +72,7 @@ cc_binary(
     name = "main",
     srcs = ["main.cc"],
     deps = [
-        ":_basic_lib",
+        ":basic",
 #         "@nanobind_bazel//:nanobind",
 
         "@rules_python//python/cc:current_py_cc_headers",

@@ -1,5 +1,6 @@
 #include <Python.h>
 #include <iostream>
+#include <filesystem>
 
 // #include "lib/Stu.h"
 #include "lib/demo_type.h"
@@ -43,45 +44,56 @@ static struct PyModuleDef submodule_def = {
 };
 
 int main(int argc, char** argv) {
+    // 获取当前工作目录
+    std::filesystem::path cwd = std::filesystem::current_path();
+    std::string cwd_str = cwd.string() + "/" + "python_bind5";
+
+    std::cout << "current dir is" << cwd_str << std::endl;
+
     Py_Initialize();
     if (!Py_IsInitialized()) {
         std::cerr << "Failed to initialize Python" << std::endl;
         return 1;
     }
 
-    PyObject* m;
+    // 构造 Python 语句: sys.path.append('<cwd>')
+    std::string cmd = "import sys; sys.path.append(r'" + cwd_str + "')";
 
+    PyRun_SimpleString(cmd.c_str());
+
+    PyObject* m;
 
     m = PyModule_Create(&submodule_def);
     if (m == NULL)
         return -1;
 
     // 2. 创建父模块 demo
-    PyObject* demo_mod = PyModule_New("demo");
-    if (!demo_mod) {
-        std::cerr << "Failed to create parent module" << std::endl;
-        return 1;
-    }
-    // 4. 把父模块注册到 sys.modules
-    PyObject* sys_modules = PyImport_GetModuleDict();
-    PyDict_SetItemString(sys_modules, "demo", demo_mod);
+    // PyObject* demo_mod = PyModule_New("basic");
+    // if (!demo_mod) {
+    //     std::cerr << "Failed to create parent module" << std::endl;
+    //     return 1;
+    // }
+    // // 4. 把父模块注册到 sys.modules
+    // PyObject* sys_modules = PyImport_GetModuleDict();
+    // PyDict_SetItemString(sys_modules, "basic", demo_mod);
+    //
+    // PyObject* sub_m;
+    // if (!((sub_m = PyInit_demo(demo_mod)))) {
+    //     PySys_WriteStderr("Failed to get PyInit_demo\n");
+    //
+    // }
 
-    PyObject* sub_m;
-    if (!((sub_m = PyInit_demo(demo_mod)))) {
-        PySys_WriteStderr("Failed to get PyInit_demo\n");
 
-    }
-
-
-    PyDict_SetItemString(sys_modules, "demo.sub_m", sub_m);
+    // PyDict_SetItemString(sys_modules, "demo.sub_m", sub_m);
 
 
     std::cout << "Python initialized" << std::endl;
     PyRun_SimpleString("print('Hello from embedded Python with Bazel module mode!')");
     PyRun_SimpleString("import sys; print('Python version:', sys.version)");
     PyRun_SimpleString("import os; print('os __file__:', os.__file__)");
-    PyRun_SimpleString("import demo; print('demo __name__:', demo.__name__)");
-    PyRun_SimpleString("import demo.sub_m; print('demo.sub_m __name__:', demo.sub_m.__name__)");
+    PyRun_SimpleString("import basic; print('basic __name__:', basic.__name__)");
+    PyRun_SimpleString("import basic; print('basic.sub_m __name__:', basic.sub_m.__name__)");
     Py_Finalize();
+
     return 0;
 }
