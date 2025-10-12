@@ -14,6 +14,10 @@ class TestBasic(unittest.TestCase):
         v.increment()
         v.increment()
         print(f'v is {v}')
+
+        for e in v:
+            print(f'e is {e}')
+
         v.increment()
         v.increment()
         print(v.value)

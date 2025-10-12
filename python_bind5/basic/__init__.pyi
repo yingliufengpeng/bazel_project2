@@ -15,6 +15,15 @@ class Demo_A2:
     value: int
 
 
+    def __iter__(self):
+        ...
+
+
+    def __next__(self) -> int:
+        ...
+
+
+
 def set_callback(f: Callable) -> None:
     ...
 
