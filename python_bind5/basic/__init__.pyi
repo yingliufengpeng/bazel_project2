@@ -1,3 +1,5 @@
+from typing import Callable
+
 from . import sub_m
 
 def hello(s: str) -> str:
@@ -13,7 +15,7 @@ class Demo_A2:
     value: int
 
 
-def set_callback():
+def set_callback(f: Callable) -> None:
     ...
 
 def clear_callback():
