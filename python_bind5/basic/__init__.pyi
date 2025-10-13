@@ -5,14 +5,29 @@ from . import sub_m
 def hello(s: str) -> str:
     ...
 
+class DemoValueDescriptor:
 
+    def __get__(self, instance, owner):
+        ...
+
+    def __set__(self, instance, value):
+        ...
 
 class Demo_A2:
+
+    x: DemoValueDescriptor
+
+    def __init__(self, name: str=None):
+        ...
 
     def increment(self):
         ...
 
     value: int
+    scale: float
+    name: str
+    dict1: dict
+    dict3: dict
 
 
     def __iter__(self):
