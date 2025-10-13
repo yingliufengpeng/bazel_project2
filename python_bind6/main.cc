@@ -46,7 +46,7 @@ static struct PyModuleDef submodule_def = {
 int main(int argc, char** argv) {
     // 获取当前工作目录
     std::filesystem::path cwd = std::filesystem::current_path();
-    std::string cwd_str = cwd.string() + "/" + "python_bind5";
+    std::string cwd_str = cwd.string() + "/" + "python_bind6";
 
     std::cout << "current dir is" << cwd_str << std::endl;
 
