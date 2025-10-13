@@ -2,11 +2,13 @@
 #include <structmember.h>
 #include <iostream>
 
+#include "MyCoroutine.h"
 // ---------------- DemoObject ----------------
 typedef struct {
     PyObject_HEAD
     int value;
     double scale;
+    int counter;
     PyObject* name;
     PyObject* dict;
     PyObject* dict1;
@@ -79,7 +81,14 @@ Demo_getattro(DemoObject* self, PyObject* name)
 }
 /* 方法示例 */
 static PyObject* demo_increment(DemoObject* self, PyObject* args) {
-    self->value += 1;
+    long delta = 1;  // 默认值为 1
+
+    // 如果传入了参数，就解析；否则保持默认值
+    if (!PyArg_ParseTuple(args, "|l", &delta)) {
+        return NULL;  // 参数类型错误
+    }
+
+    self->value += delta;
     return PyLong_FromLong(self->value);
 }
 
@@ -89,10 +98,32 @@ static PyGetSetDef Demo_getset[] = {
     {"dict1", (getter)demo_get_dict1, (setter)demo_set_dict1, "dict1", NULL},
     {NULL}
 };
+static PyObject* Demo_await(DemoObject* self) {
+    // return MyCoroutine_New(self-> value);
+    return MyCoroutine_await((MyCoroutineObject*)MyCoroutine_New(self-> value));
+}
+
+
+static PyObject* Demo_aiter(DemoObject* self) {
+
+    return (PyObject*)self;
+}
+
+static PyObject* Demo_anext(DemoObject* self) {
+    if (self->counter < 5) {
+        PyObject* coro = MyCoroutine_New(self->counter++);
+        return coro;  // async for 内部会 await
+    }
+
+    PyErr_SetNone(PyExc_StopAsyncIteration);
+    return NULL;
+}
+
+
 
 /* 方法表 */
 static PyMethodDef Demo_methods[] = {
-    {"increment", (PyCFunction)demo_increment, METH_NOARGS, "Increment value by 1"},
+    {"increment", (PyCFunction)demo_increment, METH_VARARGS, "Increment value by 1"},
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
 static PyMemberDef Demo_members[] = {
@@ -199,7 +230,9 @@ static PyType_Spec DemoIter_spec = {
 // ---------------- Demo_str ----------------
 static PyObject* Demo_str(PyObject* self) {
     DemoObject* obj = (DemoObject*)self;
-    return PyUnicode_FromFormat("%d", obj->value);
+    const char* name_str = PyUnicode_AsUTF8(obj -> name);
+
+    return PyUnicode_FromFormat("%d, %s", obj->value, name_str);
 }
 // ---------------- Demo heap type ----------------
 static PyType_Slot Demo_slots[] = {
@@ -214,6 +247,9 @@ static PyType_Slot Demo_slots[] = {
     {Py_tp_members, (void*)Demo_members},
     {Py_tp_methods, (void*)Demo_methods},
     {Py_tp_iter, (void*)Demo_iter},
+    {Py_am_aiter, (void*)Demo_aiter},
+    {Py_am_anext, (void*)Demo_anext},
+    {Py_am_await, (void*)Demo_await},
 
     {0, NULL}
 };
@@ -343,6 +379,13 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
         return NULL;
 
     }
+
+    if (InitMyCoroutinType(m) == NULL) {
+        std::cout << "自定义的模块的初始化失败... in InitMyCoroutinType" << std::endl;
+
+        return NULL;
+    }
+
     // 挂载 DemoIterType 到 DemoType 内
     if (PyObject_SetAttrString(DemoTypeObj, "DemoIterType", DemoIterTypeObj) < 0) {
         Py_DECREF(DemoTypeObj);

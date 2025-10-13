@@ -16,6 +16,8 @@ cc_library(
     srcs = [
         "lib/demo_type.cc",
         "lib/demo_type.h",
+        "lib/MyCoroutine.cpp",
+        "lib/MyCoroutine.h",
         ],
     deps = [
        "@rules_python//python/cc:current_py_cc_headers",
@@ -72,7 +74,10 @@ py_library(
 py_test(
     name = "python_basic_test",
     srcs = ["python_basic_test.py"],
-    deps = [":basic_lib"],
+    deps = [
+        ":basic_lib",
+        "@pip_deps2//anyio"
+        ],
 )
 
 

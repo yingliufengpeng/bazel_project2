@@ -20,7 +20,16 @@ class Demo_A2:
     def __init__(self, name: str=None):
         ...
 
-    def increment(self):
+    def __aiter__(self):
+        ...
+
+
+    def __anext__(self):
+        ...
+    def __await__(self):
+        ...
+
+    def increment(self, *args):
         ...
 
     value: int

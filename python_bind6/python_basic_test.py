@@ -1,6 +1,7 @@
 import unittest
 import basic
 import os
+import anyio
 
 class TestBasic(unittest.TestCase):
   
@@ -9,7 +10,8 @@ class TestBasic(unittest.TestCase):
 
         print(basic.hello('33'))
         v = basic.Demo_A2('Peng')
-        #
+        v.value = 34
+        print(f'v is {v}')
         print(f"v'x is {v.x}")
         v.x = 4
         v.value = 4
@@ -55,10 +57,11 @@ class TestBasic(unittest.TestCase):
         basic.clear_callback()
 
         basic.import_and_call_with_args("basic_tools", "greet", 35, "Alice")
+        print(f'v ------ is {v}')
 
+        v.increment(3)
         v.increment()
-        v.increment()
-
+        print(f'v ------ is {v}')
 
         v = basic.Demo_A2('Peng')
 
@@ -72,8 +75,9 @@ class TestBasic(unittest.TestCase):
         # print(f"cc is {cc}", flush=True)
         print(f'dict1 is {v.dict1}', flush=True)
         print(f'dict1 is {v.dict1}', flush=True)
-        print(f'dict1 is {v.dict1}', flush=True)
+        v.dict1['d'] = 4
 
+        print(f'dict1 is {v.dict1}', flush=True)
 
         print(f'__dict__ is {v.__dict__}')
         print(f'__dict__ is {v.__dict__}')
@@ -82,8 +86,20 @@ class TestBasic(unittest.TestCase):
 
         v.increment()
 
-    #
+        async def f():
+            r = await v
+            r = await v
+            r = await v
+            r = await v
+            print(f'r is {r}')
+            async for e in v:
+                print(f'aiter value is {e}')
 
+            r = await v
+            r = await v
+            r = await v
+            print(f'r is {r}')
+        anyio.run(f)
 
 if __name__ == "__main__":
     unittest.main()

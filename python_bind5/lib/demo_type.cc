@@ -307,21 +307,21 @@ PyTypeObject DemoType = {
     (inquiry)Demo_clear,                               // tp_clear
     0,                               // tp_richcompare
     0,                               // tp_weaklistoffset
-    (getiterfunc)Demo_iter,                               // tp_iter
+    (getiterfunc)Demo_iter,          // tp_iter
     0,                               // tp_iternext
     Demo_methods,                    // tp_methods
-    Demo_members,                               // tp_members
+    Demo_members,                    // tp_members
     Demo_getset,                     // tp_getset
     0,                               // tp_base
     0,                               // tp_dict
     0,                               // tp_descr_get
-    0,                               // tp_descr_set
-    offsetof(DemoObject, dict),                               // tp_dictoffset
-    // 0,                               // tp_dictoffset
-    (initproc)Demo_init,                               // tp_init
-    0,                               // tp_alloc
-    // PyType_GenericNew                // tp_new
-    Demo_new                // tp_new
+    0,                                // tp_descr_set
+    offsetof(DemoObject, dict),       // tp_dictoffset
+    // 0,                             // tp_dictoffset
+    (initproc)Demo_init,              // tp_init
+    0,                                // tp_alloc
+    // PyType_GenericNew              // tp_new
+    Demo_new                          // tp_new
 };
 
 
