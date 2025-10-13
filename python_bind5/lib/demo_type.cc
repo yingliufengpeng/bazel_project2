@@ -23,73 +23,9 @@ typedef struct {
     int current;
     int stop;
 } DemoIter;
-// ----------------- 描述符对象 -----------------
-typedef struct {
-    PyObject_HEAD
-    int value;  // 内部存储的整数
-} DemoValueDescriptor;
 
-// tp_descr_get
-static PyObject* DemoValue_descr_get(DemoValueDescriptor* self, PyObject* obj, PyObject* type) {
-    // printf("tp_descr_get called, value=%d\n", self->value);
-    std::cout << "tp_descr_get called, value=" << self->value << std::endl;
-    return PyLong_FromLong(self->value);
-}
 
-// tp_descr_set
-static int DemoValue_descr_set(DemoValueDescriptor* self, PyObject* obj, PyObject* value) {
-    if (!PyLong_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "value must be int");
-        return -1;
-    }
-    long v = PyLong_AsLong(value);
-    self->value = (int)v;
-    printf("tp_descr_set called, new value=%d\n", self->value);
-    return 0;
-}
 
-// ----------------- TypeObject -----------------
-static PyTypeObject DemoValueDescriptorType = {
-    PyVarObject_HEAD_INIT(nullptr, 0)
-
-    "DemoValueDescriptor",               // tp_name
-    sizeof(DemoValueDescriptor),              // tp_basicsize
-    0,                               // tp_itemsize
-    0,                               // tp_dealloc
-    0,                               // tp_vectorcall_offset
-    0,                               // tp_getattr
-    0,                               // tp_setattr
-    0,                               // tp_as_async
-    0,                               // tp_repr
-    0,                               // tp_as_number
-    0,                               // tp_as_sequence
-    0,                               // tp_as_mapping
-    0,                               // tp_hash
-    0,                               // tp_call
-    0,                               // tp_str
-    0,                               // tp_getattro
-    0,                               // tp_setattro
-    0,                               // tp_as_buffer
-    Py_TPFLAGS_DEFAULT,              // tp_flags
-    "DemoValueDescriptor",                   // tp_doc
-    0,                               // tp_traverse
-    0,                               // tp_clear
-    0,                               // tp_richcompare
-    0,                               // tp_weaklistoffset
-    0,                               // tp_iter
-    0,                               // tp_iternext
-    0,                    // tp_methods
-    0,                               // tp_members
-    0,                     // tp_getset
-    0,                               // tp_base
-    0,                               // tp_dict
-    (descrgetfunc)DemoValue_descr_get,                               // tp_descr_get
-    (descrsetfunc)DemoValue_descr_set,                               // tp_descr_set
-    0,                               // tp_dictoffset
-    0,                               // tp_init
-    0,                               // tp_alloc
-    PyType_GenericNew                // tp_new
-};
 
 extern PyTypeObject DemoType;  // ✅ 声明，不定义
 
@@ -435,20 +371,14 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
     sub_m = PyModule_Create(&submodule_def);
     if (sub_m == NULL)
         return NULL;
-    DemoType.tp_dict = PyDict_New();
 
     if (PyType_Ready(&DemoType) < 0)
         return NULL;
     if (PyType_Ready(&DemoIterType) < 0)
         return NULL;
 
-    if (PyType_Ready(&DemoValueDescriptorType) < 0) {
-        return NULL;
-    }
-
     std::cout << "自定义的模块的初始化..." << std::endl;
 
-    Py_INCREF(&DemoType);
     if (PyModule_AddObject(m, "sub_m",  sub_m)) {
         Py_DECREF(&sub_m);
         return NULL;
@@ -467,40 +397,7 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
         return NULL;
     }
 
-    // 创建描述符对象 only created in heap...
-    // // 创建描述符对象
-    // DemoValueDescriptor* desc = PyObject_New(DemoValueDescriptor, &DemoValueDescriptorType);
-    // desc->value = 123;
-    //
-    //
-    // // 将描述符挂到 Demo 类型
-    // Py_INCREF(desc);
-    // if (PyObject_SetAttrString((PyObject*)&DemoType, "x", (PyObject*)desc) < 0) {
-    //     std::cout << "自定义的模块的初始化失败..." << std::endl;
-    //     // 先检查是否有异常
-    //     if (PyErr_Occurred()) {
-    //         // 获取异常类型、值、traceback
-    //         PyObject *ptype, *pvalue, *ptraceback;
-    //         PyErr_Fetch(&ptype, &pvalue, &ptraceback);  // 从全局异常获取并清空
-    //         PyErr_NormalizeException(&ptype, &pvalue, &ptraceback);
-    //
-    //         PyObject* str_exc = PyObject_Str(pvalue);
-    //         const char* msg = PyUnicode_AsUTF8(str_exc);
-    //
-    //         std::cerr << "PyObject_SetAttrString failed: " << (msg ? msg : "<unknown>") << std::endl;
-    //
-    //         Py_XDECREF(str_exc);
-    //         Py_XDECREF(ptype);
-    //         Py_XDECREF(pvalue);
-    //         Py_XDECREF(ptraceback);
-    //     }
-    //
-    //     Py_DECREF(desc);
-    //
-    //     return NULL;
-    // }
-    //
-    // Py_DECREF(desc);  // SetAttrString 会持有引用
+
 
     std::cout << "自定义的模块的初始化成功..." << std::endl;
 

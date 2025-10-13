@@ -10,6 +10,7 @@ class TestBasic(unittest.TestCase):
         print(basic.hello('33'))
         v = basic.Demo_A2('Peng')
         #
+        print(f"v'x is {v.x}")
         v.x = 4
         v.value = 4
         v.m = 4
