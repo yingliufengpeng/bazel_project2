@@ -77,7 +77,8 @@ class TestBasic(unittest.TestCase):
 
         print(f'__dict__ is {v.__dict__}')
         print(f'__dict__ is {v.__dict__}')
-
+        v.__dict__['d34'] = 4
+        print(f'__dict__ is {v.__dict__}')
 
         v.increment()
 
