@@ -8,15 +8,49 @@ static PyObject* THPVariableMetaObj = NULL;  // 全局类型对象
 
 
 int THPVariableMetaType_init(PyObject* cls, PyObject* args, PyObject* kwargs) {
-  if (PyType_Type.tp_init(cls, args, kwargs) < 0) {
+    std::cout << " THPVariableMetaType_init ... " << std::endl;
+    if (PyType_Type.tp_init(cls, args, kwargs) < 0) {
     return -1;
-  }
+    }
 
   return 0;
 }
 
+static PyObject* THPVariableMetaType_new(PyTypeObject* metacls, PyObject* args, PyObject* kwargs) {
+    std::cout << "THPVariableMetaType_new called..." << std::endl;
+
+    // 参数: name, bases, dict
+    PyObject* name = nullptr;
+    PyObject* bases = nullptr;
+    PyObject* dict = nullptr;
+
+    if (!PyArg_ParseTuple(args, "OOO:__new__", &name, &bases, &dict)) {
+        return nullptr;
+    }
+
+    // 调用原始 type.__new__ 创建类型对象
+    PyObject* type_obj = PyType_Type.tp_new(metacls, args, kwargs);
+    if (!type_obj)
+        return nullptr;
+
+    std::cout << "THPVariableMetaType_new -> created type: "
+              << PyUnicode_AsUTF8(PyObject_Str(name)) << std::endl;
+
+    // 这里你可以对创建出来的类型做额外处理，比如：
+    // - 修改 tp_flags
+    // - 设置自定义属性
+    // - 检查 bases 是否符合要求
+    // - 记录类型信息
+    // 举例：
+    PyObject_SetAttrString(type_obj, "__created_by__", PyUnicode_FromString("THPVariableMeta"));
+
+    return type_obj;
+}
+
+
 
 static PyType_Slot THPVariableMetaType_slots[] = {
+    {Py_tp_new, (void*)THPVariableMetaType_new},
     {Py_tp_init, (void*)THPVariableMetaType_init},
     {Py_tp_base, (void*)&PyType_Type},
     {0, NULL},
@@ -40,6 +74,7 @@ static int THPFake_clear(THPVariable* self) {
 }
 
 
+static PyObject* THPVariable_new(PyTypeObject* type, PyObject* args, PyObject* kwargs);
 static PyTypeObject THPVariableType = {
     PyVarObject_HEAD_INIT((PyTypeObject*)THPVariableMetaObj, 0)
     "THPVariableType", /* tp_name */
@@ -86,12 +121,23 @@ static PyTypeObject THPVariableType = {
     nullptr, /* tp_alloc */
     // Although new is provided here, it is illegal to call this with cls ==
     // THPVariableMeta.  Instead, subclass it first and then construct it
-    nullptr, /* tp_new */
+    THPVariable_new, /* tp_new */
 };
 
+static PyObject* THPVariable_new(PyTypeObject* type, PyObject* args, PyObject* kwargs) {
+    if (type == &THPVariableType) {
+        PyErr_SetString(PyExc_TypeError,
+                        "cannot create 'THPVariableType' instances; subclass it first");
+        return nullptr;
+    }
 
+    THPVariable* self = (THPVariable*)type->tp_alloc(type, 0);
+    std::cout << "THPVariable_new (subclass) called!" << std::endl;
+    return (PyObject*)self;
+}
 
 PyObject* InitTHPVariableMeta(PyObject* m) {
+    std::cout << "自定义的模块的初始化  InitTHPVariableMeta"  << std::endl;
     // 创建 THPVariableMeta_spec
     if (!THPVariableMetaObj) {
         THPVariableMetaObj = PyType_FromSpec(&THPVariableMeta_spec);
@@ -103,11 +149,15 @@ PyObject* InitTHPVariableMeta(PyObject* m) {
         return NULL;
     }
 
-    THPVariableType.ob_base.ob_base = *THPVariableMetaObj;
+    // 2. 设置 THPVariableType 的元类
+    PyTypeObject* meta_type = (PyTypeObject*)THPVariableMetaObj;
+
+    // PyVarObject_HEAD_INIT 设置初始时是 PyType_Type，
+    // 我们现在要让它的 metaclass 指向自定义的 THPVariableMeta
+    THPVariableType.ob_base.ob_base.ob_type = meta_type;
 
     if (PyType_Ready(&THPVariableType) < 0)
         return NULL;
-
 
 
     if (PyModule_AddObject(m, "THPVariableMeta", THPVariableMetaObj) < 0) {
@@ -121,6 +171,7 @@ PyObject* InitTHPVariableMeta(PyObject* m) {
 
         return NULL;
     }
+    std::cout << "自定义的模块的初始化成功  InitTHPVariableMeta"  << std::endl;
 
     return THPVariableMetaObj;
 }

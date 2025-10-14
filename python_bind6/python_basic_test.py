@@ -87,16 +87,16 @@ class TestBasic(unittest.TestCase):
         v.increment()
 
         async def f():
-            r = await v
-            r = await v
-            r = await v
-            r = await v
-            print(f'r is {r}')
+            # r = await v
+            # r = await v
+            # r = await v
+            # r = await v
+            # print(f'r is {r}')
             async for e in v:
                 print(f'aiter value is {e}')
 
-            r = await v
-            r = await v
+            # r = await v
+            # r = await v
             r = await v
             print(f'r is {r}')
         anyio.run(f)
