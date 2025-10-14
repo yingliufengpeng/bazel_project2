@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "MyCoroutine.h"
+#include "THPVariableMeta.h"
 // ---------------- DemoObject ----------------
 typedef struct {
     PyObject_HEAD
@@ -382,6 +383,13 @@ PyMODINIT_FUNC PyInit_demo(PyObject* m) {
 
     if (InitMyCoroutinType(m) == NULL) {
         std::cout << "自定义的模块的初始化失败... in InitMyCoroutinType" << std::endl;
+
+        return NULL;
+    }
+
+
+    if (InitTHPVariableMeta(m) == NULL) {
+        std::cout << "自定义的模块的初始化失败... in InitTHPVariableMeta" << std::endl;
 
         return NULL;
     }

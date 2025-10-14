@@ -96,7 +96,6 @@ PyObject* InitMyCoroutinType(PyObject* m) {
     if (!MyCoroutineTypeObj) {
         std::cout << "自定义的模块的初始化失败... in DemoIterTypeObj" << std::endl;
 
-        Py_DECREF(m);
         return NULL;
     }
 

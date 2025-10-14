@@ -15,6 +15,8 @@ cc_library(
     srcs = [
         "lib/MyCoroutine.cpp",
         "lib/MyCoroutine.h",
+        "lib/THPVariableMeta.cpp",
+        "lib/THPVariableMeta.h",
         "lib/demo_type.cc",
         "lib/demo_type.h",
     ],
@@ -75,6 +77,15 @@ py_library(
 py_test(
     name = "python_basic_test",
     srcs = ["python_basic_test.py"],
+    deps = [
+        ":basic_lib",
+        "@pip_deps2//anyio",
+    ],
+)
+
+py_test(
+    name = "python_basic_test2",
+    srcs = ["python_basic_test2.py"],
     deps = [
         ":basic_lib",
         "@pip_deps2//anyio",
