@@ -26,6 +26,49 @@ typedef struct {
     int current;
     int stop;
 } DemoIter;
+typedef struct {
+    PyObject_HEAD
+    char data[8];
+} DemoBufferObject;
+
+// ① 实现 getbuffer
+static int
+DemoBuffer_getbuffer(PyObject *exporter, Py_buffer *view, int flags)
+{
+
+    std::cout << "DemoBuffer_getbuffer" << std::endl;
+    DemoBufferObject *self = (DemoBufferObject *)exporter;
+    if (view == NULL) {
+        PyErr_SetString(PyExc_BufferError, "NULL view");
+        return -1;
+    }
+
+    // 填充 Py_buffer 结构
+    view->obj = exporter;
+    view->buf = self->data;
+    view->len = sizeof(self->data);
+    view->readonly = 0;
+    view->itemsize = 1;
+    view->format = (char *)"B";  // unsigned byte
+    view->ndim = 1;
+    view->shape = NULL;
+    view->strides = NULL;
+    view->suboffsets = NULL;
+    view->internal = NULL;
+
+    Py_INCREF(exporter);
+    return 0;
+}
+
+// ② 实现 releasebuffer（可选）
+static void
+DemoBuffer_releasebuffer(PyObject *exporter, Py_buffer *view)
+{
+    std::cout << "DemoBuffer_releasebuffer" << std::endl;
+    // 通常无需额外操作
+    Py_DECREF(exporter);
+}
+
 
 // ---------------- Demo_iter ----------------
 static PyObject* Demo_iter(DemoObject* self);
@@ -251,6 +294,8 @@ static PyType_Slot Demo_slots[] = {
     {Py_am_aiter, (void*)Demo_aiter},
     {Py_am_anext, (void*)Demo_anext},
     {Py_am_await, (void*)Demo_await},
+    {Py_bf_getbuffer, (void*)DemoBuffer_getbuffer},
+    {Py_bf_releasebuffer, (void*)DemoBuffer_releasebuffer},
 
     {0, NULL}
 };

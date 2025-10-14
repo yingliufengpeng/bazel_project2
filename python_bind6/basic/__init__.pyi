@@ -1,9 +1,12 @@
 from typing import Callable
+from typing_extensions import Buffer
 
 from . import sub_m
 
 def hello(s: str) -> str:
     ...
+
+
 
 class DemoValueDescriptor:
 
@@ -13,9 +16,13 @@ class DemoValueDescriptor:
     def __set__(self, instance, value):
         ...
 
-class Demo_A2:
+class Demo_A2(Buffer):
 
     x: DemoValueDescriptor
+
+
+    # 支持 memoryview / bytes
+    def __bytes__(self) -> bytes: ...
 
     def __init__(self, name: str=None):
         ...

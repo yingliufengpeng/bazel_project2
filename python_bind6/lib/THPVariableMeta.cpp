@@ -8,9 +8,9 @@ static PyObject* THPVariableMetaObj = NULL;  // 全局类型对象
 
 
 int THPVariableMetaType_init(PyObject* cls, PyObject* args, PyObject* kwargs) {
-    std::cout << " THPVariableMetaType_init ... " << std::endl;
+    std::cout << "THPVariableMetaType_init ... " << std::endl;
     if (PyType_Type.tp_init(cls, args, kwargs) < 0) {
-    return -1;
+        return -1;
     }
 
   return 0;
