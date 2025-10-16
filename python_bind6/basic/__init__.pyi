@@ -24,7 +24,7 @@ class Demo_A2(Buffer):
     # 支持 memoryview / bytes
     def __bytes__(self) -> bytes: ...
 
-    def __init__(self, name: str=None):
+    def __init__(self, name: str | None=None):
         ...
 
     def __aiter__(self):
