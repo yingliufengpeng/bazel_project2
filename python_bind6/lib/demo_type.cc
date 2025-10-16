@@ -183,6 +183,9 @@ static PyMemberDef Demo_members[] = {
 
 static void Demo_dealloc(DemoObject* self)
 {
+    auto m = Py_REFCNT(self);
+    std::cout << "Demo_dealloc current self's refcnt is " << "self's name is " << self -> name << m << std::endl;
+
     PyObject_GC_UnTrack(self);   // 1. 先让 GC 不再跟踪该对象
     Py_CLEAR(self->name);         // 2. 清理 PyObject* 成员
     Py_TYPE(self)->tp_free((PyObject*)self); // 3. 释放对象内存
@@ -228,6 +231,10 @@ static int Demo_init(DemoObject* self, PyObject* args, PyObject* kwds)
 static int
 Demo_traverse(DemoObject* self, visitproc visit, void* arg)
 {
+    auto m = Py_REFCNT(self);
+    std::cout << "Demo_traverse current self's refcnt is " << m << std::endl;
+    printf("Object %p\n", (void*)self);
+
     // 如果 name 不为 NULL，就告诉 GC：我持有它
     Py_VISIT(self->name);
     Py_VISIT(self->dict1);
@@ -238,6 +245,8 @@ Demo_traverse(DemoObject* self, visitproc visit, void* arg)
 static int
 Demo_clear(DemoObject* self)
 {
+    auto m = Py_REFCNT(self);
+    std::cout << "Demo_clear current self's refcnt is " << m << std::endl;
     Py_CLEAR(self->name);
     Py_CLEAR(self->dict1);
     Py_CLEAR(self->dict);

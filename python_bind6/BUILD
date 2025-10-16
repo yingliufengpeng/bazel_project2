@@ -92,6 +92,15 @@ py_test(
     ],
 )
 
+py_test(
+    name = "python_basic_test3",
+    srcs = ["python_basic_test3.py"],
+    deps = [
+        ":basic_lib",
+        "@pip_deps2//anyio",
+    ],
+)
+
 cc_binary(
     name = "main",
     srcs = ["main.cc"],
