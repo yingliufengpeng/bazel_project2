@@ -260,6 +260,53 @@ struct O {
 
 };
 
+struct Foo {
+  int i;
+  int j;
+  Foo() {
+    i = 1;
+    j = 2;
+    std::cout << "执行构造函数..." << i << j << std::endl;
+  }
+
+  ~Foo() {
+
+    std::cout << "执行析构函数..." << i << j << std::endl;
+  }
+};
+
+struct B;
+struct A {
+  std::shared_ptr<B> b;
+  ~A() {
+    std::cout << "~A" << std::endl;
+  }
+};
+struct B {
+  std::weak_ptr<A> a;
+
+  ~B() {
+    std::cout << "~B" << std::endl;
+  }
+};
+
+
+struct BB;
+struct AA {
+  std::shared_ptr<BB> bb;
+  ~AA() {
+    std::cout << "~AA" << std::endl;
+  }
+};
+struct BB {
+  std::shared_ptr<AA> aa;
+
+  ~BB() {
+    std::cout << "~BB" << std::endl;
+  }
+};
+
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -271,5 +318,29 @@ int main() {
   auto r1 = MaybeOwned<Mn>::borrowed(mn3);
   auto r2 = MaybeOwned<Mn>::owned(Mn());
   auto r3 = MaybeOwned<std::shared_ptr<Mn>>::borrowed(mn2);
+
+  auto r4 = std::make_unique<Mn>(Mn());
+  std::cout << "r4'count is " << r4.get() << std::endl;
+
+  auto r5 = std::make_shared<Mn>(Mn());
+  auto r6 = r5;
+  auto r7 = r6;
+  r6 = nullptr;
+  std::cout << "r5'count is " << r5.use_count() << std::endl;
+
+  char buffer[1024] = {0};
+  Foo* f = new (buffer) Foo();  // placement new
+  f->~Foo();                    // 手动析构
+
+  auto b = std::make_shared<B>();
+  auto a = std::make_shared<A>();
+  (*a).b = b;
+  (*b).a = a;
+
+
+  auto bb = std::make_shared<BB>();
+  auto aa = std::make_shared<AA>();
+  (*aa).bb = bb;
+  (*bb).aa = aa;
   return 0;
 }
