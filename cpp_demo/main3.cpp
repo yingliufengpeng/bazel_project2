@@ -342,5 +342,7 @@ int main() {
   auto aa = std::make_shared<AA>();
   (*aa).bb = bb;
   (*bb).aa = aa;
+
+  std::cout << "构造循环引用案例" << std::endl;
   return 0;
 }
