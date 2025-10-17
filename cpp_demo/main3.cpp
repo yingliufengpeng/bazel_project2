@@ -337,6 +337,12 @@ int main() {
   (*a).b = b;
   (*b).a = a;
 
+  {
+    auto m = b;
+    std::shared_ptr<B> *m2 = &b;
+    std::cout << "b's count " << b.use_count() << std::endl;
+  }
+  std::cout << "b's count " << b.use_count() << std::endl;
 
   auto bb = std::make_shared<BB>();
   auto aa = std::make_shared<AA>();
