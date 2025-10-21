@@ -306,6 +306,23 @@ struct BB {
   }
 };
 
+struct P {
+  int i ;
+  operator bool() const noexcept {
+    return i != 0;
+  }
+};
+
+struct P2 {
+
+  int i;
+  int j;
+
+  operator bool() const noexcept {
+    return i != j;
+  }
+};
+
 
 int main() {
 
@@ -350,5 +367,14 @@ int main() {
   (*bb).aa = aa;
 
   std::cout << "构造循环引用案例" << std::endl;
+
+  auto p = P();
+  std::cout << static_cast<bool>(p) << std::endl;
+  p.i = 3;
+  std::cout << p << std::endl;
+
+  auto p2 = P2();
+  std::cout << p2 << std::endl;
+
   return 0;
 }
