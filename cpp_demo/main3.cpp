@@ -377,6 +377,17 @@ auto fn3(T&& t) -> T {
   return std::forward<T>(t);
 }
 
+struct F4 {};
+
+auto f4(F4&& o) {
+  std::cout << "f4" << std::endl;
+}
+template <class T>
+using SmallVectorSizeType =
+    std::conditional_t<sizeof(T) < 4 && sizeof(void*) >= 8, uint64_t, uint32_t>;
+
+using i_t = SmallVectorSizeType<uint32_t>;
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -453,5 +464,15 @@ int main() {
   auto r44 = fn3(44);
   std::cout << "r44 is " << r44 << std::endl;
 
+  auto s_f4 = F4();
+  f4(std::forward<F4>(s_f4));
+  f4(F4());
+
+  const i_t a8 = 3;
+  std::cout << "a8 is " << typeid(a8).name() << std::endl;
+
+  std::cout << sizeof(i_t) << std::endl;
+  std::cout << sizeof(char) << std::endl;
+  std::cout << sizeof(void*) << std::endl;
   return 0;
 }
