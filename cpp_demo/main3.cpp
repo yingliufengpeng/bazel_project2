@@ -317,6 +317,10 @@ struct P2 {
 
   int i;
   int j;
+  union {
+    int* ptr;
+    int arr[10];
+  };
 
   operator bool() const noexcept {
     return i != j;
@@ -375,6 +379,11 @@ int main() {
 
   auto p2 = P2();
   std::cout << p2 << std::endl;
+
+  p2.arr[6] = 355;
+  std::cout << p2.arr[6] << std::endl;
+
+  std::cout << *(p2.ptr + 6) << std::endl;
 
   return 0;
 }
