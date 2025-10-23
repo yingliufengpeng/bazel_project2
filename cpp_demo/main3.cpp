@@ -279,6 +279,7 @@ struct B;
 struct A {
   std::shared_ptr<B> b;
   ~A() {
+    std::cout << "b's count" << b.use_count() << std::endl;
     std::cout << "~A" << std::endl;
   }
 };
@@ -286,6 +287,7 @@ struct B {
   std::weak_ptr<A> a;
 
   ~B() {
+    std::cout << "a's count" << a.use_count() << std::endl;
     std::cout << "~B" << std::endl;
   }
 };
