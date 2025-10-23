@@ -346,6 +346,20 @@ std::ostream& operator<<(std::ostream& os, const Flags& f) {
   return os;
 }
 
+void process(const std::string& s) {
+  std::cout << "左值引用版本\n";
+}
+void process(std::string&& s) {
+  std::cout << "右值引用版本\n";
+}
+
+template<typename T>
+void relay(T&& arg) {
+  // 直接传递 arg
+  process(std::forward<T>(arg));
+
+}
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -398,16 +412,18 @@ int main() {
   auto p2 = P2();
   std::cout << p2 << std::endl;
 
-  p2.arr[6] = 355;
-  std::cout << p2.arr[6] << std::endl;
-
-  std::cout << *(p2.ptr + 6) << std::endl;
+  p2.arr[1] = 355;
+  // std::cout << p2.arr[1] << std::endl;
+  //
+  // std::cout << "ooo " << *(p2.ptr + 1) << std::endl;
 
   auto flags = Flags();
   flags.a = true;
   flags.b = false;
 
-  std::cout << flags << std::endl;
-
+  std::cout << "flags is " << flags << std::endl;
+  std::string s = "hi";
+  relay(s);          // 左值
+  relay(std::string("yo")); // 右值
   return 0;
 }
