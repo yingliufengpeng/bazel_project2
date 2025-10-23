@@ -360,6 +360,23 @@ void relay(T&& arg) {
 
 }
 
+
+template<typename F, typename... Args>
+void log_and_call(F&& func, Args&&... args) {
+  std::cout << "[LOG] calling function...\n";
+  std::invoke(std::forward<F>(func), std::forward<Args>(args)...);
+}
+
+
+auto f2(int a, int b) -> int {
+  return a + b;
+}
+
+template<typename T>
+auto fn3(T&& t) -> T {
+  return std::forward<T>(t);
+}
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -425,5 +442,16 @@ int main() {
   std::string s = "hi";
   relay(s);          // 左值
   relay(std::string("yo")); // 右值
+
+  auto log_f = [](int a, int b) -> void {
+    auto c = f2(a, b);
+    std::cout << "a is " << a << " b is " << b << " c is " << c << std::endl;
+  };
+
+  log_and_call(log_f, 4, 45);
+
+  auto r44 = fn3(44);
+  std::cout << "r44 is " << r44 << std::endl;
+
   return 0;
 }
