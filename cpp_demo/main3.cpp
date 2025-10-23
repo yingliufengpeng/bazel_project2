@@ -330,6 +330,22 @@ struct P2 {
 };
 
 
+struct Flags {
+  bool a : 1;
+  bool b : 1;
+  bool c : 1;
+  bool d : 1;
+  bool e : 1;
+};
+// 重载 <<
+std::ostream& operator<<(std::ostream& os, const Flags& f) {
+  os << "Flags(a=" << f.a
+     << ", b=" << f.b
+     << ", c=" << f.c
+     << ", d=" << f.d << ")";
+  return os;
+}
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -386,6 +402,12 @@ int main() {
   std::cout << p2.arr[6] << std::endl;
 
   std::cout << *(p2.ptr + 6) << std::endl;
+
+  auto flags = Flags();
+  flags.a = true;
+  flags.b = false;
+
+  std::cout << flags << std::endl;
 
   return 0;
 }
