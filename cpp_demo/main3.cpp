@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iostream>
+#include <optional>
 #include <type_traits>
 #include <utility>
 
@@ -388,6 +389,33 @@ using SmallVectorSizeType =
 
 using i_t = SmallVectorSizeType<uint32_t>;
 
+auto div2(int a, int b) -> std::optional<float> {
+  if (b == 0)
+    return std::nullopt;
+  return static_cast<float>(a) / b;
+}
+
+template <typename T>
+auto div3(T& a, T& b) -> std::optional<T> {
+  return a / b;
+}
+
+template <typename T>
+auto div3(T&& a, T&& b) -> std::optional<T> {
+  return div3(a, b);
+}
+
+template <typename T>
+auto div4(T& a) -> std::optional<T> {
+  return a;
+}
+
+template <typename T>
+auto div4(T&& a) -> std::optional<T> {
+  return a;
+}
+
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -474,5 +502,27 @@ int main() {
   std::cout << sizeof(i_t) << std::endl;
   std::cout << sizeof(char) << std::endl;
   std::cout << sizeof(void*) << std::endl;
+
+
+  auto r51 = div2(1, 2);
+  std::cout << "r51 is " << *r51 << std::endl;
+  auto r52 = div2(1, 0);
+
+  if (r52.has_value()) {
+    std::cout << "r52 is " << *r52 << std::endl;
+  }
+
+  auto r66 = 34;
+  auto r61 = div3(std::move(r66), 2);
+  std::cout << "r61 is " << *r61 << std::endl;
+  auto r64 = div3(r66, r66);
+
+  std::cout << "r61 is " << *r64 << std::endl;
+
+  auto r67 = 34;
+  auto r62 = div4(34);
+  auto r63 = div4(r67);
+  std::cout << "r62 is " << *r62 << std::endl;
+  std::cout << "r63 is " << *r63 << std::endl;
   return 0;
 }
