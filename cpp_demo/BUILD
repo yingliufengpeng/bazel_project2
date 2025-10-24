@@ -93,5 +93,9 @@ cc_binary(
 
 cc_binary(
     name = "my_app3",
-    srcs = ["main3.cpp"],
+    srcs = [
+        "MyContainer.h",
+        "main3.cpp",
+        "main_extend.h",
+    ],
 )

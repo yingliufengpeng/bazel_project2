@@ -1,12 +1,14 @@
 #pragma once
 
 
+#include <functional>
 #include <memory>
 #include <iostream>
 #include <optional>
 #include <type_traits>
 #include <utility>
 
+#include "main_extend.h"
 
 #if defined(__GNUC__) || defined(__ICL) || defined(__clang__)
 #define C10_LIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 1))
@@ -524,5 +526,13 @@ int main() {
   auto r63 = div4(r67);
   std::cout << "r62 is " << *r62 << std::endl;
   std::cout << "r63 is " << *r63 << std::endl;
+
+  std::function<int()> m = []() -> int { return 3; };
+
+  auto r71 = m();
+  std::cout << "r71 is " << r71 << std::endl;
+
+  std::cout << "--------------" << std::endl;
+  ff1();
   return 0;
 }
