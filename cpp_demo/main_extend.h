@@ -5,7 +5,7 @@
 #ifndef MAIN_EXTEND_H
 #define MAIN_EXTEND_H
 #include <iostream>
-
+#include <array>
 #include "MyContainer.h"
 
 template <int n>
@@ -39,6 +39,9 @@ inline void ff1() {
     ff2();
 }
 
+
+void ff3();
+
 inline void ff2() {
     std::cout << "ff2" << std::endl;
 
@@ -52,11 +55,40 @@ inline void ff2() {
     for (auto it = container.begin(); it != container.end(); ++it) {
         std::cout << *it << " ";
     }
+
+    for (auto& e: container) {
+        std::cout << "[*it] == " << e << std::endl;
+    }
     std::cout << std::endl;
 
+    ff3();
+}
 
 
 
+template <typename V, typename... T>
+inline constexpr auto array_of(T&&... t) -> std::array<V, sizeof...(T)> {
+    return {{std::forward<T>(t)...}};
+}
+
+template <typename T, size_t N>
+std::ostream& operator<<(std::ostream& os, const std::array<T, N>& arr) {
+    os << "{";
+    for (size_t i = 0; i < N; ++i) {
+        os << arr[i];
+        if (i != N - 1) os << ", ";
+    }
+    os << "}";
+    return os;
+}
+
+inline void ff3() {
+    std::cout << "ff3" << std::endl;
+
+    auto arr = array_of<int>(1, 2, 3);
+
+    std::cout << "arr is " << arr << std::endl;
+    std::cout << "ff3 end" << std::endl;
 }
 
 
