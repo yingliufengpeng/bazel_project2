@@ -534,5 +534,14 @@ int main() {
 
   std::cout << "--------------" << std::endl;
   ff1();
+
+  std::cout << "vvvv ----"  << std::endl;
+  std::vector<int> v1(3, 4);
+  std::cout << "v1.size = " << v1.size() << std::endl; // 3
+
+  auto v2 = std::move(v1);
+
+  std::cout << "v2.size = " << v2.size() << std::endl; // 3
+  std::cout << "v1.size = " << v1.size() << std::endl; // 0（正确行为）
   return 0;
 }
