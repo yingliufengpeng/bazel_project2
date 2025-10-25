@@ -586,5 +586,33 @@ int main() {
   std::cout << "Unknown OS" << std::endl;
 #endif
 
+
+  P_ASSERT(3 == 3, "3 != 3");
+
+  LOG("Hello");                    // ✅ 展开为 printf("[LOG] Hello\n");
+  LOG("Sum: %d", 3 + 4);           // ✅ 展开为 printf("[LOG] Sum: %d\n", a + b);
+  SAY_HELLO_WORLD();
+  PRINT_DOUBLE(3);
+
+  func_foo();
+  func_bar();
+
+  LOG_INFO("System started");
+  LOG_WARN("Low memory");
+  LOG_ERROR("Something went wrong");
+  LOG_INFO("System finished!");
+  LOG_ERROR("Failed at %s:%d", __FILE__, __LINE__);
+
+  PRINT_DOBULE(4);
+
+  std::cout << GET_VAR(1) << std::endl;  // ✅ 输出 100
+  std::cout << GET_VAR(2) << std::endl;  // ✅ 输出 200
+
+  std::cout << TO_STRING(VALUE) << std::endl;  // ✅ 输出 "42"
+
+  MAKE_VAR(foo) = 1;  // foo0
+  MAKE_VAR(foo) = 2;  // foo1
+  MAKE_VAR(foo) = 3;  // foo2
+
   return 0;
 }
