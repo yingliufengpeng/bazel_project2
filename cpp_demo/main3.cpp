@@ -9,7 +9,7 @@
 #include <utility>
 
 #include "main_extend.h"
-
+#include "Buffer.h"
 #if defined(__GNUC__) || defined(__ICL) || defined(__clang__)
 #define C10_LIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 1))
 #define C10_UNLIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 0))
@@ -543,5 +543,13 @@ int main() {
 
   std::cout << "v2.size = " << v2.size() << std::endl; // 3
   std::cout << "v1.size = " << v1.size() << std::endl; // 0（正确行为）
+
+  std::cout << "buffer test ..." << std::endl;
+  auto bf1 = peng::Buffer(4);
+  std::cout << "bf1.size() = " << bf1.size() << std::endl;
+
+  auto bf2 = std::move(bf1);
+  std::cout << "bf2.size() = " << bf2.size() << std::endl;
+  std::cout << "bf1.size() = " << bf1.size() << std::endl;
   return 0;
 }

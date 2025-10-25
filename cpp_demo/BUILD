@@ -94,6 +94,8 @@ cc_binary(
 cc_binary(
     name = "my_app3",
     srcs = [
+        "Buffer.cpp",
+        "Buffer.h",
         "MyContainer.h",
         "main3.cpp",
         "main_extend.h",
