@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "main_extend.h"
+#include "utils.h"
 #include "Buffer.h"
 #if defined(__GNUC__) || defined(__ICL) || defined(__clang__)
 #define C10_LIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 1))
@@ -549,5 +550,41 @@ int main() {
   auto bf2 = std::move(bf1);
   std::cout << "bf2.size() = " << bf2.size() << std::endl;
   std::cout << "bf1.size() = " << bf1.size() << std::endl;
+
+#ifdef DEBUG_MODE
+  std::cout << "DEBUG_MODE" << std::endl;
+#endif
+
+#ifdef USE_P_MATH
+  auto add_r = add(3, 4);;
+  std::cout << "add_r is " << add_r << std::endl;
+#endif
+
+
+  std::cout << "Compiler: ";
+
+#if defined(__clang__)
+  std::cout << "Clang " << __clang_major__ << "." << __clang_minor__ << std::endl;
+#elif defined(__GNUC__)
+  std::cout << "GCC " << __GNUC__ << "." << __GNUC_MINOR__ << std::endl;
+#elif defined(_MSC_VER)
+  std::cout << "MSVC (version " << _MSC_VER << ")" << std::endl;
+#elif defined(__INTEL_COMPILER)
+  std::cout << "Intel C++ (version " << __INTEL_COMPILER << ")" << std::endl;
+#else
+  std::cout << "Unknown compiler" << std::endl;
+#endif
+
+  std::cout << "Platform: ";
+#if defined(_WIN32)
+  std::cout << "Windows" << std::endl;
+#elif defined(__linux__)
+  std::cout << "Linux" << std::endl;
+#elif defined(__APPLE__)
+  std::cout << "macOS" << std::endl;
+#else
+  std::cout << "Unknown OS" << std::endl;
+#endif
+
   return 0;
 }

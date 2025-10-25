@@ -91,6 +91,11 @@ cc_binary(
     deps = ["//third_party/my_lib:my_lib2"],
 )
 
+config_setting(
+    name = "debug_mode",
+    values = {"compilation_mode": "dbg"},
+)
+
 cc_binary(
     name = "my_app3",
     srcs = [
@@ -99,5 +104,17 @@ cc_binary(
         "MyContainer.h",
         "main3.cpp",
         "main_extend.h",
+        "utils.h",
     ],
+    copts = select({
+        ":debug_mode": [
+            "-DDEBUG_MODE=1",
+            "-DUSE_P_MATH=1",
+        ],
+        "//conditions:default": [],
+    }) + select({
+        "@platforms//os:linux": [],
+        "@platforms//os:windows": [],
+        "//conditions:default": [],
+    }),
 )

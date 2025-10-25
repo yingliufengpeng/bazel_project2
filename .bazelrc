@@ -1,6 +1,6 @@
 
 #build --remote_cache=http://127.0.0.1:9090
-
+build --compilation_mode=dbg
 # build:dbg  --strip=never
 # build -c dbg --strip=never
 build --incompatible_disallow_empty_glob=false
