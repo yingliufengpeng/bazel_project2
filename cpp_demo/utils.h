@@ -80,7 +80,7 @@ while (0)
 #define PRINT(D, v) \
  printf("v %d\n", D(v))
 
-#define PRINT_DOBULE(v) PRINT(DOUBLE, v)
+#define PRINT_DOBLE(v) PRINT(DOUBLE, v)
 
 #define MAKE_NAME(a, b) a##b
 #define VAR1 100
@@ -94,5 +94,12 @@ while (0)
 
 #define MAKE_VAR(name) int CONCAT(name, __COUNTER__)
 
+#define TRY \
+try {
+
+#define CATCH \
+} catch (std::exception& e) { \
+    std::cout << "Caught exception: " << e.what() << std::endl; \
+  }
 
 #endif //BAZEL_PROJECT2_UTILS_H

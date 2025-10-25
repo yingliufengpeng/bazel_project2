@@ -603,7 +603,7 @@ int main() {
   LOG_INFO("System finished!");
   LOG_ERROR("Failed at %s:%d", __FILE__, __LINE__);
 
-  PRINT_DOBULE(4);
+  PRINT_DOUBLE(4);
 
   std::cout << GET_VAR(1) << std::endl;  // ✅ 输出 100
   std::cout << GET_VAR(2) << std::endl;  // ✅ 输出 200
@@ -613,6 +613,13 @@ int main() {
   MAKE_VAR(foo) = 1;  // foo0
   MAKE_VAR(foo) = 2;  // foo1
   MAKE_VAR(foo) = 3;  // foo2
+
+  TRY
+    std::cout << "func is running ..." << std::endl;
+    throw std::runtime_error("Division by zero!");
+  CATCH
+
+
 
   return 0;
 }
