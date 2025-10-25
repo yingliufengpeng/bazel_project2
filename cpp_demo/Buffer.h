@@ -10,10 +10,9 @@
 #include <cstring>
 
 namespace peng {
-    struct  Buffer {
-
-        char* data_;
+    struct Buffer {
         size_t size_;
+        char* data_;
 
         Buffer(size_t);
         // 析构函数
