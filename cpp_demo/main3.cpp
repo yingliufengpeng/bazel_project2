@@ -7,10 +7,14 @@
 #include <utility>
 #include <thread>
 #include <vector>
-
+#include <cppcoro/task.hpp>
+#include <cppcoro/sync_wait.hpp>
 #include "main_extend.h"
 #include "utils.h"
 #include "Buffer.h"
+
+
+
 #if defined(__GNUC__) || defined(__ICL) || defined(__clang__)
 #define C10_LIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 1))
 #define C10_UNLIKELY(expr) (__builtin_expect(static_cast<bool>(expr), 0))
@@ -419,6 +423,15 @@ auto div4(T&& a) -> std::optional<T> {
 }
 
 
+cppcoro::task<int> async_add(int a, int b) {
+  co_return a + b;
+}
+
+cppcoro::task<void> run() {
+  int result = co_await async_add(2, 3);
+  std::cout << "Result: " << result << std::endl;
+}
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -642,7 +655,7 @@ int main() {
   std::vector<std::thread> threads2;
 
   for (int i = 0; i < 10; ++i) {
-    threads2.emplace_back([&] {
+    threads2.emplace_back([&]() {
         for (int j = 0; j < 10000; ++j)
           c2.increment();
     });

@@ -107,13 +107,10 @@ try {
 
 namespace peng {
 
-
-
-
     struct SafeCounter {
         mutable std::atomic<int> count = 0;
 
-        void increment() const {
+        auto increment() const {
             count.fetch_add(1, std::memory_order_relaxed);  // ✅ 原子操作
         }
     };
@@ -123,14 +120,11 @@ namespace peng {
 
 namespace peng {
 
-
-
-
     struct LockedCounter {
         mutable int count = 0;
         mutable std::mutex mtx;  // 用于保护共享资源
 
-        void increment() const {
+        auto increment() const {
             std::lock_guard<std::mutex> lock(mtx);
             count++;
         }

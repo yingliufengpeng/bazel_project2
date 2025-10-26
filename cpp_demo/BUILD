@@ -114,7 +114,19 @@ cc_binary(
         "//conditions:default": [],
     }) + select({
         "@platforms//os:linux": [],
-        "@platforms//os:windows": [],
+        "@platforms//os:windows": ["/std:c++20"],
         "//conditions:default": [],
     }),
+    linkopts = select({
+        "@platforms//os:linux": [
+            "-lcppcoro",
+        ],
+        "@platforms//os:windows": [
+            "cppcoro.lib",
+        ],
+        "//conditions:default": [],
+    }),
+    deps = [
+        "@vcpkg",
+    ],
 )
