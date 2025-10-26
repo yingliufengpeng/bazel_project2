@@ -113,13 +113,13 @@ cc_binary(
         ],
         "//conditions:default": [],
     }) + select({
-        "@platforms//os:linux": [],
+        "@platforms//os:linux": ["-std=c++20"],
         "@platforms//os:windows": ["/std:c++20"],
         "//conditions:default": [],
     }),
     linkopts = select({
         "@platforms//os:linux": [
-            "-lcppcoro",
+            "-lcoro",
         ],
         "@platforms//os:windows": [
             "cppcoro.lib",

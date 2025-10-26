@@ -7,11 +7,20 @@
 #include <utility>
 #include <thread>
 #include <vector>
-#include <cppcoro/task.hpp>
-#include <cppcoro/sync_wait.hpp>
+
 #include "main_extend.h"
 #include "utils.h"
 #include "Buffer.h"
+
+#ifdef __linux__
+#include <coro/coro.hpp>
+
+
+#elif __WIN32__
+#include <cppcoro/task.hpp>
+#include <cppcoro/sync_wait.hpp>
+
+#endif
 
 
 
@@ -422,12 +431,19 @@ auto div4(T&& a) -> std::optional<T> {
   return a;
 }
 
+#ifdef __linux__
+#define CORO coro
+#elif __WIN32__
+#define CORO cppcoro
+#endif
 
-cppcoro::task<int> async_add(int a, int b) {
+
+
+CORO::task<int> async_add(int a, int b) {
   co_return a + b;
 }
 
-cppcoro::task<void> run() {
+CORO::task<void> run() {
   int result = co_await async_add(2, 3);
   std::cout << "Result: " << result << std::endl;
 }
@@ -664,5 +680,13 @@ int main() {
   for (auto& t : threads2) t.join();
 
   std::cout << "最终 count = " << c2.count << " (理论上应为 100000)" << std::endl;
+
+#ifdef __linux__
+  CORO::sync_wait(run());
+
+#elif __WIN32__
+  CORO::sync_wait(run());
+
+#endif
   return 0;
 }
