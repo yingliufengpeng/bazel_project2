@@ -5,6 +5,8 @@
 #include <optional>
 #include <type_traits>
 #include <utility>
+#include <thread>
+#include <vector>
 
 #include "main_extend.h"
 #include "utils.h"
@@ -620,6 +622,34 @@ int main() {
   CATCH
 
 
+  const peng::SafeCounter c;  // 注意：const 对象
+  std::vector<std::thread> threads;
 
+  // 启动 10 个线程，每个线程执行 10000 次 increment()
+  for (int i = 0; i < 10; ++i) {
+    threads.emplace_back([&] {
+        for (int j = 0; j < 10000; ++j)
+          c.increment();
+  });
+  }
+
+  for (auto& t : threads) t.join();
+
+  std::cout << "最终 count = " << c.count << " (理论上应为 100000)\n";
+
+
+  const peng::LockedCounter c2;
+  std::vector<std::thread> threads2;
+
+  for (int i = 0; i < 10; ++i) {
+    threads2.emplace_back([&] {
+        for (int j = 0; j < 10000; ++j)
+          c2.increment();
+    });
+  }
+
+  for (auto& t : threads2) t.join();
+
+  std::cout << "最终 count = " << c2.count << " (理论上应为 100000)" << std::endl;
   return 0;
 }

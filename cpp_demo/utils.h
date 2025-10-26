@@ -5,6 +5,8 @@
 #ifndef BAZEL_PROJECT2_UTILS_H
 #define BAZEL_PROJECT2_UTILS_H
 #include <iostream>
+#include <mutex>
+#include <atomic>
 
 
 #ifdef USE_P_MATH
@@ -101,5 +103,38 @@ try {
 } catch (std::exception& e) { \
     std::cout << "Caught exception: " << e.what() << std::endl; \
   }
+
+
+namespace peng {
+
+
+
+
+    struct SafeCounter {
+        mutable std::atomic<int> count = 0;
+
+        void increment() const {
+            count.fetch_add(1, std::memory_order_relaxed);  // ✅ 原子操作
+        }
+    };
+
+}
+
+
+namespace peng {
+
+
+
+
+    struct LockedCounter {
+        mutable int count = 0;
+        mutable std::mutex mtx;  // 用于保护共享资源
+
+        void increment() const {
+            std::lock_guard<std::mutex> lock(mtx);
+            count++;
+        }
+    };
+}
 
 #endif //BAZEL_PROJECT2_UTILS_H
