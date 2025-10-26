@@ -12,15 +12,17 @@
 #include "utils.h"
 #include "Buffer.h"
 
-#ifdef __linux__
-#include <coro/coro.hpp>
+#if defined(__linux__)
+  #include <coro/coro.hpp>
 
-
-#elif __WIN32__
-#include <cppcoro/task.hpp>
-#include <cppcoro/sync_wait.hpp>
-
+#elif defined(_WIN32) || defined(_WIN64)
+  // #include <cppcoro/task.hpp>
+  // #include <cppcoro/sync_wait.hpp>
+#else
+    #error "Unsupported platform"
 #endif
+
+
 
 
 
@@ -431,14 +433,16 @@ auto div4(T&& a) -> std::optional<T> {
   return a;
 }
 
-#ifdef __linux__
+#if defined(__linux__)
 #define CORO coro
-#elif __WIN32__
+#elif defined(_WIN32) || defined(_WIN64)
 #define CORO cppcoro
+#else
+#error "Unsupported platform"
 #endif
 
 
-
+#if defined(__linux__)
 CORO::task<int> async_add(int a, int b) {
   co_return a + b;
 }
@@ -447,6 +451,7 @@ CORO::task<void> run() {
   int result = co_await async_add(2, 3);
   std::cout << "Result: " << result << std::endl;
 }
+#endif
 
 int main() {
 
@@ -684,8 +689,8 @@ int main() {
 #ifdef __linux__
   CORO::sync_wait(run());
 
-#elif __WIN32__
-  CORO::sync_wait(run());
+// #elif __WIN32__
+//   CORO::sync_wait(run());
 
 #endif
   return 0;
