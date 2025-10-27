@@ -9,6 +9,7 @@
 #include <set>
 #include <map>
 #include <unordered_map>
+#include <any>
 
 #include <fmt/format.h>
 #include <fmt/ranges.h>   // ✅ 必须要加，才能打印 STL 容器
@@ -257,6 +258,24 @@ auto main() -> int {
 
 
     ff1();
+
+    std::unordered_map<std::string, std::any> dict;
+
+    dict["age"] = 30;                  // int
+    dict["name"] = std::string("Alice"); // std::string
+    dict["pi"] = 3.14159;              // double
+    dict["p"] = p;
+    dict.emplace("p2", p);
+
+    // 访问
+    try {
+        std::cout << std::any_cast<int>(dict["age"]) << "\n";
+        std::cout << std::any_cast<std::string>(dict["name"]) << "\n";
+        std::cout << std::any_cast<double>(dict["pi"]) << "\n";
+        std::cout << std::any_cast<Person>(dict["p"]) << "\n";
+    } catch (const std::bad_any_cast& e) {
+        std::cout << "类型错误: " << e.what() << "\n";
+    }
 }
 
 auto push_func(std::vector<void(*)()>& v){
@@ -277,5 +296,6 @@ auto ff1() -> void {
     for (auto f: v) {
         f();
     }
+
 
 }
