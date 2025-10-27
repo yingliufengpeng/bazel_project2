@@ -5,7 +5,13 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <unordered_set>
+#include <set>
+#include <map>
+#include <unordered_map>
+
 #include <fmt/format.h>
+#include <fmt/ranges.h>   // ✅ 必须要加，才能打印 STL 容器
 
 #define VARIABLE(n, ...) int n;
 #define INIT_VARIABLE(n, init) this -> n = (init);
@@ -109,8 +115,26 @@ struct Person {
         return *this;
     };
 
+    bool operator==(const Person& p) const {
+        return i == p.i && j == p.j && name == p.name;
+    }
+
+    bool operator <(const Person& p) const {
+        return i < p.i && j < p.j;
+    }
+
 
 };
+
+namespace std {
+
+    template<>
+    struct hash<Person> {
+        std::size_t operator()(const Person& p) const noexcept {
+            return std::hash<int>()(p.i) ^ std::hash<int>()(p.i) ^ (std::hash<std::string>()(p.name) << 1);
+        }
+    };
+}
 
 auto make_person() -> Person {
     auto p = Person(1, 2, "aa");
@@ -127,6 +151,19 @@ std::ostream& operator<<(std::ostream& os, const Person& person) {
     return os;
 }
 
+
+// 为 Person 定义 formatter
+template <>
+struct fmt::formatter<Person> {
+    // 告诉 fmt 不需要特别的解析逻辑
+    constexpr auto parse(fmt::format_parse_context& ctx) { return ctx.begin(); }
+
+    // 👇 注意最后的 const！MSVC 必须加
+    template <typename FormatContext>
+    auto format(const Person& p, FormatContext& ctx) const {
+        return fmt::format_to(ctx.out(), "{{i: {}, j: {}, name: {}}}", p.i, p.j, p.name);
+    }
+};
 auto main() -> int {
 
     std::vector<F*> vec;
@@ -185,5 +222,34 @@ auto main() -> int {
     p4 = std::move(p5);
     std::cout << p4 << std::endl;
     std::cout << p5 << std::endl;
+
+    std::cout << "Person in set/map usage" << std::endl;
+
+    std::unordered_set<Person> s;
+    s.insert({1, 11, "Alice"});
+    s.insert({2, 22, "Bob"});
+    fmt::print("people = {}\n", s);  // ✅ 自动打印
+
+
+    std::set<Person> s2;
+    s2.insert({1, 11, "Alice"});
+    s2.insert({2, 22, "Alice"});
+    fmt::print("people = {}\n", s2);  // ✅ 自动打印
+
+
+    std::map<std::string, Person> map1;
+    map1.insert({"32", Person{2,3,"two"}});
+    map1.insert({"33", Person{2,33,"two"}});
+    fmt::print("people = {}\n", map1);  // ✅ 自动打印
+
+    std::unordered_map<std::string, Person> map2;
+    map2.insert({"32", Person{2,3,"two"}});
+    map2.insert({"33", Person{2,33,"two"}});
+    fmt::print("people = {}\n", map2);  // ✅ 自动打印
+
+    std::vector<Person> vec3;
+    vec3.push_back({3, 4, "44"});
+    vec3.push_back({4, 5, "45"});
+    fmt::print("people = {}\n", vec3);  // ✅ 自动打印
 
 }
