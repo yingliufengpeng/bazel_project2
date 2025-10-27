@@ -97,7 +97,7 @@ struct Person {
 
     Person(int i, int j, std::string&& name = ""): i(i), j(j), name(std::move(name)) {}
 
-    Person(Person& p) = default;
+    Person(const Person& p) = default;
 
     Person(Person&& p) noexcept {
         std::cout << "Person&& is processing" << std::endl;
@@ -107,7 +107,7 @@ struct Person {
     };
 
 
-    Person& operator=(Person& p) = default;
+    Person& operator=(const Person& p) = default;
     Person& operator=(Person&& p) noexcept {
         i = p.i;
         j = p.j;
