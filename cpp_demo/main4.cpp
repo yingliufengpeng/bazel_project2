@@ -70,7 +70,7 @@ auto push_func(std::vector<F*>& vec) {
     auto m = +[](int a, int b) -> int {
         return a + b;
     };
-    vec.push_back(m);
+    vec.emplace_back(m);
 }
 
 auto push_func2(std::vector<std::function<F>>& vec) {
@@ -85,8 +85,8 @@ auto push_func2(std::vector<std::function<F>>& vec) {
         return a + b + p -> age;
     };
 
-    vec.push_back(m);
-    vec.push_back(m2);
+    vec.emplace_back(m);
+    vec.emplace_back(m2);
 }
 
 struct Person {
