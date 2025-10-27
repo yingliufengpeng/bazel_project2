@@ -5,15 +5,46 @@
 #include <functional>
 #include <iostream>
 
+#define VARIABLE(n) int n;
+#define INIT_VARIABLE(n, init) this -> n = (init);
+
+#define PRINT_IMPL(n, u) ((u).n)
+#define PRINT(n, os, u) (os) << PRINT_IMPL(n, u) << "," ;
+
+
+#define MULTI_VARIABLE(_, ...) \
+_(CPU_INDEX, __VA_ARGS__) \
+_(GPU_INDEX, __VA_ARGS__)
+
+
+
+
+
 struct User {
     int id;
     int age;
+    MULTI_VARIABLE(VARIABLE)
+
+    explicit User() {
+        id = age = 0;
+        MULTI_VARIABLE(INIT_VARIABLE, 10)
+    }
 
     ~User() {
         std::cout << "~User()" << std::endl;
         age = 0;
     }
 };
+
+std::ostream& operator<<(std::ostream& os, const User& user) {
+    os << "{";
+    os << user.id << ", ";
+    os << user.age << ", ";
+
+    MULTI_VARIABLE(PRINT, os, user)
+    os << "}";
+    return os;
+}
 
 using F = auto (int, int) -> int;
 
@@ -32,7 +63,7 @@ auto push_func2(std::vector<std::function<F>>& vec) {
     p -> age = 4;
 
     auto m2 = [p](int a, int b) -> int {
-
+        std::cout << "p is " << *p << std::endl;
         return a + b + p -> age;
     };
 
