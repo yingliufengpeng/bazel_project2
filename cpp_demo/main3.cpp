@@ -7,6 +7,8 @@
 #include <utility>
 #include <thread>
 #include <vector>
+#include <functional>
+
 
 #include "main_extend.h"
 #include "utils.h"
@@ -453,6 +455,13 @@ CORO::task<void> run() {
 }
 #endif
 
+void hello() { std::cout << "Hello!\n"; }
+
+
+auto register_callback(std::function<void()> && cb) -> void {
+  cb();
+}
+
 int main() {
 
   auto o1 = O<O<O<int8_t>>>();
@@ -694,5 +703,42 @@ int main() {
 //   CORO::sync_wait(run());
 
 #endif
+
+  auto f1 = +[]() -> void {
+    std::cout << "f1()" << std::endl;
+  };
+
+  std::function s_f1 = f1;
+  std::function s_f2 = hello;
+
+
+  // 尝试获取原始函数指针
+  if (auto p = s_f1.target<void(*)()>()) {
+    std::cout << "Got target successfully in sf1.\n";
+    (*p)();  // 调用原函数 -> 输出 Hello!
+  } else {
+    std::cout << "Type mismatch.\n";
+  }
+
+  // 尝试获取原始函数指针
+  if (auto p = s_f2.target<void(*)()>()) {
+    std::cout << "Got target successfully.\n";
+    (*p)();  // 调用原函数 -> 输出 Hello!
+  } else {
+    std::cout << "Type mismatch in sf2.\n";
+  }
+
+  // 尝试获取原始函数指针
+  if (auto p = s_f2.target<std::add_pointer_t<decltype(hello)>>()) {
+    std::cout << "Got target successfully.\n";
+    (*p)();  // 调用原函数 -> 输出 Hello!
+  } else {
+    std::cout << "Type mismatch in sf2.\n";
+  }
+
+
+  register_callback([]() -> void { std::cout << "hello, world" << std::endl ; });
+  register_callback(f1);
+  register_callback(std::move(s_f1));
   return 0;
 }
