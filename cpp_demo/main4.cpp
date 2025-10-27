@@ -4,8 +4,9 @@
 
 #include <functional>
 #include <iostream>
+#include <memory>
 
-#define VARIABLE(n) int n;
+#define VARIABLE(n, ...) int n;
 #define INIT_VARIABLE(n, init) this -> n = (init);
 
 #define PRINT_IMPL(n, u) ((u).n)
@@ -15,8 +16,6 @@
 #define MULTI_VARIABLE(_, ...) \
 _(CPU_INDEX, __VA_ARGS__) \
 _(GPU_INDEX, __VA_ARGS__)
-
-
 
 
 
