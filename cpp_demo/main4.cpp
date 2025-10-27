@@ -83,6 +83,49 @@ auto push_func2(std::vector<std::function<F>>& vec) {
     vec.push_back(m2);
 }
 
+struct Person {
+    int i;
+    int j;
+    std::string name;
+    Person() = default;
+
+    Person(int i, int j, std::string&& name = ""): i(i), j(j), name(std::move(name)) {}
+
+    Person(Person& p) = default;
+
+    Person(Person&& p) noexcept {
+        std::cout << "Person&& is processing" << std::endl;
+        i = p.i;
+        j = p.j;
+        name = std::move(p.name);
+    };
+
+
+    Person& operator=(Person& p) = default;
+    Person& operator=(Person&& p) noexcept {
+        i = p.i;
+        j = p.j;
+        name = std::move(p.name);
+        return *this;
+    };
+
+
+};
+
+auto make_person() -> Person {
+    auto p = Person(1, 2, "aa");
+    return std::move(p);
+}
+
+
+std::ostream& operator<<(std::ostream& os, const Person& person) {
+
+    auto s = fmt::format("{}, {}, {}", person.i, person.j, person.name);
+    os << "{";
+    os << s;
+    os << "}";
+    return os;
+}
 
 auto main() -> int {
 
@@ -112,5 +155,35 @@ auto main() -> int {
     }
 
 
+
+    auto p = Person(3, 4, "ok");
+    std::cout << p << std::endl;
+
+    auto p2 = Person(3, 4, "ok2");
+    std::cout << p2 << std::endl;
+
+
+    auto p3 = p2;
+    std::cout << p3 << std::endl;
+    std::cout << p2 << std::endl;
+
+
+    p3 = Person(3, 4, "ok3");
+    std::cout << p3 << std::endl;
+
+    std::cout << "p4 is processing" << std::endl;
+    auto p4 = make_person();
+    std::cout << p4 << std::endl;
+
+    std::cout << "p5 is processing" << std::endl;
+    auto p5 = std::move(p4);
+    std::cout << p5 << std::endl;
+    std::cout << p4 << std::endl;
+
+    std::cout << "= is processing" << std::endl;
+
+    p4 = std::move(p5);
+    std::cout << p4 << std::endl;
+    std::cout << p5 << std::endl;
 
 }
