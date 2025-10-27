@@ -134,5 +134,5 @@ cc_binary(
 cc_binary(
     name = "my_app4",
     srcs = ["main4.cpp"],
-    deps = [],
+    deps = ["@fmt"],
 )

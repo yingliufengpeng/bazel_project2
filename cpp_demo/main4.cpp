@@ -5,19 +5,32 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <fmt/format.h>
 
 #define VARIABLE(n, ...) int n;
 #define INIT_VARIABLE(n, init) this -> n = (init);
 
 #define PRINT_IMPL(n, u) ((u).n)
-#define PRINT(n, os, u) (os) << PRINT_IMPL(n, u) << "," ;
+#define PRINT(n, u) os << PRINT_IMPL(n, u) << "," ;
+
+
+auto add_context(std::string&& a, std::string&& b = "") -> void {
+    std::cout << "error : " << a << ", " << b;
+}
+
+
 
 
 #define MULTI_VARIABLE(_, ...) \
 _(CPU_INDEX, __VA_ARGS__) \
 _(GPU_INDEX, __VA_ARGS__)
 
-
+#define TORCH_RETHROW(e, ...)               \
+do {                                        \
+    add_context(__VA_ARGS__);               \
+    throw std::runtime_error(                \
+    std::string(#e) + "--" + fmt::format(__VA_ARGS__)); \
+} while (false)
 
 struct User {
     int id;
@@ -40,7 +53,7 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
     os << user.id << ", ";
     os << user.age << ", ";
 
-    MULTI_VARIABLE(PRINT, os, user)
+    MULTI_VARIABLE(PRINT, user)
     os << "}";
     return os;
 }
@@ -88,5 +101,16 @@ auto main() -> int {
     }
 
     std::cout << "Hello World!\n";
+    add_context("ll");
+    add_context("aa", "bb");
+
+    try {
+        TORCH_RETHROW("memory error", " role: system ", " action: delete ");
+
+    } catch (const std::exception& e) {
+        std::cout << e.what() << std::endl;
+    }
+
+
 
 }
