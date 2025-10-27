@@ -232,8 +232,8 @@ auto main() -> int {
 
 
     std::set<Person> s2;
-    s2.insert({1, 11, "Alice"});
-    s2.insert({2, 22, "Alice"});
+    s2.emplace(1, 11, "Alice");
+    s2.emplace(2, 22, "Alice");
     fmt::print("people = {}\n", s2);  // ✅ 自动打印
 
 
