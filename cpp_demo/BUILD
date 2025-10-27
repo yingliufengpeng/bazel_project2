@@ -130,3 +130,9 @@ cc_binary(
         "@vcpkg",
     ],
 )
+
+cc_binary(
+    name = "my_app4",
+    srcs = ["main4.cpp"],
+    deps = [],
+)

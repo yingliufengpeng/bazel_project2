@@ -41,6 +41,7 @@ inline void ff1() {
 
 
 void ff3();
+void ff4();
 
 inline void ff2() {
     std::cout << "ff2" << std::endl;
@@ -62,6 +63,8 @@ inline void ff2() {
     std::cout << std::endl;
 
     ff3();
+
+    ff4();
 }
 
 
@@ -91,5 +94,20 @@ inline void ff3() {
     std::cout << "ff3 end" << std::endl;
 }
 
+static std::string global_str = "globacl hello world";
 
+inline auto get_string() -> std::string&& {
+    return std::move(global_str);  // ✅ 合法
+}
+
+
+inline void ff4() {
+    std::cout << "global_str = " << global_str << std::endl;
+    auto r = get_string();
+    r = "ok";
+    std::cout << r << std::endl;
+
+
+
+}
 #endif //MAIN_EXTEND_H
