@@ -238,18 +238,18 @@ auto main() -> int {
 
 
     std::map<std::string, Person> map1;
-    map1.insert({"32", Person{2,3,"two"}});
-    map1.insert({"33", Person{2,33,"two"}});
+    map1.emplace("32", Person{2,3,"two"});
+    map1.emplace("33", Person{2,33,"two"});
     fmt::print("people = {}\n", map1);  // ✅ 自动打印
 
     std::unordered_map<std::string, Person> map2;
-    map2.insert({"32", Person{2,3,"two"}});
-    map2.insert({"33", Person{2,33,"two"}});
+    map2.emplace("32", Person{2,3,"two"});
+    map2.emplace("33", Person{2,33,"two"});
     fmt::print("people = {}\n", map2);  // ✅ 自动打印
 
     std::vector<Person> vec3;
-    vec3.push_back({3, 4, "44"});
-    vec3.push_back({4, 5, "45"});
+    vec3.emplace_back(3, 4, "44");
+    vec3.emplace_back(4, 5, "45");
     fmt::print("people = {}\n", vec3);  // ✅ 自动打印
 
 }
