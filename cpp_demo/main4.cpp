@@ -164,6 +164,9 @@ struct fmt::formatter<Person> {
         return fmt::format_to(ctx.out(), "{{i: {}, j: {}, name: {}}}", p.i, p.j, p.name);
     }
 };
+
+auto ff1() -> void ;
+
 auto main() -> int {
 
     std::vector<F*> vec;
@@ -251,5 +254,28 @@ auto main() -> int {
     vec3.emplace_back(3, 4, "44");
     vec3.emplace_back(4, 5, "45");
     fmt::print("people = {}\n", vec3);  // ✅ 自动打印
+
+
+    ff1();
+}
+
+auto push_func(std::vector<void(*)()>& v){
+    static int i = 0;
+    auto f = +[]() -> void  {
+        // std::cout << "push_func()  i " << i << std::endl;
+        fmt::print("push_func() {}\n", i++);
+    };
+    v.emplace_back(f);
+}
+
+auto ff1() -> void {
+    std::vector<void(*)()> v;
+    for (int i = 1; i < 100; ++i) {
+        push_func(v);
+    }
+
+    for (auto f: v) {
+        f();
+    }
 
 }

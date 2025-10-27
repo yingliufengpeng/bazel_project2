@@ -134,5 +134,10 @@ cc_binary(
 cc_binary(
     name = "my_app4",
     srcs = ["main4.cpp"],
+    copts = select({
+        "@platforms//os:linux": ["-std=c++20"],
+        "@platforms//os:windows": ["/std:c++20"],
+        "//conditions:default": [],
+    }),
     deps = ["@fmt"],
 )
