@@ -12,7 +12,7 @@
 #include "utils.h"
 #include "Buffer.h"
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
   #include <coro/coro.hpp>
 
 #elif defined(_WIN32) || defined(_WIN64)
@@ -686,7 +686,8 @@ int main() {
 
   std::cout << "最终 count = " << c2.count << " (理论上应为 100000)" << std::endl;
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
+
   CORO::sync_wait(run());
 
 // #elif __WIN32__
