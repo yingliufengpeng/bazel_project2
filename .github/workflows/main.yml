@@ -1,9 +1,38 @@
+name: Bazel CI
 
-  name: Setup bazelisk for Bazel builds
-  # You may pin to the exact commit or the version.
-  # uses: holvonix-open/setup-bazelisk@461095abb6f789e6093c2165080d0ce1db13f2ba
-  uses: holvonix-open/setup-bazelisk@v0.6.1
-  with:
-    # Version of @bazel/bazelisk npm package
-    bazeliskVersion: # default is latest
-          
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        
+        steps:
+            # 1️⃣ Checkout 仓库
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            
+            # 2️⃣ Setup Bazelisk
+            - name: Setup Bazelisk for Bazel builds
+              uses: holvonix-open/setup-bazelisk@v0.6.1
+              with:
+                  # 固定 Bazelisk 版本
+                  bazeliskVersion: "1.20.0"
+             
+            # 4️⃣ Verify Bazel installation
+            - name: Check Bazel version
+              run: |
+                  bazelisk version
+            
+            # 5️⃣ Build the project
+            - name: Bazel build
+              run: |
+                  bazelisk build //cpp_demo/...
+            
+            # 6️⃣ Run tests
+            - name: Bazel test
+              run: |
+                  bazelisk test //...
