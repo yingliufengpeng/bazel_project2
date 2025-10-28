@@ -15,28 +15,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ 安装 Bazelisk（关闭缓存）
-      - name: Setup Bazelisk
-        uses: bazelbuild/setup-bazelisk@v2
-        with:
-          bazelisk-version: "v1.27.0"
-          token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          ACTIONS_CACHE_URL: "none"   # 🚫 明确禁用 cache
-          ACTIONS_RUNTIME_TOKEN: ""   # 🚫 不传 runtime token，彻底关闭缓存 API
-
-      # 3️⃣ 显示版本
-      - name: Check Bazelisk version
+      # 2️⃣ 手动安装 Bazelisk（稳定方案）
+      - name: Install Bazelisk manually
         run: |
-          which bazelisk
+          echo "== Downloading Bazelisk =="
+          wget -O /usr/local/bin/bazelisk https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-linux-amd64
+          chmod +x /usr/local/bin/bazelisk
+          echo "== Bazelisk version =="
           bazelisk version
 
-      # 4️⃣ 构建
-      - name: Build with Bazel
+      # 3️⃣ 构建项目
+      - name: Build project
         run: |
+          echo "== Start building =="
           bazelisk build //cpp_demo/...
 
-      # 5️⃣ 测试
-      - name: Test with Bazel
+      # 4️⃣ 运行测试
+      - name: Run tests
         run: |
+          echo "== Run tests =="
           bazelisk test //python_bind6/...
+
+      # 5️⃣ （可选）上传构建产物
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bazel-bin-artifacts
+          path: bazel-bin/
