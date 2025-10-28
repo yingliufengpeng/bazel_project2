@@ -22,24 +22,20 @@
 
 #define P_API
 
-
-
 auto add_context(std::string&& a, std::string&& b = "") -> void {
     std::cout << "error : " << a << ", " << b;
 }
-
-
 
 
 #define MULTI_VARIABLE(_, ...) \
 _(CPU_INDEX, __VA_ARGS__) \
 _(GPU_INDEX, __VA_ARGS__)
 
-#define TORCH_RETHROW(e, ...)               \
-do {                                        \
-    add_context(__VA_ARGS__);               \
-    throw std::runtime_error(                \
-    std::string(#e) + "--" + fmt::format(__VA_ARGS__)); \
+#define TORCH_RETHROW(e, ...)                               \
+do {                                                        \
+    add_context(__VA_ARGS__);                               \
+    throw std::runtime_error(                               \
+    std::string(#e) + "--" + fmt::format(__VA_ARGS__));     \
 } while (false)
 
 struct User {
@@ -97,6 +93,7 @@ struct Person {
     int i;
     int j;
     std::string name;
+
     Person() = default;
 
     Person(int i, int j, std::string&& name = ""): i(i), j(j), name(std::move(name)) {}
@@ -110,8 +107,8 @@ struct Person {
         name = std::move(p.name);
     };
 
-
     Person& operator=(const Person& p) = default;
+
     Person& operator=(Person&& p) noexcept {
         i = p.i;
         j = p.j;
@@ -315,8 +312,6 @@ auto ff1() -> void {
 
 P_API auto compile_str_to_img() -> void {
     std::cout << fmt::format("compile str to img  in {}", __func__) << std::endl;
-
-
 }
 
 
@@ -324,7 +319,6 @@ struct Item {
     int i;
     int j;
     std::string s;
-
 
     Item() : i(0), j(0), s("default") {
         std::cout << "Item constructed\n";
@@ -334,6 +328,8 @@ struct Item {
     }
 };
 
+
+auto ff3() -> void;
 
 auto ff2() -> void {
     alignas(Item) char arr[sizeof(Item) + 100];  // ✅ 确保对齐正确
@@ -348,5 +344,41 @@ auto ff2() -> void {
 
     p->~Item();  // ✅ 手动析构
 
+    ff3();
+}
 
+
+
+std::ostream& operator<<(std::ostream& os, const Item& item) {
+    os << "{";
+    os << fmt::format("{}, {}, {}", item.i, item.j, item.s);
+    os << "}";
+    return os;
+}
+
+template<typename T>
+auto init_T() -> void {
+
+    // alignas(T) char arr[sizeof(T)];
+    typename std::aligned_storage<sizeof(T), alignof(T)>::type arr;
+    // T* p = new (&arr) T();  // placement new
+
+    T* p = new (&arr) T();
+
+    if constexpr (std::is_pointer_v<T>) {
+        std::cout << "p is ----- " << p << std::endl;
+    } else {
+        std::cout << "p is ----- " << *p << std::endl;
+
+    }
+
+    p -> ~T();
+}
+
+auto ff3() -> void {
+
+    init_T<Item>();
+    init_T<size_t>();
+    init_T<std::string>();
+    init_T<char*>();
 }
