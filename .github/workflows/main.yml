@@ -15,24 +15,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Bazelisk (官方推荐)
-      - name: Setup Bazelisk (official)
+      # 2️⃣ 安装 Bazelisk（官方维护版本）
+      - name: Setup Bazelisk
         uses: bazelbuild/setup-bazelisk@v2
         with:
-          bazelisk-version: "v1.27.0"   # ✅ 指定一个稳定版本
+          bazelisk-version: "v1.27.0"
           token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          ACTIONS_CACHE_URL: ""   # ✅ 禁止 Bazelisk 缓存，避免 "Cache service responded with 400"
 
-      # 3️⃣ 查看 Bazel 版本
-      - name: Check Bazel version
+      # 3️⃣ 显示 Bazelisk / Bazel 版本
+      - name: Verify Bazelisk and Bazel
         run: |
-          bazel version
+          which bazelisk
+          bazelisk version
 
       # 4️⃣ 构建项目
-      - name: Bazel build
+      - name: Build project
         run: |
-          bazel build //cpp_demo/...
+          bazelisk build //cpp_demo/...
 
       # 5️⃣ 运行测试
-      - name: Bazel test
+      - name: Run Bazel tests
         run: |
-          bazel test //python_bind6/...
+          bazelisk test //python_bind6/...
