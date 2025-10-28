@@ -11,17 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout 仓库代码
+      # 1️⃣ Checkout 仓库
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Bazelisk（官方推荐）
+      # 2️⃣ Setup Bazelisk (官方推荐)
       - name: Setup Bazelisk (official)
         uses: bazelbuild/setup-bazelisk@v2
         with:
-          bazelisk-cache: true  # ✅ 启用缓存加速
+          bazelisk-version: "v1.27.0"   # ✅ 指定一个稳定版本
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3️⃣ 显示 Bazel/Bazelisk 版本信息
+      # 3️⃣ 查看 Bazel 版本
       - name: Check Bazel version
         run: |
           bazel version
