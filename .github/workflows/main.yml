@@ -1,38 +1,37 @@
 name: Bazel CI
 
 on:
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        
-        steps:
-            # 1️⃣ Checkout 仓库
-            - name: Checkout repository
-              uses: actions/checkout@v3
-            
-            # 2️⃣ Setup Bazelisk
-            - name: Setup Bazelisk for Bazel builds
-              uses: holvonix-open/setup-bazelisk@v0.6.1
-              with:
-                  # 固定 Bazelisk 版本
-                  bazeliskVersion: "1.20.0"
-             
-            # 4️⃣ Verify Bazel installation
-            - name: Check Bazel version
-              run: |
-                  bazelisk version
-            
-            # 5️⃣ Build the project
-            - name: Bazel build
-              run: |
-                  bazelisk build //cpp_demo/...
-            
-            # 6️⃣ Run tests
-            - name: Bazel test
-              run: |
-                bazelisk test //python_bind6/..
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout 仓库代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Bazelisk（官方推荐）
+      - name: Setup Bazelisk (official)
+        uses: bazelbuild/setup-bazelisk@v2
+        with:
+          bazelisk-cache: true  # ✅ 启用缓存加速
+
+      # 3️⃣ 显示 Bazel/Bazelisk 版本信息
+      - name: Check Bazel version
+        run: |
+          bazel version
+
+      # 4️⃣ 构建项目
+      - name: Bazel build
+        run: |
+          bazel build //cpp_demo/...
+
+      # 5️⃣ 运行测试
+      - name: Bazel test
+        run: |
+          bazel test //python_bind6/...
