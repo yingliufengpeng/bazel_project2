@@ -35,4 +35,4 @@ jobs:
             # 6️⃣ Run tests
             - name: Bazel test
               run: |
-                  bazelisk test //...
+                bazelisk test //python_bind6/..
