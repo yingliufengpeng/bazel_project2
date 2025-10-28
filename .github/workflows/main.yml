@@ -1,1 +1,9 @@
 
+  name: Setup bazelisk for Bazel builds
+  # You may pin to the exact commit or the version.
+  # uses: holvonix-open/setup-bazelisk@461095abb6f789e6093c2165080d0ce1db13f2ba
+  uses: holvonix-open/setup-bazelisk@v0.6.1
+  with:
+    # Version of @bazel/bazelisk npm package
+    bazeliskVersion: # default is latest
+          
