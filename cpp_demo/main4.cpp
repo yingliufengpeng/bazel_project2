@@ -292,6 +292,7 @@ auto push_func(std::vector<void(*)()>& v){
 
 
 P_API auto compile_str_to_img() -> void;
+auto ff2() -> void;
 
 auto ff1() -> void {
     std::vector<void(*)()> v;
@@ -307,11 +308,45 @@ auto ff1() -> void {
 
     std::cout << fmt::format("start processing {} {} {}", __FILE__, __FUNCTION__, __LINE__) << std::endl;
     compile_str_to_img();
+
+    ff2();
 }
 
 
 P_API auto compile_str_to_img() -> void {
     std::cout << fmt::format("compile str to img  in {}", __func__) << std::endl;
+
+
+}
+
+
+struct Item {
+    int i;
+    int j;
+    std::string s;
+
+
+    Item() : i(0), j(0), s("default") {
+        std::cout << "Item constructed\n";
+    }
+    ~Item() {
+        std::cout << "Item destructed\n";
+    }
+};
+
+
+auto ff2() -> void {
+    alignas(Item) char arr[sizeof(Item) + 100];  // ✅ 确保对齐正确
+
+    Item* p = new (arr) Item();
+
+    p->i = 1;
+    p->j = 2;
+    p->s = "hello";
+
+    std::cout << fmt::format("value {} {} {}", p->i, p->j, p->s ) << std::endl;
+
+    p->~Item();  // ✅ 手动析构
 
 
 }
