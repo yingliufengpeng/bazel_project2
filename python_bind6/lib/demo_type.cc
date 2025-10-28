@@ -181,13 +181,14 @@ static PyMemberDef Demo_members[] = {
     {NULL}  // 哨兵，必须以 NULL 结尾
 };
 
+static int Demo_clear(DemoObject* self);
 static void Demo_dealloc(DemoObject* self)
 {
     auto m = Py_REFCNT(self);
     std::cout << "Demo_dealloc current self's refcnt is " << "self's name is " << self -> name << m << std::endl;
 
     PyObject_GC_UnTrack(self);   // 1. 先让 GC 不再跟踪该对象
-    Py_CLEAR(self->name);         // 2. 清理 PyObject* 成员
+    Demo_clear(self);
     Py_TYPE(self)->tp_free((PyObject*)self); // 3. 释放对象内存
 }
 static PyObject* Demo_new(PyTypeObject* type, PyObject* args, PyObject* kwds)

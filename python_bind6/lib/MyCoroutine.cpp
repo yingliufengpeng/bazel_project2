@@ -31,20 +31,25 @@ PyObject* MyCoroutine_await(MyCoroutineObject* self) {
     // Create a Future instance
     PyObject *future = PyObject_CallNoArgs(future_class);
     Py_DECREF(future_class);
-    Py_DECREF(loop);
     if (future == NULL) {
+        Py_DECREF(loop);
+
         return NULL;
     }
 
     // Set a result immediately (e.g., 42) for simplicity
     PyObject *result = PyLong_FromLong(self ->value);
     if (result == NULL) {
+        Py_DECREF(loop);
+
         Py_DECREF(future);
         return NULL;
     }
     PyObject *set_result = PyObject_CallMethod(future, "set_result", "(O)", result);
     Py_DECREF(result);
     if (set_result == NULL) {
+        Py_DECREF(loop);
+
         Py_DECREF(future);
         return NULL;
     }
@@ -53,12 +58,15 @@ PyObject* MyCoroutine_await(MyCoroutineObject* self) {
     // Call Future.__await__ to get the iterator
     PyObject *await_method = PyObject_GetAttrString(future, "__await__");
     if (await_method == NULL) {
+        Py_DECREF(loop);
         Py_DECREF(future);
         return NULL;
     }
     PyObject *iterator = PyObject_CallNoArgs(await_method);
     Py_DECREF(await_method);
     Py_DECREF(future);
+    Py_DECREF(loop);
+
     if (iterator == NULL) {
         return NULL;
     }
@@ -75,7 +83,7 @@ static PyType_Slot MyCoroutine_slots[] = {
 static PyType_Spec MyCoroutine_spec = {
     .name = "MyCoroutine",
     .basicsize = sizeof(MyCoroutineObject),
-    .flags = Py_TPFLAGS_DEFAULT,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
     .slots = MyCoroutine_slots,
 };
 PyObject* MyCoroutine_New(int value) {

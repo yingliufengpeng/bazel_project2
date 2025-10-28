@@ -102,7 +102,5 @@ class TestBasic(unittest.TestCase):
         anyio.run(f)
 
 
-
-
 if __name__ == "__main__":
     unittest.main()
