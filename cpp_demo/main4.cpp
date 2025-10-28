@@ -20,6 +20,9 @@
 #define PRINT_IMPL(n, u) ((u).n)
 #define PRINT(n, u) os << PRINT_IMPL(n, u) << "," ;
 
+#define P_API
+
+
 
 auto add_context(std::string&& a, std::string&& b = "") -> void {
     std::cout << "error : " << a << ", " << b;
@@ -287,6 +290,9 @@ auto push_func(std::vector<void(*)()>& v){
     v.emplace_back(f);
 }
 
+
+P_API auto compile_str_to_img() -> void;
+
 auto ff1() -> void {
     std::vector<void(*)()> v;
     for (int i = 1; i < 100; ++i) {
@@ -296,6 +302,16 @@ auto ff1() -> void {
     for (auto f: v) {
         f();
     }
+
+    // std::cout << "start processing ..." << __func__  << "  " << __FILE__ << std::endl;
+
+    std::cout << fmt::format("start processing {} {} {}", __FILE__, __FUNCTION__, __LINE__) << std::endl;
+    compile_str_to_img();
+}
+
+
+P_API auto compile_str_to_img() -> void {
+    std::cout << fmt::format("compile str to img  in {}", __func__) << std::endl;
 
 
 }
