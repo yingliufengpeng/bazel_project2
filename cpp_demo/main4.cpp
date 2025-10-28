@@ -360,7 +360,8 @@ template<typename T>
 auto init_T() -> void {
 
     // alignas(T) char arr[sizeof(T)];
-    typename std::aligned_storage<sizeof(T), alignof(T)>::type arr;
+    // typename std::aligned_storage<sizeof(T), alignof(T)>::type arr;
+    std::aligned_storage_t<sizeof(T), alignof(T)> arr;
     // T* p = new (&arr) T();  // placement new
 
     T* p = new (&arr) T();
