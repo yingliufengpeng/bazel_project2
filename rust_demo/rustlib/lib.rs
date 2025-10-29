@@ -7,10 +7,17 @@ pub struct Person {
     age: i32,
 }
 
+enum Mode {
+
+    Push,
+    Pop
+}
+
 #[derive(Debug)]
 struct Student {
     name: String,
     age: i32,
+    mode: Mode,
     vec: Vec<String>,
 }
 
@@ -18,7 +25,7 @@ struct Student {
 
 impl Student {
     pub fn new(name: String, age: i32) -> Self {
-        Student { name, age, vec: vec![] }
+        Student { name, age, vec: vec![], mode: Mode::Push }
     }
 
     pub fn add(&mut self, message: String) {
