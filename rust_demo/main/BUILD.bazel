@@ -8,5 +8,5 @@ cc_binary(
     ],
     deps = [
         "//rust_demo/rustlib",
-    ],  # 链接 Rust 库
+    ],
 )
