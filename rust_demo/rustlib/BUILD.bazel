@@ -1,4 +1,5 @@
 load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust_pyo3//:defs.bzl", "pyo3_extension", "pyo3_toolchain")
 
 rust_library(
     name = "rustlib",
@@ -9,10 +10,22 @@ rust_library(
     rustc_flags = [
         "--crate-type=staticlib",
     ],
+    crate_features = ["extension-module", "abi3-py313"],
+
     visibility = ["//rust_demo/main:__pkg__"],
     deps = [
         "@my_crates//:rand",
         "@my_crates//:serde",
         "@my_crates//:tempfile",
+
     ],
+)
+
+pyo3_extension(
+    name = "pylib",
+    srcs = [],
+    deps = [
+        ":rustlib",
+        "@my_crates//:pyo3"
+    ]
 )

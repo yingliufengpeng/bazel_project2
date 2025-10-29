@@ -37,7 +37,7 @@ bazel_dep(name = "platforms", version = "1.0.0")
 # 引入 rules_nodejs
 bazel_dep(name = "rules_nodejs", version = "6.5.0")
 
-PYTHON_VERSION = "3.13"
+PYTHON_VERSION = "3.12"
 
 # Configure Python toolchain
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
@@ -239,6 +239,11 @@ git_override(
 )
 
 bazel_dep(name = "rules_rust", version = "0.67.0")
+bazel_dep(name = "rules_rust_pyo3", version = "0.67.0")
+
+# Configure the toolchain for PyO3
+pyo3_toolchain = use_extension("@rules_rust_pyo3//:extensions.bzl", "pyo3_toolchain")
+pyo3_toolchain.register_toolchains()
 
 # 启用扩展，导入工具链
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")

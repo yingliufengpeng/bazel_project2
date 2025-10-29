@@ -7,6 +7,6 @@ cc_binary(
         "@platforms//os:linux",  # 仅 Linux
     ],
     deps = [
-        "//rust_demo/rustlib",
+        "//rust_demo/rustlib:rustlib",
     ],
 )
