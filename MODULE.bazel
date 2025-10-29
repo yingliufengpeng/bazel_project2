@@ -20,6 +20,9 @@ bazel_dep(name = "rules_jvm_external", version = "6.3")
 bazel_dep(name = "rules_oci", version = "2.2.6")
 bazel_dep(name = "rules_java", version = "8.14.0")
 bazel_dep(name = "fmt", version = "12.0.0")
+bazel_dep(name = "jsoncpp", version = "1.9.6")
+bazel_dep(name = "nlohmann_json", version = "3.12.0")
+
 #bazel_dep(name = "ffmpeg_bazel_build", version = "8.11.0")
 #git_override(
 #    module_name = "ffmpeg_bazel_build",
@@ -241,9 +244,9 @@ bazel_dep(name = "rules_rust", version = "0.67.0")
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
     edition = "2024",
-    versions = ["1.85.0"],
+    versions = ["nightly"],
 )
-#use_repo(rust, "rust_toolchains")
+use_repo(rust, "rust_toolchains")
 
 # 启用 crate_universe 扩展（用来引入 crates.io 包）
 crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")

@@ -1,7 +1,12 @@
 cc_binary(
     name = "main",
     srcs = ["main.cc"],
+    # 在非 Linux 平台构建时，Bazel 会自动忽略此目标
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",  # 仅 x86_64
+        "@platforms//os:linux",  # 仅 Linux
+    ],
     deps = [
-        "//rust_demo/rustlib:rustlib"
-        ],  # 链接 Rust 库
+        "//rust_demo/rustlib",
+    ],  # 链接 Rust 库
 )

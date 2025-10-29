@@ -139,5 +139,9 @@ cc_binary(
         "@platforms//os:windows": ["/std:c++20"],
         "//conditions:default": [],
     }),
-    deps = ["@fmt"],
+    deps = [
+        "@fmt",
+        "@jsoncpp",
+        "@nlohmann_json//:json",
+    ],
 )

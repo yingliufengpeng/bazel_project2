@@ -10,6 +10,9 @@
 #include <map>
 #include <unordered_map>
 #include <any>
+#include <json/json.h>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 #include <fmt/format.h>
 #include <fmt/ranges.h>   // ✅ 必须要加，才能打印 STL 容器
@@ -376,10 +379,76 @@ auto init_T() -> void {
     p -> ~T();
 }
 
+auto ff4() -> size_t;
+
 auto ff3() -> void {
 
     init_T<Item>();
     init_T<size_t>();
     init_T<std::string>();
     init_T<char*>();
+
+    ff4();
+}
+
+
+struct PERSON {
+    std::string name;
+    int age;
+    std::vector<std::string> skills;
+    bool flag;
+    // NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PERSON, name, age, skills)
+
+    // NLOHMANN_DEFINE_TYPE_INTRUSIVE(PERSON, name, age, skills)
+
+    ~PERSON() {
+        std::cout << "PERSON destructed\n";
+    }
+
+};
+
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PERSON, name, age, skills, flag)
+
+
+auto ff5() -> void;
+auto ff4() -> size_t {
+    std::string raw = R"({"name":"Alice","age":30})";
+    Json::Value root;
+    Json::CharReaderBuilder reader;
+    std::string errs;
+
+    std::istringstream s(raw);
+    if (!Json::parseFromStream(reader, s, &root, &errs)) {
+        std::cerr << "Failed to parse JSON: " << errs << std::endl;
+        return 1;
+    }
+
+    std::cout << "name " << root["name"].asString() << std::endl;
+    std::cout << "age " <<  root["age"].asInt() << std::endl;
+
+
+    std::cout << "PERSON IS PROCESSING " << std::endl;
+    std::string s2 = R"({"name":"Alice","age":30,"skills":["C++","Python"], "flag": true})";
+    json j = json::parse(s2);
+    auto p = j.get<PERSON>();   // 一行解析到结构体
+
+    p.skills.push_back("Rust");
+    p.skills.push_back("C");
+    p.skills.push_back("Scala");
+    json j2 = p;
+    std::cout << j2 << std::endl;
+
+    ff5();
+    return 0;
+}
+
+
+auto ff5() -> void {
+    auto s = std::make_shared<PERSON>();
+
+    {
+        auto s = std::make_shared<PERSON>();
+    }
+
 }
