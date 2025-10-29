@@ -257,6 +257,13 @@ crate.from_cargo(
 )
 use_repo(crate, "my_crates")
 
+crate.from_cargo(
+    name = "pybind_rust_crates",
+    cargo_lockfile = "python_rust_bind7/Cargo.lock",
+    manifests = ["python_rust_bind7/Cargo.toml"],  # 指定一个 Cargo.toml，里面写依赖
+)
+use_repo(crate, "pybind_rust_crates")
+
 # 引入我们自定义的工具链扩展
 python_toolchain_ext = use_extension("//toolchain_demo:extensions.bzl", "python_toolchain_ext")
 use_repo(python_toolchain_ext, "py_toolchain_repo")

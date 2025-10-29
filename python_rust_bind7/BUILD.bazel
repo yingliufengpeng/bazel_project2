@@ -1,0 +1,9 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "main",
+    srcs = ["main.py"],
+    data = ["//python_rust_bind7/rust_demo:rust_demo"],  # 引入 Rust 动态库
+    deps = [],
+
+)

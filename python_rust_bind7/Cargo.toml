@@ -1,0 +1,13 @@
+[package]
+name = "python_rust_bind7"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+pyo3 = { version = "0.18", features = ["extension-module"] }
+
+
+[lib]
+path = "dummy.rs"
