@@ -14,19 +14,11 @@ struct Student {
     vec: Vec<String>,
 }
 
-fn main() {
-    let p = Person {
-        name: "Alice".to_string(),
-        age: 30,
-        vec: vec!["C++".to_string(), "Rust".to_string()],
-    };
 
-    println!("{:?}", p);
-}
 
 impl Student {
     pub fn new(name: String, age: i32) -> Self {
-        Person { name, age, vec: vec![] }
+        Student { name, age, vec: vec![] }
     }
 
     pub fn add(&mut self, message: String) {
@@ -43,10 +35,10 @@ pub extern "C" fn make_person() -> Person {
         age: 30,
     };
 
-    let mut m = Student::new(name.into_raw(), 30);
+    let mut m = Student::new("Alice".to_string(), 30);
     m.add("C++".to_string());
-    m.add("Python");
-    println!("Student: {#?}", m);
+    m.add("Python".to_string());
+    println!("Student: {:#?}", m);
     p
 }
 #[no_mangle]
