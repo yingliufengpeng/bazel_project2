@@ -1,15 +1,23 @@
 #include <iostream>
+#include <string>
+extern "C" {
+    struct Person {
+        const char* name;
+        int age;
+    };
 
-extern "C" int random_add(int);
-extern "C" void make_person();
-
-void foo() {
-    std::cout << "Hello world!" << std::endl;
+    Person make_person();
+    void free_person_name(const char* s);  // Rust 提供的释放函数
 }
 
 int main() {
-    std::cout << "3 + random = " << random_add(3) << std::endl;
-    make_person();
-    foo();
+    Person p = make_person();
+    std::string name(p.name);
+    std::cout << "Person name: " << name << ", age: " << p.age << std::endl;
+
+    // 释放 Rust 分配的字符串
+    free_person_name(p.name);
+
+    std::cout << "finished" << std::endl;
     return 0;
 }
