@@ -1,0 +1,21 @@
+load("@rules_rust//rust:defs.bzl", "rust_shared_library")
+
+rust_shared_library(
+    name = "rust_demo",
+    srcs = ["src/lib.rs"],
+    #    crate_type = "staticlib",
+#    crate_name = "rustlib",
+    edition = "2021",
+    rustc_flags = [
+        "--crate-type=staticlib",
+    ],
+    deps = [
+        "@pybind_rust_crates//:rand",
+        "@pybind_rust_crates//:serde",
+        "@pybind_rust_crates//:pyo3",
+    ],
+    crate_name = "cdylib",
+
+    visibility = ["//visibility:public"],  # 👈 加上这行！
+
+)

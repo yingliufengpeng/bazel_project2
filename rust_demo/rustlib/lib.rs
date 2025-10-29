@@ -6,9 +6,8 @@ pub struct Person {
     name: *const c_char,
     age: i32,
 }
-
+#[derive(Debug)]
 enum Mode {
-
     Push,
     Pop
 }
@@ -20,8 +19,6 @@ struct Student {
     mode: Mode,
     vec: Vec<String>,
 }
-
-
 
 impl Student {
     pub fn new(name: String, age: i32) -> Self {
