@@ -1,15 +1,22 @@
 use std::ffi::CString;
+use std::fs::File;
 use std::os::raw::c_char;
+use tempfile::NamedTempFile;
+use std::io::{Cursor, Write, Seek, SeekFrom, copy};
+
+mod utils;
+mod tools;
 
 #[repr(C)]
 pub struct Person {
     name: *const c_char,
     age: i32,
 }
+
 #[derive(Debug)]
 enum Mode {
     Push,
-    Pop
+    Pop,
 }
 
 #[derive(Debug)]
@@ -28,25 +35,59 @@ impl Student {
     pub fn add(&mut self, message: String) {
         self.vec.push(message);
     }
-
 }
 
 #[no_mangle]
 pub extern "C" fn make_person() -> Person {
-    let name = CString::new("Alice").unwrap();
+    let name = CString::new("Alice").unwrap_or_else(|_| CString::new("Invalid").unwrap());
     let p = Person {
-        name: name.into_raw(),  // 将 CString 转为裸指针
+        name: name.into_raw(),
         age: 30,
     };
+
+    // Rust 调用模块方法
+    match (utils::add(3, 4), tools::mul(3, 4)) {
+        (r, r2) => println!("r: {:?}, r2: {:?}", r, r2),
+    }
+
+    // Cursor -> 临时文件
+    if let Err(e) = handle_temp_file() {
+        eprintln!("临时文件处理失败: {}", e);
+    }
 
     let mut m = Student::new("Alice".to_string(), 30);
     m.add("C++".to_string());
     m.add("Python".to_string());
     println!("Student: {:#?}", m);
+
     p
 }
+
+fn handle_temp_file() -> std::io::Result<()> {
+    let mut cursor = Cursor::new(Vec::new());
+    cursor.write_all(b"temporary data")?;
+    cursor.seek(SeekFrom::Start(0))?;
+
+    let mut tmp = NamedTempFile::new()?;
+    println!("临时文件路径: {:?}", tmp.path());
+
+    copy(&mut cursor, tmp.as_file_mut())?;
+
+    // 工具模块中假设提供文件操作接口
+    if let Err(e) = tools::fs::list_dir(tmp.as_file()) {
+        eprintln!("list_dir 出错: {}", e);
+    }
+
+
+    Ok(())
+}
+
 #[no_mangle]
 pub extern "C" fn free_person_name(s: *mut c_char) {
-    if s.is_null() { return; }
-    unsafe { CString::from_raw(s); } // 回收内存
+    if s.is_null() {
+        return;
+    }
+    unsafe {
+        let _ = CString::from_raw(s);
+    }
 }

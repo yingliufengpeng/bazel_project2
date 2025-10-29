@@ -2,7 +2,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 
 rust_library(
     name = "rustlib",
-    srcs = ["lib.rs"],
+    srcs = glob(["**/*.rs"]),
     #    crate_type = "staticlib",
     crate_name = "rustlib",
     edition = "2021",
@@ -13,5 +13,6 @@ rust_library(
     deps = [
         "@my_crates//:rand",
         "@my_crates//:serde",
+        "@my_crates//:tempfile",
     ],
 )
