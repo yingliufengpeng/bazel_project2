@@ -28,7 +28,9 @@ int main() {
     s1[0] = 'm';
     std::cout<< "s2 = " << s2 << std::endl;
 
-    unsafe_process_img("ok");
+    auto v2 = std::string(process_img("hello, world"));
+    std::cout << "v2 = " << v2 << std::endl;
+
 
     return 0;
 }
