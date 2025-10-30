@@ -91,3 +91,22 @@ pub extern "C" fn free_person_name(s: *mut c_char) {
         let _ = CString::from_raw(s);
     }
 }
+
+
+#[no_mangle]
+pub extern "C" fn rust_make_string() -> *const c_char {
+    let s = CString::new("这个函数在别的语言（C ABI）实现").unwrap();
+    let p = s.as_ptr();
+    std::mem::forget(s); // 避免 Rust 释放
+    p
+}
+
+#[no_mangle]
+pub extern "C" fn rust_free_string(s: *const c_char) {
+    if s.is_null() {
+        return;
+    }
+    unsafe {
+        let _ = CString::from_raw(s as *mut c_char);
+    }
+}

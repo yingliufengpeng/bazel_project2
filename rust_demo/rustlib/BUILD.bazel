@@ -17,6 +17,7 @@ rust_library(
         "@my_crates//:rand",
         "@my_crates//:serde",
         "@my_crates//:tempfile",
+        "@my_crates//:cxx",
 
     ],
 )
