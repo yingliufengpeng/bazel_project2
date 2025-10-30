@@ -157,11 +157,53 @@ pub extern "C" fn process_img(path: *const c_char) -> *const c_char {
         let s = cstr.to_str().unwrap_or("<invalid utf8>");
         println!("Processing img: {}", s);
         let output = format!("Processed: {}", s);
-
+        bar_add();
         utils::make_cstring(&output)
     }
 }
 
+extern "C" {
+    fn foo_add(a: i32, b: i32) -> i32;
+    fn getPoint(a: i32, b: i32, name: *const c_char) -> Point;
+    fn freePersonInner(person: *mut Point);
+}
+
+#[repr(C)]
+#[derive(Clone, Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+    name: *const c_char
+
+}
+
+impl Point {
+    pub fn show(self: &Point) {
+        unsafe {
+            let cstr = CStr::from_ptr(self.name as *const c_char);
+            let s = cstr.to_str().unwrap_or("<invalid utf8>");
+            println!("Point name: {}--{}--{}", self.x, self.y, s);
+        }
+    }
+}
+
+impl Drop for Point {
+    fn drop(&mut self) {
+        unsafe {
+            freePersonInner(self)
+        }
+    }
+}
+
+
+fn bar_add() {
+    unsafe {
+        let point = getPoint(1, 2, CString::new("自动编译 cpp_core（包含所有 .cpp）").unwrap().into_raw());
+        // print!("Point x: {}, y: {}", point.x, point.y);
+        point.show();
+        println!("foo_add(3,4) = {}", foo_add(3, 4));
+    }
+}
 
 // use pyo3::prelude::*;
 //

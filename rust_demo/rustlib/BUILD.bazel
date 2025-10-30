@@ -19,6 +19,7 @@ rust_library(
         "@my_crates//:tempfile",
         "@my_crates//:cxx",
         "@my_crates//:pyo3",
+        "//rust_demo/cpp:cpp_core"
 
     ],
 )
