@@ -25,23 +25,22 @@ nanobind_extension(
     srcs = [
         "nanobind_python.cpp",
     ],
-    data = ["basic.pyi"],
     copts = select({
         "@platforms//os:windows": ["/std:c++20"],  # MSVC
         "@platforms//os:linux": ["-std=c++20"],  # GCC/Clang
         "//conditions:default": [],
     }),
+    data = ["basic.pyi"],
     deps = [
+        "//rust_demo/cpp_lib",
         "@fmt",
-        "//rust_demo/cpp_lib"
     ],
 )
-
 
 py_library(
     name = "basic_lib",
     srcs = [
-        "tools.py"
+        "tools.py",
     ],
     data = [
         ":basic",
@@ -56,19 +55,18 @@ py_test(
         ":basic_lib",
     ],
 )
-py_library(
-    name = "basic_lib2",
-    srcs = [
-        "tools.py"
-    ],
-    data = [
-        ":basic",
-        "//rust_demo/rustlib:rust_demo2",
-
-    ],
-    imports = ["."],
-)
-
+#py_library(
+#    name = "basic_lib2",
+#    srcs = [
+#        "tools.py"
+#    ],
+#    data = [
+#        ":basic",
+#        "//rust_demo/rustlib:rust_demo2",
+#
+#    ],
+#    imports = ["."],
+#)
 
 #py_test(
 #    name = "python_basic_test2",
