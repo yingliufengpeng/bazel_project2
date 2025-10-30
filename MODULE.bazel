@@ -253,6 +253,9 @@ rust.toolchain(
 )
 use_repo(rust, "rust_toolchains")
 
+# --- 3. 注册 Rust toolchain（必须！）---
+register_toolchains("@rust_toolchains//:all")
+
 # 启用 crate_universe 扩展（用来引入 crates.io 包）
 crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
 crate.from_cargo(

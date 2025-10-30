@@ -1,5 +1,5 @@
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-load("@rules_rust_pyo3//:defs.bzl", "pyo3_extension", "pyo3_toolchain")
+#load("@rules_rust_pyo3//:defs.bzl", "pyo3_extension", "pyo3_toolchain")
 
 rust_library(
     name = "rustlib",
@@ -18,19 +18,57 @@ rust_library(
         "@my_crates//:serde",
         "@my_crates//:tempfile",
         "@my_crates//:cxx",
+        "@my_crates//:pyo3",
 
     ],
 )
 
-pyo3_extension(
-    name = "pylib",
-    srcs = [],
-    deps = [
-        ":rustlib",
-        "@my_crates//:pyo3"
-    ]
-)
+#rust_library(
+#    name = "rustlib2",
+#    srcs = glob(["**/*.rs"]),
+#    #    crate_type = "staticlib",
+#    crate_name = "rustlib2",
+#    edition = "2021",
+#    rustc_flags = [
+#        "--crate-type=staticlib",
+#    ],
+#    crate_features = ["extension-module", "abi3-py313"],
+#
+#    visibility = ["//rust_demo:__subpackages__"],
+#    deps = [
+#        "@my_crates//:rand",
+#        "@my_crates//:serde",
+#        "@my_crates//:tempfile",
+#        "@my_crates//:cxx",
+#        "@my_crates//:pyo3",
+#
+#    ],
+#)
 
+
+
+# ---------- Rust → Python 扩展 ----------
+#pyo3_extension(
+#    name = "rust_lib_ext",               # 生成的 .so / .pyd 文件名
+#    srcs = glob(["**/*.rs"]),
+#    crate_root = "lib.rs",
+#    # 可选：额外依赖
+#    # deps = [":some_rust_dep"],
+#    visibility = ["//visibility:public"],
+#    deps = [
+#        ":rustlib",
+#
+#   ]
+#)
+#
+#rust_library(
+#    name = "rust_demo2",
+#    srcs = glob(["**/*.rs"]),
+#    edition = "2021",
+#    deps = [
+#        ":rust_lib_ext",
+#    ],
+#)
 
 rust_test(
     name = "rust_demo_test",
@@ -38,3 +76,4 @@ rust_test(
     edition = "2021",
     crate = ":rustlib",
 )
+

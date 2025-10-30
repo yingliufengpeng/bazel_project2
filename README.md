@@ -128,3 +128,5 @@
 
 ### 查询 target存储位置的
     bazelisk query --output=location @hello_mod_ext//:foo 
+    bazelisk query --output=location @rust_toolchains//:rust_linux_x86_64__x86_64-unknown-linux-gnu__stable
+    bazelisk query --output=location @rust_linux_x86_64__x86_64-unknown-linux-gnu__stable_tools

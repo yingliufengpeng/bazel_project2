@@ -161,3 +161,32 @@ pub extern "C" fn process_img(path: *const c_char) -> *const c_char {
         utils::make_cstring(&output)
     }
 }
+
+
+// use pyo3::prelude::*;
+//
+// #[pyclass]
+// pub struct Person2 {
+//     #[pyo3(get, set)]
+//     pub name: String,
+//     #[pyo3(get, set)]
+//     pub age: u32,
+// }
+//
+// #[pymethods]
+// impl Person2 {
+//     #[new]
+//     fn new(name: String, age: u32) -> Self {
+//         Person2 { name, age }
+//     }
+//
+//     fn greet(&self) -> String {
+//         format!("Hello, {} ({})", self.name, self.age)
+//     }
+// }
+//
+// #[pymodule]
+// fn rust_demo2(m: &Bound<'_, PyModule>) -> PyResult<()> {
+//     m.add_class::<Person2>()?;
+//     Ok(())
+// }

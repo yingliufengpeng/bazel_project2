@@ -56,3 +56,26 @@ py_test(
         ":basic_lib",
     ],
 )
+py_library(
+    name = "basic_lib2",
+    srcs = [
+        "tools.py"
+    ],
+    data = [
+        ":basic",
+        "//rust_demo/rustlib:rust_demo2",
+
+    ],
+    imports = ["."],
+)
+
+
+#py_test(
+#    name = "python_basic_test2",
+#    srcs = ["python_basic_test2.py"],
+#    data = [
+#     ],
+#    deps = [
+#        ':basic_lib2'
+#    ],
+#)
