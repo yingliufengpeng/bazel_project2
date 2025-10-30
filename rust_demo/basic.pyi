@@ -9,3 +9,7 @@ class Person(Protocol):
 
 def make_person() -> 'Person':
     ...
+
+
+def process_img(path: str) -> str:
+    ...

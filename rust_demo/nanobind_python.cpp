@@ -1,3 +1,4 @@
+#include <cstring>
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/string.h>
@@ -31,6 +32,15 @@ NB_MODULE(basic, m) {
         Person* p = make_person_ptr();  // 分配 Person，内部 name 已初始化
         return p;
     }, nb::rv_policy::take_ownership);
+
+
+
+    m.def("process_img", [](const std::string &path) -> std::string {
+        const char* res = process_img(path.c_str());
+        std::string out(res);
+        rust_free_string(res); // ✅ 释放 Rust 分配的字符串
+        return out;
+    });
 }
 
 

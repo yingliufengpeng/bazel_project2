@@ -83,7 +83,7 @@ fn handle_temp_file() -> std::io::Result<()> {
 }
 
 #[no_mangle]
-pub extern "C" fn free_person_name(s: *mut c_char) {
+pub extern "C" fn rust_free_string(s: *mut c_char) {
     if s.is_null() {
         return;
     }
@@ -143,5 +143,19 @@ pub extern "C" fn free_person_ptr(p: *mut Person) {
                 let _ = CString::from_raw(p.name as *mut c_char);
             }
         }
+    }
+}
+
+
+
+#[no_mangle]
+pub extern "C" fn process_img(path: *const c_char) -> *const c_char {
+    unsafe {
+        let cstr = CStr::from_ptr(path);
+        let s = cstr.to_str().unwrap_or("<invalid utf8>");
+        println!("Processing img: {}", s);
+        let output = format!("Processed: {}", s);
+
+        utils::make_cstring(&output)
     }
 }

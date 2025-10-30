@@ -4,13 +4,6 @@
 #include "cpp_lib/lib.h"
 
 int main() {
-    Person pp = make_person();
-    auto p = &pp;
-    std::string name(p -> name);
-    std::cout << "Person name: " << name << ", age: " << p -> age << std::endl;
-
-    // 释放 Rust 分配的字符串
-    free_person_name(p -> name);
 
     Person* p2 = make_person_ptr();
     std::cout << "name: " << p2->name << ", age: " << p2->age << std::endl;
@@ -34,6 +27,8 @@ int main() {
 
     s1[0] = 'm';
     std::cout<< "s2 = " << s2 << std::endl;
+
+    unsafe_process_img("ok");
 
     return 0;
 }
