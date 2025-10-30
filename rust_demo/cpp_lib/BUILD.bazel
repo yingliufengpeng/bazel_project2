@@ -1,12 +1,17 @@
-cc_binary(
-    name = "main",
-    srcs = ["main.cc"],
+cc_library(
+    name = "cpp_lib",
+    srcs = ["lib.h"],
+    includes = [".."],
+#    strip_include_prefix = "rust_demo",
+
     # 在非 Linux 平台构建时，Bazel 会自动忽略此目标
     target_compatible_with = [
         "@platforms//cpu:x86_64",  # 仅 x86_64
         "@platforms//os:linux",  # 仅 Linux
     ],
     deps = [
-        "//rust_demo/cpp_lib",
+        "//rust_demo/rustlib:rustlib",
     ],
+    visibility = ["//rust_demo:__subpackages__"],
+
 )
