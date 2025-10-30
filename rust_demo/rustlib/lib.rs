@@ -3,6 +3,7 @@ use std::fs::File;
 use std::os::raw::c_char;
 use tempfile::NamedTempFile;
 use std::io::{Cursor, Write, Seek, SeekFrom, copy};
+use std::ffi::CStr;
 
 mod utils;
 mod tools;
@@ -78,7 +79,6 @@ fn handle_temp_file() -> std::io::Result<()> {
         eprintln!("list_dir 出错: {}", e);
     }
 
-
     Ok(())
 }
 
@@ -102,11 +102,46 @@ pub extern "C" fn rust_make_string() -> *const c_char {
 }
 
 #[no_mangle]
-pub extern "C" fn rust_free_string(s: *const c_char) {
-    if s.is_null() {
+pub extern "C" fn free_inner_person_ptr(p: *mut Person) {
+
+    if p.is_null() {
         return;
     }
     unsafe {
+        // let mut s = p -> name;
+        let person: &Person = &*p;
+        let c_str = CStr::from_ptr(person.name);
+        println!("free string: {:?}", c_str.to_str().unwrap());
+
+
+        let s: *mut c_char = person.name as *mut c_char;
+
         let _ = CString::from_raw(s as *mut c_char);
+    }
+}
+
+
+#[no_mangle]
+pub extern "C" fn make_person_ptr() -> *mut Person {
+    let name = CString::new("正确方法：把 *const c_char 转成 Rust 字符串").unwrap();
+    let p = Box::new(Person {
+        name: name.into_raw(),
+        age: 30,
+    });
+    Box::into_raw(p)
+}
+
+// 该方法目前没有用到，目前的上下文场景是在c++的环境中调用的代码
+#[no_mangle]
+pub extern "C" fn free_person_ptr(p: *mut Person) {
+
+    if !p.is_null() {
+        println!("Person is freeing ");
+        unsafe {
+            let p = Box::from_raw(p);
+            if !p.name.is_null() {
+                let _ = CString::from_raw(p.name as *mut c_char);
+            }
+        }
     }
 }

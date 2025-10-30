@@ -4,18 +4,36 @@
 #include "cpp_lib/lib.h"
 
 int main() {
-    Person p = make_person();
-    std::string name(p.name);
-    std::cout << "Person name: " << name << ", age: " << p.age << std::endl;
+    Person pp = make_person();
+    auto p = &pp;
+    std::string name(p -> name);
+    std::cout << "Person name: " << name << ", age: " << p -> age << std::endl;
 
     // 释放 Rust 分配的字符串
-    free_person_name(p.name);
+    free_person_name(p -> name);
 
-
+    Person* p2 = make_person_ptr();
+    std::cout << "name: " << p2->name << ", age: " << p2->age << std::endl;
+    free_person_ptr(p2);
 
     const char* s = rust_make_string();
     std::string msg(s);
     rust_free_string(s);
     std::cout << "C++ got: " << msg << std::endl;
+
+    char* s1 = new char[100];
+    s1[0] = 'a';
+    s1[1] = 'b';
+    s1[2] = 'c';
+    s1[3] = '\0';
+
+
+    auto s2 = std::string(s1);
+
+    std::cout<< "s2 = " << s2 << std::endl;
+
+    s1[0] = 'm';
+    std::cout<< "s2 = " << s2 << std::endl;
+
     return 0;
 }

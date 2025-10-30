@@ -5,9 +5,6 @@
 #include <fmt/core.h>
 #include "XY.h"
 
-int main() {
-  fmt::print("Hello, world!\n");
-}
 
 
 #include <iostream>
