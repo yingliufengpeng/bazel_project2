@@ -9,3 +9,12 @@ pub  fn make_cstring(src: &String) -> *const c_char {
 pub fn add(x: i32, y: i32) -> i32 {
     x + y
 }
+
+pub fn mul(x: &i32, y: &i32) -> i32 {
+    x * y
+}
+
+pub fn choose<'a>(x: &'a i32, y: &'a i32) -> &'a i32 {
+    if *x > *y { x } else { y }
+}
+
