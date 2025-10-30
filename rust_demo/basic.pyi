@@ -1,9 +1,9 @@
 
+from typing import Protocol
 
-class Person:
+class Person(Protocol):
     name: str
     age: int
-
 
 
 
