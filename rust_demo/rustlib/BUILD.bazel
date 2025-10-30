@@ -1,4 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@rules_rust_pyo3//:defs.bzl", "pyo3_extension", "pyo3_toolchain")
 
 rust_library(
@@ -29,4 +29,12 @@ pyo3_extension(
         ":rustlib",
         "@my_crates//:pyo3"
     ]
+)
+
+
+rust_test(
+    name = "rust_demo_test",
+#    srcs = glob(["**/*.rs"]),
+    edition = "2021",
+    crate = ":rustlib",
 )

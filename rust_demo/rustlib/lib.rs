@@ -7,6 +7,7 @@ use std::ffi::CStr;
 
 mod utils;
 mod tools;
+mod node;
 
 #[repr(C)]
 pub struct Person {
