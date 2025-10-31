@@ -2,7 +2,7 @@
 [workspace]
 name = "rust_demo"
 members = [
-    "my_macro",
+    "my-macro",
     "rustlib",
 ]
 

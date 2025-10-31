@@ -12,7 +12,7 @@ tempfile = "3"
 cxx = "1.0"
 pyo3 = { version = "0.27", features = ["extension-module"] }
 tokio = { version = "1", features = ["full"] }
-my_macro = {path = "../my_macro"}
+my-macro = {path = "../my-macro" }
 
 [lib]
 path = "lib.rs"

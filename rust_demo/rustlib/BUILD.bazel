@@ -24,7 +24,7 @@ rust_library(
 
     ],
     proc_macro_deps = [
-        "//rust_demo/my_macro:my_macro",  # ✅ 这里正确使用 proc_macro_deps
+        "//rust_demo/my-macro:my-macro",  # ✅ 这里正确使用 proc_macro_deps
     ],
 )
 

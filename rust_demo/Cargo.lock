@@ -269,7 +269,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "my_macro"
+name = "my-macro"
 version = "0.1.0"
 dependencies = [
  "proc-macro2",
@@ -468,7 +468,7 @@ name = "rustlib"
 version = "0.1.0"
 dependencies = [
  "cxx",
- "my_macro",
+ "my-macro",
  "pyo3",
  "rand",
  "serde",
