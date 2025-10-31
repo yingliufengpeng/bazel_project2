@@ -1,4 +1,5 @@
 
+use crate::utils;
 
 #[derive(Debug)]
 struct Calculator<'a> {
@@ -70,6 +71,12 @@ mod tests {
 
         // cache 存储多个结果
         println!("cache = {:?}", calc.cache);
+
+    }
+
+    #[test]
+    fn test_async() {
+        utils::process_url("https://www.google.com");
 
     }
 }
