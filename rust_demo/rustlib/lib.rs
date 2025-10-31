@@ -10,6 +10,7 @@ mod tools;
 mod node;
 mod tree;
 mod calculator;
+mod common;
 
 #[repr(C)]
 pub struct Person {

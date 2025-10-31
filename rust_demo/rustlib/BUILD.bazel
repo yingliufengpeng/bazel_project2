@@ -20,8 +20,11 @@ rust_library(
         "@my_crates//:cxx",
         "@my_crates//:pyo3",
         "@my_crates//:tokio",
-        "//rust_demo/cpp:cpp_core"
+        "//rust_demo/cpp:cpp_core",
 
+    ],
+    proc_macro_deps = [
+        "//rust_demo/my_macro:my_macro",  # ✅ 这里正确使用 proc_macro_deps
     ],
 )
 

@@ -1,0 +1,12 @@
+[package]
+name = "my_macro"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "2.0"        # 解析 Rust 语法
+quote = "1.0"      # 生成 Rust 代码
+proc-macro2 = "1.0"

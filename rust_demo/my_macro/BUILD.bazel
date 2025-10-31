@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+
+rust_proc_macro(
+    name = "my_macro",
+    srcs = ["src/lib.rs"],
+    edition = "2021",
+    deps = [
+        "@my_crates//:syn",
+        "@my_crates//:quote",
+        "@my_crates//:proc-macro2",
+    ],
+    visibility = ["//rust_demo:__subpackages__"],
+
+)

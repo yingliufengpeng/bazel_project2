@@ -5,13 +5,18 @@ edition = "2021"
 
 [dependencies]
 rand = { version = "0.9", features = ["std", "std_rng"] }
-
 serde = { version = "1.0", features = ["derive"] }
 tempfile = "3"
 cxx = "1.0"
 pyo3 = { version = "0.27", features = ["extension-module"] }
 tokio = { version = "1", features = ["full"] }
+syn = "2.0"        # 解析 Rust 语法
+quote = "1.0"      # 生成 Rust 代码
+proc-macro2 = "1.0"
+
+my_macro = { path = "./my_macro" }
+
 
 [lib]
 path = "dummy.rs"
-crate-type = ["cdylib"]  # 生成 Python 可加载动态库
+#crate-type = ["cdylib"]  # 生成 Python 可加载动态库
