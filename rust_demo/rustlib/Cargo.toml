@@ -1,0 +1,18 @@
+[package]
+name = "rustlib"
+version = "0.1.0"
+edition = "2021"
+
+
+
+[dependencies]
+rand = { version = "0.9", features = ["std", "std_rng"] }
+serde = { version = "1.0", features = ["derive"] }
+tempfile = "3"
+cxx = "1.0"
+pyo3 = { version = "0.27", features = ["extension-module"] }
+tokio = { version = "1", features = ["full"] }
+my_macro = {path = "../my_macro"}
+
+[lib]
+path = "lib.rs"
