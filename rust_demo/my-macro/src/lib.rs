@@ -12,6 +12,7 @@ mod router;
 mod private;
 mod compose;
 mod multi_args;
+mod builder;
 
 /// 一个简单属性宏，打印函数开始和结束
 #[proc_macro_attribute]
@@ -77,4 +78,9 @@ pub fn gen_hello_world(item: TokenStream) -> TokenStream {
 pub fn multi_args(input: TokenStream) -> TokenStream {
 
     multi_args::multi_args_impl(input)
+}
+
+#[proc_macro_derive(Builder)]
+pub fn builder(item: TokenStream) -> TokenStream {
+    builder::create_builder(item.into()).into()
 }

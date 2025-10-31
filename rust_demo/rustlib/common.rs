@@ -1,6 +1,6 @@
 
 use my_macro::{log_fn, public, get, private, local, compose, gen_hello_world, multi_args};
-use my_macro::{Hello, UpperCaseName};
+use my_macro::{Hello, UpperCaseName, Builder};
 
 #[log_fn]
 fn add(a: i32, b: i32) -> i32 {
@@ -50,6 +50,12 @@ fn stringify(n: i32) -> String {
 struct Greeter;
 
 gen_hello_world!(Greeter);
+
+#[derive(Builder)]
+struct Gleipnir {
+    roots_of: String,
+    breath_of_a_fish: u8
+}
 
 
 #[cfg(test)]
@@ -104,5 +110,11 @@ mod tests {
 
         multi_args!("hello, world", M, N, Q);
         hello();
+
+        let gleipnir = Gleipnir::builder()
+            .roots_of("mountains".to_string())
+            .breath_of_a_fish(1)
+            .build();
+
     }
 }
