@@ -1,5 +1,5 @@
 
-use my_macro::{log_fn, public, get, private, local, compose, gen_hello_world, multi_args};
+use my_macro::{log_fn, public, get, private, local, compose, gen_hello_world, multi_args, panic_to_result};
 use my_macro::{Hello, UpperCaseName, Builder};
 
 #[log_fn]
@@ -60,6 +60,22 @@ struct Gleipnir {
 // #[derive(Builder)]
 // pub enum ExampleEnum {}
 
+
+#[derive(Debug)]
+pub struct Person {
+    name: String,
+    age: u32,
+}
+
+#[panic_to_result]
+fn create_person(name: String, age: u32) -> Person {
+    if age > 30 {
+        panic!("I hope I die before I get old");
+    }
+    Person { name, age }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -118,5 +134,15 @@ mod tests {
             .breath_of_a_fish(1)
             .build();
 
+    }
+
+
+    #[test]
+    fn test_panic_to_result() {
+
+        let actual = create_person("Sam".to_string(), 22).unwrap();
+
+        assert_eq!(actual.name, "Sam".to_string());
+        assert_eq!(actual.age, 22);
     }
 }

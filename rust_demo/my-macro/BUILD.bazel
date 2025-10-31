@@ -8,6 +8,7 @@ rust_proc_macro(
         "@my_crates//:syn",
         "@my_crates//:quote",
         "@my_crates//:venial",
+        "@my_crates//:proc-macro-error",
         "@my_crates//:proc-macro2",
     ],
     visibility = ["//rust_demo:__subpackages__"],

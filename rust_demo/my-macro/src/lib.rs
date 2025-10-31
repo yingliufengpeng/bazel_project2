@@ -1,6 +1,7 @@
 extern crate proc_macro;
 use proc_macro::TokenStream;
 use syn::Ident as SynIdent;
+use proc_macro_error::{emit_error, proc_macro_error};
 
 use quote::quote;
 use syn::{parse_macro_input, ItemFn};
@@ -13,6 +14,9 @@ mod private;
 mod compose;
 mod multi_args;
 mod builder;
+
+#[path = "panic-to-result.rs"]
+mod panic_to_result;
 
 /// 一个简单属性宏，打印函数开始和结束
 #[proc_macro_attribute]
@@ -84,3 +88,11 @@ pub fn multi_args(input: TokenStream) -> TokenStream {
 pub fn builder(item: TokenStream) -> TokenStream {
     builder::create_builder(item.into()).into()
 }
+
+#[proc_macro_error]
+#[proc_macro_attribute]
+pub fn panic_to_result(_a: TokenStream, item: TokenStream) -> TokenStream {
+    panic_to_result::panic_to_result_impl(_a, item)
+}
+
+
