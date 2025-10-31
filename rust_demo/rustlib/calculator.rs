@@ -76,7 +76,12 @@ mod tests {
 
     #[test]
     fn test_async() {
-        utils::process_url("https://www.google.com");
+        utils::process_url("https://www.google.com/cc_library/v1.2.3.zip");
 
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn test_mul_process() {
+        utils::multi_process("https://www.google.com/rules_python/v1.2.3.zip").await;
     }
 }
