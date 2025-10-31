@@ -57,6 +57,8 @@ struct Gleipnir {
     breath_of_a_fish: u8
 }
 
+// #[derive(Builder)]
+// pub enum ExampleEnum {}
 
 #[cfg(test)]
 mod tests {

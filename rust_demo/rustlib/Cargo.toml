@@ -16,3 +16,6 @@ my-macro = {path = "../my-macro" }
 
 [lib]
 path = "lib.rs"
+
+[dev-dependencies]
+trybuild = "1.0.90"

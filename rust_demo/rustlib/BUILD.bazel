@@ -82,5 +82,9 @@ rust_test(
     crate = ":rustlib",
     args = ["--nocapture"],
 
+    deps = [
+        "@my_crates//:trybuild",
+    ]
+
 )
 
