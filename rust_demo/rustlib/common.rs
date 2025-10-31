@@ -1,5 +1,5 @@
 
-use my_macro::{log_fn, public, get};
+use my_macro::{log_fn, public, get, private, local, compose, gen_hello_world, multi_args};
 use my_macro::{Hello, UpperCaseName};
 
 #[log_fn]
@@ -29,6 +29,29 @@ fn add_user() {
     println!("Adding user...");
 }
 
+
+private!{
+ #[derive(Debug)]
+ struct User {
+     name: String,
+     age: i32,
+ }
+}
+
+
+fn add_one(n: i32) -> i32 {
+    n + 1
+}
+
+fn stringify(n: i32) -> String {
+    n.to_string()
+}
+
+struct Greeter;
+
+gen_hello_world!(Greeter);
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -45,7 +68,41 @@ mod tests {
 
         let s = Student3{i: 3, j: 4, k_age: 5};
         println!("s is {:?}", s);
-
         add_user();
+
+        let user = User {name: "wang".into(), age:44};
+        println!("user is {:?}", user);
+        println!("user'name is {:?}", user.get_name());
+
+        local!();
+        println!("local greeting is {:?}", greeting);
+
+        fn compose_two<FIRST, SECOND, THIRD, F, G>(first: F, second: G)
+                                                   -> impl Fn(FIRST) -> THIRD
+        where
+            F: Fn(FIRST) -> SECOND,
+            G: Fn(SECOND) -> THIRD,
+        {
+            move |x| second(first(x))
+        }
+
+        let f = compose_two(compose_two(compose_two(add_one, add_one), add_one), stringify);
+        let r = f(4);
+        println!("fffff (4) is {:?}", r);
+    }
+
+    #[test]
+    fn test_compose() {
+
+        let composed = compose!(
+            add_one >> add_one >> stringify
+        );
+        println!("{:?}", composed(5));
+
+        println!("{:?}", (Greeter).hello_world());
+
+
+        multi_args!("hello, world", M, N, Q);
+        hello();
     }
 }

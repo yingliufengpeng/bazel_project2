@@ -1,5 +1,6 @@
 extern crate proc_macro;
 use proc_macro::TokenStream;
+use syn::Ident as SynIdent;
 
 use quote::quote;
 use syn::{parse_macro_input, ItemFn};
@@ -8,6 +9,9 @@ mod hello;
 mod log;
 mod public;
 mod router;
+mod private;
+mod compose;
+mod multi_args;
 
 /// 一个简单属性宏，打印函数开始和结束
 #[proc_macro_attribute]
@@ -36,4 +40,41 @@ pub fn public(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn get(attr: TokenStream, item: TokenStream) -> TokenStream {
     router::get_impl(attr, item)
+}
+
+#[proc_macro]
+pub fn private(item: TokenStream) -> TokenStream {
+    private::private_impl(item)
+}
+
+#[proc_macro]
+pub fn local(_: TokenStream) -> TokenStream {
+    quote!(
+        let greeting = "Heya! It's me, Imoen!";
+     ).into()
+}
+
+
+#[proc_macro]
+pub fn compose(item: TokenStream) -> TokenStream {
+    compose::compose_impl(item)
+}
+
+#[proc_macro]
+pub fn gen_hello_world(item: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(item as SynIdent);
+    quote!(
+        impl #input {
+            pub fn hello_world(&self) -> String {
+                "Hello, world!".to_string()
+            }
+        }
+    )
+        .into()
+}
+
+#[proc_macro]
+pub fn multi_args(input: TokenStream) -> TokenStream {
+
+    multi_args::multi_args_impl(input)
 }
