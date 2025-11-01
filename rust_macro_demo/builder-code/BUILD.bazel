@@ -14,9 +14,9 @@ rust_library(
 
     visibility = ["//visibility:public"],
     deps = [
-        "@my_crates_macro_demo//:quote",
-        "@my_crates_macro_demo//:syn",
-        "@my_crates_macro_demo//:proc-macro2",
+        "@my_crates_macro//:quote",
+        "@my_crates_macro//:syn",
+        "@my_crates_macro//:proc-macro2",
 
 
     ],

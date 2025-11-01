@@ -5,8 +5,8 @@ rust_proc_macro(
     srcs = glob(['src/**/*.rs']),
     edition = "2021",
     deps = [
-                "@my_crates_macro_demo//:quote",
-                "@my_crates_macro_demo//:syn",
+                "@my_crates_macro//:quote",
+                "@my_crates_macro//:syn",
 
     ],
     visibility = ["//visibility:public"],
