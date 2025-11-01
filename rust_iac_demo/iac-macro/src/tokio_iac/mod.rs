@@ -10,7 +10,8 @@ use syn::parse_macro_input;
 use input::IacInput;
 use errors::IacError;
 use lambda::LambdaClient;
-use s3::S3Client;
+use s3::{S3Client};
+use aws_sdk_s3::error::SdkError;
 
 async fn create_infra(iac_input: IacInput) -> Result<(), IacError> {
     let s3_client = S3Client::new().await;
@@ -19,7 +20,22 @@ async fn create_infra(iac_input: IacInput) -> Result<(), IacError> {
 
     if let Some(lambda) = &iac_input.lambda {
         eprintln!("creating lambda...");
-        output = Some(lambda_client.create_lambda(lambda).await?);
+        output = match lambda_client.create_lambda(&lambda).await {
+            Ok(resp) => {
+                println!("Lambda created: {:?}", resp);
+                Some(resp)
+            }
+            Err(e) => {
+                if let SdkError::ServiceError(ref service_err) = &e {
+                    eprintln!("AWS Lambda create failed: {:?}", service_err.err());
+                } else {
+                    eprintln!("Other error: {:?}", e);
+                }
+
+                None
+            }
+        };
+        // output = Some(lambda_client.create_lambda(lambda).await?);
     }
 
     if let Some(bucket) = &iac_input.bucket {
@@ -45,6 +61,7 @@ async fn create_infra(iac_input: IacInput) -> Result<(), IacError> {
 
 pub fn iac(item: TokenStream) -> TokenStream {
     let ii: IacInput = parse_macro_input!(item);
+    eprintln!("{:?} {:?}", ii, file!());
 
     if ii.has_resources() {
         let rt = tokio::runtime::Runtime::new().unwrap();
