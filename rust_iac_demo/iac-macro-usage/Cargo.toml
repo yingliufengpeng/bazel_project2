@@ -1,5 +1,5 @@
 [package]
-name = "iac"
+name = "iac-macro-usage"
 version = "0.1.0"
 edition = "2021"
 
