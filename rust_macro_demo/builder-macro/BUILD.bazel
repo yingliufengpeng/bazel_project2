@@ -1,0 +1,13 @@
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+
+rust_proc_macro(
+    name = "builder-macro",
+    srcs = glob(['src/**/*.rs']),
+    edition = "2021",
+    deps = [
+
+        "//rust_macro_demo/builder-code"
+    ],
+    visibility = ["//visibility:public"],
+
+)

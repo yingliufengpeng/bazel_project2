@@ -1,0 +1,43 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+#load("@rules_rust_pyo3//:defs.bzl", "pyo3_extension", "pyo3_toolchain")
+
+rust_library(
+    name = "rustlib",
+    srcs = glob(["**/*.rs"]),
+    #    crate_type = "staticlib",
+    crate_name = "rustlib",
+    edition = "2021",
+    rustc_flags = [
+        "--crate-type=staticlib",
+    ],
+    crate_features = ["extension-module", "abi3-py313"],
+
+    visibility = ["//visibility:public"],
+    deps = [
+        "@my_crates_macro_demo//:rand",
+        "@my_crates_macro_demo//:serde",
+
+
+    ],
+    proc_macro_deps = [
+        "//rust_macro_demo/builder-macro",  # ✅ 这里正确使用 proc_macro_deps
+        "//rust_macro_demo/public-macro",  # ✅ 这里正确使用 proc_macro_deps
+        "//rust_macro_demo/other-macro",  # ✅ 这里正确使用 proc_macro_deps
+    ],
+)
+
+
+
+rust_test(
+    name = "rust_macro_demo_test",
+#    srcs = glob(["**/*.rs"]),
+    edition = "2021",
+    crate = ":rustlib",
+    args = ["--nocapture"],
+
+    deps = [
+        "@my_crates_macro_demo//:trybuild",
+    ]
+
+)
+

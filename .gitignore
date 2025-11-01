@@ -13,3 +13,4 @@ MODULE.bazel.lock
 .__atomic-*
 rust_demo/target
 python_rust_bind7/target
+rust_macro_demo/target

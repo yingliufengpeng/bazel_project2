@@ -1,0 +1,24 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+#load("@rules_rust_pyo3//:defs.bzl", "pyo3_extension", "pyo3_toolchain")
+
+rust_library(
+    name = "builder-code",
+    srcs = glob(["**/*.rs"]),
+    #    crate_type = "staticlib",
+    crate_name = "builder_code",
+    edition = "2021",
+    rustc_flags = [
+        "--crate-type=staticlib",
+    ],
+    crate_features = ["extension-module" ],
+
+    visibility = ["//visibility:public"],
+    deps = [
+        "@my_crates_macro_demo//:quote",
+        "@my_crates_macro_demo//:syn",
+        "@my_crates_macro_demo//:proc-macro2",
+
+
+    ],
+
+)

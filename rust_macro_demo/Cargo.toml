@@ -1,0 +1,12 @@
+
+[workspace]
+name = "rust_macro_demo"
+members = [
+    "builder-macro",
+    "builder-code",
+    "rustlib",
+    'public-macro'
+]
+
+
+

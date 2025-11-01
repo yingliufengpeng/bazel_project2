@@ -1,0 +1,19 @@
+[package]
+name = "rustlib"
+version = "0.1.0"
+edition = "2021"
+
+
+
+[dependencies]
+rand = { version = "0.9", features = ["std", "std_rng"] }
+serde = { version = "1.0", features = ["derive"] }
+builder-macro = {path = "../builder-macro" }
+public-macro = {path = "../public-macro" }
+other-macro = {path = "../other-macro" }
+
+[lib]
+path = "lib.rs"
+
+[dev-dependencies]
+trybuild = "1.0.90"
