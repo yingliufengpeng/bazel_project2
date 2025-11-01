@@ -1,0 +1,38 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "iac_lib",
+    srcs = glob(["**/*.rs"]),
+    #    crate_type = "staticlib",
+    crate_name = "rustlib",
+    edition = "2021",
+    rustc_flags = [
+        "--crate-type=staticlib",
+    ],
+    crate_features = ["extension-module", "abi3-py313"],
+
+    visibility = ["//visibility:public"],
+    deps = [
+
+
+    ],
+    proc_macro_deps = [
+        "//rust_iac_demo/iac-macro"
+    ],
+)
+
+
+
+rust_test(
+    name = "iac_lib_test",
+#    srcs = glob(["**/*.rs"]),
+    edition = "2021",
+    crate = ":iac_lib",
+    args = ["--nocapture"],
+
+    deps = [
+        "@iac_crates_macro//:trybuild",
+    ]
+
+)
+

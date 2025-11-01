@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+
+rust_proc_macro(
+    name = "iac-macro",
+    srcs = glob(['src/**/*.rs']),
+    edition = "2021",
+    deps = [
+                "@iac_crates_macro//:quote",
+                "@iac_crates_macro//:syn",
+                "@iac_crates_macro//:aws-config",
+                "@iac_crates_macro//:aws-sdk-s3",
+                "@iac_crates_macro//:aws-sdk-lambda",
+                "@iac_crates_macro//:proc-macro2",
+                "@iac_crates_macro//:tokio",
+
+    ],
+    visibility = ["//visibility:public"],
+
+)

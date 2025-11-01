@@ -1,0 +1,10 @@
+
+[workspace]
+name = "rust_iac_demo"
+members = [
+ "iac-macro",
+ "iac-macro-usage"
+]
+
+
+
