@@ -1,5 +1,8 @@
  ### 在运行该代码之前, 需要做如下的约定,自己可以做酌情修改.
  
+ # 相关问题 
+    rust相关demo目前在基于bazel的构建模式下,windows会失败. 尽量用linux环境.
+ 
 ```bash
 
     bazel 仓库的目录为  E:/bazel_local_repo
