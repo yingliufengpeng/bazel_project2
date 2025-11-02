@@ -1202,14 +1202,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "iac"
-version = "0.1.0"
-dependencies = [
- "iac-macro",
- "trybuild",
-]
-
-[[package]]
 name = "iac-macro"
 version = "0.1.0"
 dependencies = [
@@ -1220,6 +1212,14 @@ dependencies = [
  "quote",
  "syn",
  "tokio",
+]
+
+[[package]]
+name = "iac-macro-usage"
+version = "0.1.0"
+dependencies = [
+ "iac-macro",
+ "trybuild",
 ]
 
 [[package]]
