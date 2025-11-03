@@ -49,13 +49,13 @@ impl<T> Drop for MyBox<T> {
     }
 }
 
- 
+
 
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_my_box() {
         let mut b = MyBox::new(123);
