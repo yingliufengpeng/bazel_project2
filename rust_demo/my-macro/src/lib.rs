@@ -17,6 +17,7 @@ mod builder;
 
 #[path = "panic-to-result.rs"]
 mod panic_to_result;
+mod my_macro_rules;
 
 /// 一个简单属性宏，打印函数开始和结束
 #[proc_macro_attribute]
