@@ -3,8 +3,10 @@ use std::marker::PhantomData;
 use std::ops::Deref;
 
 type DynFunc = dyn Fn(i32) -> i32;
+type DynMutFunc = dyn FnMut(i32) -> i32;
 type VBoxFunc = Vec<Box<dyn Fn(i32) -> i32>>;
 type VFunc = Vec<fn(i32) -> i32>;
+
 
 #[derive(Debug,    )]
 struct Cursor<'a> {
@@ -114,14 +116,14 @@ fn f1() {
     let c = *m;
     println!("c {:?}", c);
 
-    let mut v: Vec<Box<dyn Fn(i32)->i32>> = Vec::new();
+    let mut v: Vec<Box<DynMutFunc>> = Vec::new();
 
     for i in 0..3 {
         let f = |e: i32| {e + 3};
         v.push(Box::new(f));
     }
     //
-    v.iter().for_each( |f   |  {
+    v.iter_mut().for_each( |f   |  {
         f(4);
 
     });
