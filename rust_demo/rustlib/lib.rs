@@ -13,7 +13,7 @@ mod calculator;
 mod common;
 mod mybox;
 mod parser;
-
+mod func;
 
 #[repr(C)]
 pub struct Person {
