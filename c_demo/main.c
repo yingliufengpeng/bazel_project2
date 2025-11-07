@@ -11,49 +11,57 @@ enum {
     OP_ADD,
     OP_PRINT_TOP,
     OP_HALT,
-    OP_END,
 };
+
+#define PUSH_STACK()  stack[sp++] = (arg)
+#define STACK_SET_TOP(x) stack[sp - 1] = (x)
+#define STACK_TOP() stack[sp - 1]
+#define STACK_VALUE(offset) stack[sp - offset]
+#define STACK_SP_ADD() sp += 1
+#define STACK_SP_SUB() sp -= 1
+#define NEXTOPCODE() (opcode = bytecode[pc++])
+#define NEXTARG() (arg = bytecode[pc++])
+#define DISPATCH_EXIT() goto end  /* switch-case 内用 break 跳到下次循环 */
 
 #if defined(_WIN32)
 
-    #define TARGET(op) case op :
-    #define NEXTOPCODE() (opcode = bytecode[pc++])
-    #define NEXTARG() (arg = bytecode[pc++])
+    #define TARGET(op) case op
+
     #define DISPATCH() break  /* switch-case 内用 break 跳到下次循环 */
-    #define DISPATCH_EXIT() goto end  /* switch-case 内用 break 跳到下次循环 */
-    #define DEFATULT default :
+    #define DEFATULT default
 
 #else
 
 
-#define TARGET(op) op :
-#define NEXTOPCODE() (opcode = bytecode[pc++])
-#define NEXTARG() (arg = bytecode[pc++])
-#define DISPATCH() goto opcode_targets[op]  /* switch-case 内用 break 跳到下次循环 */
-#define DISPATCH_EXIT goto end
-#define DEFATULT default_end :
+#define TARGET(op) op
+#define DISPATCH() \
+    NEXTOPCODE(); \
+    goto *opcode_targets[opcode];  /* switch-case 内用 break 跳到下次循环 */
+#define DEFATULT default_end
 
-static void *opcode_targets[] = {
-    &&TARGET(OP_PUSH_CONST),
-    &&TARGET(OP_ADD),
-    &&TARGET(OP_PRINT_TOP),
-    &&TARGET(OP_HALT),
-    &&TARGET(OP_END),
-};
+
 
 #endif
 
 
 
+int main( ) {
 
+#if defined(_WIN32)
+#else
+    static void *opcode_targets[] = {
+        &&TARGET(OP_PUSH_CONST),
+        &&TARGET(OP_ADD),
+        &&TARGET(OP_PRINT_TOP),
+        &&TARGET(OP_HALT),
+    };
+#endif
 
-
-
-int main(void) {
     int bytecode[] = {
         OP_PUSH_CONST, 10,
         OP_PUSH_CONST, 20,
         OP_ADD,
+        OP_PUSH_CONST, 34,
         OP_PRINT_TOP,
         OP_HALT
     };
@@ -63,51 +71,63 @@ int main(void) {
     int pc = 0;
     int opcode, arg;
 
-    for (;;) {
-        NEXTOPCODE();
 
-        switch (opcode) {
+    goto start_frame;
+#if defined(_WIN32)
 
-            TARGET(OP_PUSH_CONST) {
-                NEXTARG();
-                stack[sp++] = arg;
-                DISPATCH();
-            }
+    for (;; ) {
+#else
+    {
+#endif
 
-            TARGET(OP_ADD)  {
-                if (sp < 2) {
-                    fprintf(stderr, "stack underflow on ADD\n");
-                    exit(1);
-                }
-                int b = stack[--sp];
-                int a = stack[--sp];
-                stack[sp++] = a + b;
-                DISPATCH();
-            }
+        TARGET(OP_PUSH_CONST): {
+            NEXTARG();
+            PUSH_STACK();
 
-            TARGET(OP_PRINT_TOP) {
-                if (sp < 1) {
-                    fprintf(stderr, "stack underflow on PRINT_TOP\n");
-                    exit(1);
-                }
-                printf("Result: %d\n", stack[--sp]);
-                DISPATCH();
-            }
+            DISPATCH()
 
-            TARGET(OP_HALT) {
-                printf("Program halted.\n");
-                DISPATCH_EXIT();
-            }
-
-            DEFATULT {
-                fprintf(stderr, "Unknown opcode: %d\n", opcode);
-                DISPATCH_EXIT();
-            }
         }
+
+        TARGET(OP_ADD): {
+
+            int r1 = STACK_VALUE(2) + STACK_VALUE(1);
+            STACK_SET_TOP(r1);
+            STACK_SP_SUB();
+            DISPATCH();
+        }
+
+        TARGET(OP_PRINT_TOP): {
+
+            printf("%d\n", STACK_TOP());
+            STACK_SP_SUB();
+            DISPATCH()
+
+        }
+
+        TARGET(OP_HALT): {
+
+            printf("Halt the programm!!\n");
+            DISPATCH_EXIT();
+        }
+
+        DEFATULT: {
+            printf("Halt ERROR running here!!\n");
+
+            DISPATCH_EXIT();
+        }
+
+        start_frame: {
+            DISPATCH()
+        }
+
+#if defined(_WIN32)
     }
+#else
+    }
+#endif
 
 
-end:
 
+    end:
     return 0;
 }
