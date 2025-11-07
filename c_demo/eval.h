@@ -39,8 +39,8 @@ enum {
 #define STACK_SET_TOP(x) stack[sp - 1] = (x)
 #define STACK_TOP() stack[sp - 1]
 #define STACK_VALUE(offset) stack[sp + (offset)]
-#define STACK_SP_ADD() sp += 1
-#define STACK_SP_SUB() sp -= 1
+#define STACK_SP_UP() sp += 1
+#define STACK_SP_DOWN() sp -= 1
 #define NEXT_OP_CODE()  opcode = bytecode[pc++]
 #define NEXT_ARG() (arg = bytecode[pc++])
 #define DISPATCH_EXIT() goto end  /* switch-case 内用 break 跳到下次循环 */

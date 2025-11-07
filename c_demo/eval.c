@@ -36,7 +36,7 @@ int EVAL_Value(int bytecode[]) {
 
             TARGET(OP_ADD) {
                 int r1 = STACK_VALUE(-2) + STACK_VALUE(-1);
-                STACK_SP_SUB();
+                STACK_SP_DOWN();
 
                 STACK_SET_TOP(r1);
                 DISPATCH();
@@ -44,7 +44,7 @@ int EVAL_Value(int bytecode[]) {
 
             TARGET(OP_SUB) {
                 int r1 = STACK_VALUE(-2)  - STACK_VALUE(-1);
-                STACK_SP_SUB();
+                STACK_SP_DOWN();
                 STACK_SET_TOP(r1);
                 DISPATCH();
             }
@@ -57,7 +57,7 @@ int EVAL_Value(int bytecode[]) {
             }
             TARGET(OP_PRINT_TOP) {
                 printf("TOP Value is %d\n", STACK_TOP());
-                // STACK_SP_SUB();
+                // STACK_SP_DOWN();
                 DISPATCH()
             }
 
