@@ -25,6 +25,7 @@
     _(SUB),                 \
     _(SQAURE),              \
     _(PRINT_TOP),           \
+    _(FULL_CALL),           \
     _(HALT)
 
 
@@ -46,6 +47,13 @@ enum {
 #define DISPATCH_EXIT() goto end  /* switch-case 内用 break 跳到下次循环 */
 #define DISPATCH_ERROR() goto error  /* switch-case 内用 break 跳到下次循环 */
 
+enum OP_F {
+    ADD,
+    SUB,
+    MUL,
+};
+
+typedef int (*op_func_t)(int, int);
 
 
 #if defined(_WIN32)

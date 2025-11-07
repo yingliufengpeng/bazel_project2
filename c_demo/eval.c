@@ -6,6 +6,29 @@
 
 
 
+static int add(int a, int b) {return a + b;}
+static int sub(int a, int b) {return a - b;}
+static int mul(int a, int b) {return a * b;}
+
+
+
+static op_func_t op_fun_tables[] = {
+    [ADD] = add,
+    [SUB] = sub,
+    [MUL] = mul,
+};
+
+int f_call(int arr[], int num, op_func_t acc) {
+    int sum = 0;
+    for (int i = 0; i < num; i++) {
+        sum = acc(sum, arr[i]);
+    }
+
+    return sum;
+
+}
+
+
 int EVAL_Value(int bytecode[]) {
 
 
@@ -58,6 +81,29 @@ int EVAL_Value(int bytecode[]) {
             TARGET(OP_PRINT_TOP) {
                 printf("TOP Value is %d\n", STACK_TOP());
                 // STACK_SP_DOWN();
+                DISPATCH()
+            }
+
+            TARGET(OP_FULL_CALL) {
+                NEXT_ARG();
+                int num = arg;
+                NEXT_ARG();
+                int f_t = arg;
+                int *arr = malloc(num * sizeof(int));
+
+                for (int i = 0; i < num; i++) {
+                    arr[i] = STACK_VALUE(-i - 1);
+                }
+
+                int r = f_call(arr, num, op_fun_tables[f_t]);
+
+                for (int i = 0; i < num; i++) {
+                    STACK_SP_DOWN();
+                }
+
+                free(arr);
+
+                STACK_SET_TOP(r);
                 DISPATCH()
             }
 
