@@ -2,24 +2,52 @@
 #include <stdlib.h>
 
 /*
-  一个更接近 CPython 的循环式虚拟机（computed goto + 块作用域）
-
-  模拟逻辑：
-    10 + 20
+  兼容 Windows 的宏化循环式虚拟机
+  模拟逻辑：10 + 20
 */
 
 enum {
     OP_PUSH_CONST,
     OP_ADD,
     OP_PRINT_TOP,
-    OP_HALT
+    OP_HALT,
+    OP_END,
 };
 
-#define TARGET(op) TARGET_##op
-#define DISPATCH_GOTO() goto *opcode_targets[opcode]
+#if defined(_WIN32)
+
+    #define TARGET(op) case op :
+    #define NEXTOPCODE() (opcode = bytecode[pc++])
+    #define NEXTARG() (arg = bytecode[pc++])
+    #define DISPATCH() break  /* switch-case 内用 break 跳到下次循环 */
+    #define DISPATCH_EXIT() goto end  /* switch-case 内用 break 跳到下次循环 */
+    #define DEFATULT default :
+
+#else
+
+
+#define TARGET(op) op :
 #define NEXTOPCODE() (opcode = bytecode[pc++])
 #define NEXTARG() (arg = bytecode[pc++])
-#define DISPATCH() goto dispatch_loop
+#define DISPATCH() goto opcode_targets[op]  /* switch-case 内用 break 跳到下次循环 */
+#define DISPATCH_EXIT goto end
+#define DEFATULT default_end :
+
+static void *opcode_targets[] = {
+    &&TARGET(OP_PUSH_CONST),
+    &&TARGET(OP_ADD),
+    &&TARGET(OP_PRINT_TOP),
+    &&TARGET(OP_HALT),
+    &&TARGET(OP_END),
+};
+
+#endif
+
+
+
+
+
+
 
 int main(void) {
     int bytecode[] = {
@@ -35,49 +63,51 @@ int main(void) {
     int pc = 0;
     int opcode, arg;
 
-    static void *opcode_targets[] = {
-        &&TARGET(OP_PUSH_CONST),
-        &&TARGET(OP_ADD),
-        &&TARGET(OP_PRINT_TOP),
-        &&TARGET(OP_HALT),
-    };
-
     for (;;) {
-        dispatch_loop:
-                NEXTOPCODE();
-        DISPATCH_GOTO();
+        NEXTOPCODE();
 
-        TARGET(OP_PUSH_CONST): {
-            NEXTARG();
-            stack[sp++] = arg;
-            DISPATCH();
-        }
+        switch (opcode) {
 
-        TARGET(OP_ADD): {
-            if (sp < 2) {
-                fprintf(stderr, "stack underflow on ADD\n");
-                exit(1);
+            TARGET(OP_PUSH_CONST) {
+                NEXTARG();
+                stack[sp++] = arg;
+                DISPATCH();
             }
-            int b = stack[--sp];
-            int a = stack[--sp];
-            stack[sp++] = a + b;
-            DISPATCH();
-        }
 
-        TARGET(OP_PRINT_TOP): {
-            if (sp < 1) {
-                fprintf(stderr, "stack underflow on PRINT_TOP\n");
-                exit(1);
+            TARGET(OP_ADD)  {
+                if (sp < 2) {
+                    fprintf(stderr, "stack underflow on ADD\n");
+                    exit(1);
+                }
+                int b = stack[--sp];
+                int a = stack[--sp];
+                stack[sp++] = a + b;
+                DISPATCH();
             }
-            printf("Result: %d\n", stack[--sp]);
-            DISPATCH();
-        }
 
-        TARGET(OP_HALT): {
-            printf("Program halted.\n");
-            break;
+            TARGET(OP_PRINT_TOP) {
+                if (sp < 1) {
+                    fprintf(stderr, "stack underflow on PRINT_TOP\n");
+                    exit(1);
+                }
+                printf("Result: %d\n", stack[--sp]);
+                DISPATCH();
+            }
+
+            TARGET(OP_HALT) {
+                printf("Program halted.\n");
+                DISPATCH_EXIT();
+            }
+
+            DEFATULT {
+                fprintf(stderr, "Unknown opcode: %d\n", opcode);
+                DISPATCH_EXIT();
+            }
         }
     }
+
+
+end:
 
     return 0;
 }
