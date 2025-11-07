@@ -14,12 +14,10 @@ int EVAL_Value(int bytecode[]) {
         static void *opcode_targets[] = OPERATOR_TARGETS;
 #endif
 
-
         int stack[128];
         int sp = 0;
         int pc = 0;
         int opcode, arg;
-
 
         goto start_frame;
 
