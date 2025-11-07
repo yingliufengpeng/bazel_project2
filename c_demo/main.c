@@ -2,7 +2,6 @@
 
 int main( ) {
 
-
     int bytecode[] = {
         OP_PUSH_CONST, 11,
         OP_PUSH_CONST, 20,
@@ -13,7 +12,10 @@ int main( ) {
         OP_ADD,
         OP_SQAURE,
         OP_PRINT_TOP,
-        OP_HALT
+        OP_PRINT_TOP,
+        OP_PRINT_TOP,
+
+        OP_HALT,
     };
 
     int res = EVAL_Value(bytecode);
@@ -21,3 +23,8 @@ int main( ) {
 
     return 0;
 }
+
+
+
+
+
