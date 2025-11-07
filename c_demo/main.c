@@ -34,13 +34,13 @@ int main( ) {
     {
 #endif
 
-        TARGET(OP_PUSH_CONST): {
+        TARGET(OP_PUSH_CONST) {
             NEXT_ARG();
             PUSH_STACK();
             DISPATCH()
         }
 
-        TARGET(OP_ADD): {
+        TARGET(OP_ADD) {
             int r1 = STACK_VALUE(-2) + STACK_VALUE(-1);
             STACK_SP_SUB();
 
@@ -48,31 +48,31 @@ int main( ) {
             DISPATCH();
         }
 
-        TARGET(OP_SUB): {
+        TARGET(OP_SUB) {
             int r1 = STACK_VALUE(-2)  - STACK_VALUE(-1);
             STACK_SP_SUB();
             STACK_SET_TOP(r1);
             DISPATCH();
         }
 
-        TARGET(OP_SQAURE): {
+        TARGET(OP_SQAURE) {
             int r1 = STACK_TOP();
             int r2 = SQR(r1);
             STACK_SET_TOP(r2);
             DISPATCH();
         }
-        TARGET(OP_PRINT_TOP): {
+        TARGET(OP_PRINT_TOP) {
             printf("TOP Value is %d\n", STACK_TOP());
             // STACK_SP_SUB();
             DISPATCH()
         }
 
-        TARGET(OP_HALT): {
+        TARGET(OP_HALT) {
             printf("Halt the programm!!\n");
             DISPATCH_EXIT();
         }
 
-        DEFATULT: {
+        DEFATULT {
             printf("Halt ERROR running here!!\n");
             DISPATCH_EXIT();
         }

@@ -27,14 +27,7 @@ enum {
     OP_HALT,
 };
 
-#define OPERATOR_TARGETS  {  \
-    &&TARGET(OP_PUSH_CONST),  \
-    &&TARGET(OP_ADD),   \
-    &&TARGET(OP_SUB),  \
-    &&TARGET(OP_SQAURE),  \
-    &&TARGET(OP_PRINT_TOP),  \
-    &&TARGET(OP_HALT),  \
-}
+
 
 #define PUSH_STACK()  stack[sp++] = (arg)
 #define STACK_SET_TOP(x) stack[sp - 1] = (x)
@@ -48,22 +41,33 @@ enum {
 
 #if defined(_WIN32)
 
-    #define TARGET(op) case op
+    #define TARGET(op) case op :
 
     #define DISPATCH() \
         NEXT_OP_CODE(); \
         break;  /* switch-case 内用 break 跳到下次循环 */
-    #define DEFATULT default
+
+    #define DEFATULT default :
 
 #else
+    #define TARGET_IMPL(op) op
 
-    #define TARGET(op) op
+    #define TARGET(op) TARGET_IMPL(op) :
 
     #define DISPATCH() \
         NEXT_OP_CODE(); \
         goto *opcode_targets[opcode];  /* switch-case 内用 compute_gotos 跳到下次地址 */
-    #define DEFATULT default_end
 
+    #define DEFATULT default_end :
+
+    #define OPERATOR_TARGETS  {         \
+        &&TARGET_IMPL(OP_PUSH_CONST),   \
+        &&TARGET_IMPL(OP_ADD),          \
+        &&TARGET_IMPL(OP_SUB),          \
+        &&TARGET_IMPL(OP_SQAURE),       \
+        &&TARGET_IMPL(OP_PRINT_TOP),    \
+        &&TARGET_IMPL(OP_HALT),         \
+    }
 
 #endif
 
