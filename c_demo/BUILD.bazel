@@ -1,6 +1,9 @@
 cc_binary(
     name = "my_app",
-    srcs = ["main.c", 'eval.h'],
-#        copts = ["-std=gnu99"],
-
+    srcs = [
+        "eval.c",
+        "eval.h",
+        "main.c",
+    ],
+    #        copts = ["-std=gnu99"],
 )

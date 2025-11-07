@@ -17,15 +17,22 @@
 
 #define SQR(x) ((x) * (x))
 
+#define OP_IMPL_ALL(_)      \
+    _(PUSH_CONST),      \
+    _(ADD),             \
+    _(SUB),             \
+    _(SQAURE),          \
+    _(PRINT_TOP),       \
+    _(HALT),
+
+#define MAKE_N(n) OP_##n
 
 enum {
-    OP_PUSH_CONST,
-    OP_ADD,
-    OP_SUB,
-    OP_SQAURE,
-    OP_PRINT_TOP,
-    OP_HALT,
+
+    OP_IMPL_ALL(MAKE_N)
+
 };
+#undef MAKE_N
 
 
 
@@ -38,6 +45,7 @@ enum {
 #define NEXT_OP_CODE()  opcode = bytecode[pc++]
 #define NEXT_ARG() (arg = bytecode[pc++])
 #define DISPATCH_EXIT() goto end  /* switch-case 内用 break 跳到下次循环 */
+#define DISPATCH_ERROR() goto error  /* switch-case 内用 break 跳到下次循环 */
 
 #if defined(_WIN32)
 
@@ -50,7 +58,6 @@ enum {
     #define DEFATULT default :
 
 #else
-    #define TARGET_IMPL(op) op
 
     #define TARGET(op) TARGET_IMPL(op) :
 
@@ -60,16 +67,13 @@ enum {
 
     #define DEFATULT default_end :
 
+    #define MAKE_TARGET(n) &&##OP_##n
     #define OPERATOR_TARGETS  {         \
-        &&TARGET_IMPL(OP_PUSH_CONST),   \
-        &&TARGET_IMPL(OP_ADD),          \
-        &&TARGET_IMPL(OP_SUB),          \
-        &&TARGET_IMPL(OP_SQAURE),       \
-        &&TARGET_IMPL(OP_PRINT_TOP),    \
-        &&TARGET_IMPL(OP_HALT),         \
+        OP_IMPL_ALL(MAKE_TARGET)
     }
+    #undef MAKE_TARGET
 
 #endif
 
-
+int EVAL_Value(int bytecode[]);
 #endif //BAZEL_PROJECT2_EVAL_H
