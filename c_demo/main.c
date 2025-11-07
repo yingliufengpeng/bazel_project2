@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,10 +7,14 @@
   模拟逻辑：10 + 20 - 34
 */
 
+#define SQR(x) ((x) * (x))
+
+
 enum {
     OP_PUSH_CONST,
     OP_ADD,
     OP_SUB,
+    OP_SQAURE,
     OP_PRINT_TOP,
     OP_HALT,
 };
@@ -53,6 +58,7 @@ int main( ) {
         &&TARGET(OP_PUSH_CONST),
         &&TARGET(OP_ADD),
         &&TARGET(OP_SUB),
+        &&TARGET(OP_SQAURE),
         &&TARGET(OP_PRINT_TOP),
         &&TARGET(OP_HALT),
     };
@@ -62,10 +68,11 @@ int main( ) {
         OP_PUSH_CONST, 11,
         OP_PUSH_CONST, 20,
         OP_ADD,
-        OP_PUSH_CONST, 31,
+        OP_PUSH_CONST, 30,
         OP_SUB,
-        OP_PUSH_CONST, 200,
+        OP_PUSH_CONST, 3,
         OP_ADD,
+        OP_SQAURE,
         OP_PRINT_TOP,
         OP_HALT
     };
@@ -106,6 +113,12 @@ int main( ) {
             DISPATCH();
         }
 
+        TARGET(OP_SQAURE): {
+            int r1 = STACK_TOP();
+            int r2 = SQR(r1);
+            STACK_SET_TOP(r2);
+            DISPATCH();
+        }
         TARGET(OP_PRINT_TOP): {
             printf("TOP Value is %d\n", STACK_TOP());
             // STACK_SP_SUB();
