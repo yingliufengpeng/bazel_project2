@@ -1,11 +1,27 @@
 use std::cell::Cell;
+use std::error;
+use std::fmt::Display;
 use std::marker::PhantomData;
+use std::ops::Deref;
 use std::rc::Rc;
 use syn::{
-    parse::Result,
+
     spanned::Spanned,
 };
 
+struct Error {
+    messages: Vec<String>,
+}
+
+
+pub type Result<T> = std::result::Result<T, Error>;
+
+
+type ParseStream<'a> = &'a ParseBuffer<'a>;
+
+trait Parse: Sized {
+    fn parse(input: ParseStream) -> Result<Self>;
+}
 
 // 模拟 syn::Cursor —— 指向剩余输入的游标
 #[derive(Clone, Copy, Debug)]
@@ -14,6 +30,30 @@ pub struct Cursor<'a> {
     rest: &'a str,
     _marker: PhantomData<Cursor<'a>>,
 
+}
+
+#[derive(Clone, Copy, Debug)]
+struct StepCursor<'c, 'a> {
+    cursor: Cursor<'c>,
+    _marker: PhantomData<fn(Cursor<'c>) -> &'a Cursor<'a>>,
+}
+
+impl <'c, 'a> Deref for StepCursor<'c, 'a> {
+    type Target = Cursor<'c>;
+    fn deref(&self) -> &Self::Target {
+        &self.cursor
+    }
+
+
+}
+
+
+impl <'c, 'a> StepCursor<'c, 'a> {
+    pub fn error<T: Display>(self, message: T) -> Error {
+        Error{
+            messages: vec![message.to_string()],
+        }
+    }
 }
 
 impl <'a> Cursor<'a> {
@@ -27,9 +67,15 @@ impl <'a> Cursor<'a> {
     fn get_rest(&self, advance: usize) -> &'a str {
         &self.rest[advance..]
     }
+
+    pub fn punct(mut self) -> Option<(Punct, Cursor<'a>)> {
+        let p = Punct{ch: 'a'};
+        let cursor = Cursor::new(&self.rest[1..]);
+        Some((p, cursor))
+        // unimplemented!()
+
+    }
 }
-
-
 
 
 // 关键：ParseBuffer
@@ -57,29 +103,35 @@ impl <'a> ParseBuffer<'a> {
         }
     }
 
+
+    fn is_empty(&self) -> bool {
+        self.cell.get().rest.is_empty()
+    }
+
     fn peek(&self) -> Cursor<'a> {
         // let c = self.cell.get();
         self.cell.clone().get()
 
     }
 
-    fn parse(&self) -> Cursor<'a> {
 
-        let c = self.cell.get();
-        let r = Cursor::new(c.get_rest(1));
-        self.cell.set(r);
-        // m.rest = &m.rest[1..];
+    fn step<F, R>(&self, function: F) -> Result<R>
+    where F: for <'c> FnOnce(StepCursor<'c, 'a>) -> Result<(R, Cursor<'c>)>,
+    {
 
-        parse_impl(self, self);
+        let (res, others) = function(StepCursor{
+            cursor: self.cell.get(), // cell.get() is to copy the value of cell
+            _marker: PhantomData,
+        })?;
 
+        self.cell.set(others);
 
-        {
-            let fork = self.fork();
-            let fork2 = self.fork();
-            parse_impl(&fork2, &fork2);
-        }
+        Ok(res)
 
-        r
+    }
+
+    fn parse<T: Parse>(&self) -> Result<T> {
+        T::parse(self)
     }
 
 
@@ -99,12 +151,89 @@ fn parse_impl<'b, 'a: 'b>(m: &'b ParseBuffer<'a>, n: &'b ParseBuffer<'a>) {
 
 }
 
+impl Parse for Punct {
+    fn parse(input: ParseStream) -> Result<Self> {
+        input.step(|cursor| match cursor.punct() {
+            Some((punct, rest)) => Ok((punct, rest)),
+            None => Err(cursor.error("expected punctuation token")),
+        })
+    }
+}
+
+#[derive(Clone)]
+pub struct Punct {
+    ch: char,
+
+}
+
+struct Punctuated<T, P> {
+    inner: Vec<(T, P)>,
+    last: Option<Box<T>>,
+}
+
+impl <T, P> Punctuated<T, P> {
+    fn new() -> Self {
+        Punctuated{
+            inner: vec![],
+            last: None,
+        }
+    }
+
+
+    pub fn push_value(&mut self, value: T) {
+
+        self.last = Some(Box::new(value));
+    }
+
+
+    fn push_punct(&mut self, punctuation: P) {
+
+        let last = self.last.take().unwrap();
+        self.inner.push((*last, punctuation));
+    }
+    fn parse_terminated(input: ParseStream) -> Result<Self>
+    where
+        T: Parse,
+        P: Parse,
+    {
+        Self::parse_terminated_with(input, T::parse)
+    }
+
+
+    pub fn parse_terminated_with<'a>(
+        input:  ParseStream<'a>,
+        parser: fn( ParseStream<'a>) ->  Result<T>,
+    ) ->  Result<Self>
+    where
+        P: Parse,
+    {
+        let mut punctuated = Punctuated::new();
+
+        loop {
+            if input.is_empty() {
+                break;
+            }
+            let value = parser(input)?;
+            let p = punctuated.last.take().unwrap();
+            punctuated.push_value(value);
+            if input.is_empty() {
+                break;
+            }
+            let punct  = input.parse()?;
+            punctuated.push_punct(punct);
+        }
+
+        Ok(punctuated)
+    }
+
+}
+
 struct ParamArgs {
     args: syn::AttributeArgs,
 }
 
-impl syn::parse::Parse for ParamArgs {
-    fn parse(input: syn::parse::ParseStream) -> Result<Self> {
+impl Parse for ParamArgs {
+    fn parse(input: ParseStream) -> Result<Self> {
         let punctuated = <syn::punctuated::Punctuated<_, syn::Token![,] >>::parse_terminated(input)?;
         Ok(Self {
             args: punctuated.into_iter().collect::<Vec<_>>(),
@@ -127,7 +256,6 @@ mod tests {
 
         for i in 0..3 {
             let c = p1.parse();
-            println!("c is {:?}", c)
         }
 
     }
