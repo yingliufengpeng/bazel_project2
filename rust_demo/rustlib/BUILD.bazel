@@ -4,27 +4,29 @@ load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 rust_library(
     name = "rustlib",
     srcs = glob(["**/*.rs"]),
+    crate_features = [
+        "extension-module",
+        "abi3-py313",
+    ],
     #    crate_type = "staticlib",
     crate_name = "rustlib",
     edition = "2021",
+    proc_macro_deps = [
+        "//rust_demo/my-macro:my-macro",  # ✅ 这里正确使用 proc_macro_deps
+    ],
     rustc_flags = [
         "--crate-type=staticlib",
     ],
-    crate_features = ["extension-module", "abi3-py313"],
-
     visibility = ["//rust_demo:__subpackages__"],
     deps = [
-        "@my_crates//:rand",
-        "@my_crates//:serde",
-        "@my_crates//:tempfile",
+        "//rust_demo/cpp:cpp_core",
         "@my_crates//:cxx",
         "@my_crates//:pyo3",
+        "@my_crates//:rand",
+        "@my_crates//:serde",
+        "@my_crates//:syn",
+        "@my_crates//:tempfile",
         "@my_crates//:tokio",
-        "//rust_demo/cpp:cpp_core",
-
-    ],
-    proc_macro_deps = [
-        "//rust_demo/my-macro:my-macro",  # ✅ 这里正确使用 proc_macro_deps
     ],
 )
 
@@ -49,8 +51,6 @@ rust_library(
 #
 #    ],
 #)
-
-
 
 # ---------- Rust → Python 扩展 ----------
 #pyo3_extension(
@@ -77,14 +77,11 @@ rust_library(
 
 rust_test(
     name = "rust_demo_test",
-#    srcs = glob(["**/*.rs"]),
-    edition = "2021",
-    crate = ":rustlib",
     args = ["--nocapture"],
-
+    crate = ":rustlib",
+    #    srcs = glob(["**/*.rs"]),
+    edition = "2021",
     deps = [
         "@my_crates//:trybuild",
-    ]
-
+    ],
 )
-
