@@ -5,8 +5,6 @@ use syn::{
     parse::Result,
     spanned::Spanned,
 };
-use syn::{parse_macro_input, NestedMeta};
-
 
 
 // 模拟 syn::Cursor —— 指向剩余输入的游标
@@ -107,26 +105,13 @@ struct ParamArgs {
 
 impl syn::parse::Parse for ParamArgs {
     fn parse(input: syn::parse::ParseStream) -> Result<Self> {
-        let punctuated =
-            <syn::punctuated::Punctuated<_, syn::Token![,]>>::parse_terminated(input)?;
+        let punctuated = <syn::punctuated::Punctuated<_, syn::Token![,] >>::parse_terminated(input)?;
         Ok(Self {
             args: punctuated.into_iter().collect::<Vec<_>>(),
         })
     }
 }
 
-struct Punctuated<T, P> {
-    inner: Vec<(T, P)>,
-    last: Option<Box<T>>,
-}
-
-impl <T, P> Punctuated<T, P> {
-
-    fn parse_terminated(stream: ParseBuffer) -> Punctuated<T, P> {
-
-        unimplemented!()
-    }
-}
 
 
 #[cfg(test)]

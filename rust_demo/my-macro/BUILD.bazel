@@ -5,7 +5,7 @@ rust_proc_macro(
     srcs = glob(['src/**/*.rs']),
     edition = "2021",
     deps = [
-        "@my_crates//:syn",
+        "@my_crates//:syn-2.0.106",
         "@my_crates//:quote",
         "@my_crates//:venial",
         "@my_crates//:proc-macro-error",

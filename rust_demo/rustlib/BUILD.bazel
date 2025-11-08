@@ -24,7 +24,7 @@ rust_library(
         "@my_crates//:pyo3",
         "@my_crates//:rand",
         "@my_crates//:serde",
-        "@my_crates//:syn",
+        "@my_crates//:syn-1.0.109",
         "@my_crates//:tempfile",
         "@my_crates//:tokio",
     ],
