@@ -81,7 +81,7 @@ impl <'a> Cursor<'a> {
 // 关键：ParseBuffer
 pub struct ParseBuffer<'a> {
     // 当前解析位置（用 'static 存储）
-    cell: Cell<Cursor<'a>>,
+    cell: Cell<Cursor<'static>>,
     // 告诉编译器：我们“名义上”持有 'a 数据
     _marker: PhantomData<Cursor<'a>>,
 }
@@ -96,7 +96,7 @@ impl Drop for ParseBuffer<'_> {
 
 impl <'a> ParseBuffer<'a> {
 
-    fn new(cursor: Cursor<'a>) -> ParseBuffer<'a> {
+    fn new(cursor: Cursor<'static>) -> ParseBuffer<'a> {
         ParseBuffer{
             cell: Cell::new(cursor),
             _marker: PhantomData,
@@ -141,8 +141,6 @@ impl <'a> ParseBuffer<'a> {
             _marker: PhantomData,
         }
     }
-
-
 
 }
 
@@ -229,14 +227,26 @@ impl <T, P> Punctuated<T, P> {
 }
 
 struct ParamArgs {
-    args: syn::AttributeArgs,
+    args: Vec<String>,
+}
+
+impl Parse for char {
+    fn parse(input: ParseStream) -> Result<Self> {
+        Ok('a')
+    }
+}
+
+impl Parse for String {
+    fn parse(input: ParseStream) -> Result<Self> {
+        Ok('a'.to_string())
+    }
 }
 
 impl Parse for ParamArgs {
     fn parse(input: ParseStream) -> Result<Self> {
-        let punctuated = <syn::punctuated::Punctuated<_, syn::Token![,] >>::parse_terminated(input)?;
+        let punctuated = <Punctuated<_, char>>::parse_terminated(input)?;
         Ok(Self {
-            args: punctuated.into_iter().collect::<Vec<_>>(),
+            args: punctuated.inner.into_iter().map(|e| e.0).collect(),
         })
     }
 }
@@ -245,6 +255,7 @@ impl Parse for ParamArgs {
 
 #[cfg(test)]
 mod tests {
+    use tokio::io::AsyncReadExt;
     use super::*;
 
     #[test]
@@ -254,9 +265,7 @@ mod tests {
 
         println!("begin parsing:  {:?}", p1.peek());
 
-        for i in 0..3 {
-            let c = p1.parse();
-        }
+
 
     }
 }
