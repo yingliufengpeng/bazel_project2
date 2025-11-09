@@ -25,17 +25,39 @@ trait Parse: Sized {
 
 // 模拟 syn::Cursor —— 指向剩余输入的游标
 #[derive(Clone, Copy, Debug)]
-pub struct Cursor<'a> {
+struct Cursor<'a> {
     // 指向剩余未解析的输入
     rest: &'a str,
     _marker: PhantomData<Cursor<'a>>,
 
 }
 
+
+struct SCursor<'a, 'c> {
+    rest: &'c str,
+    _maker: PhantomData<fn(Cursor<'c>) -> Cursor<'a>>,
+}
+
+
+type CT<'a, 'c> = fn(Cursor<'c>) -> Cursor<'a>;
+fn cover_impl<'a, 'c>(f: CT::<'a, 'c>) -> Cursor<'a> {
+    let x = Cursor::new("dd");
+    let r = f(x);
+    {
+
+        let r2 = r;
+        r2
+    }
+
+
+}
+
+
+
 #[derive(Clone, Copy, Debug)]
 struct StepCursor<'c, 'a> {
     cursor: Cursor<'c>,
-    _marker: PhantomData<fn(Cursor<'c>) -> &'a Cursor<'a>>,
+    _marker: PhantomData<fn(Cursor<'c>) ->  Cursor<'a>>,
 }
 
 impl <'c, 'a> Deref for StepCursor<'c, 'a> {

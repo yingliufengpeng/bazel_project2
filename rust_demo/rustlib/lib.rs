@@ -14,6 +14,7 @@ mod common;
 mod mybox;
 mod parser;
 mod func;
+mod pin;
 
 #[repr(C)]
 pub struct Person {
