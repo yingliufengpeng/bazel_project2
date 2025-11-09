@@ -56,5 +56,5 @@
 
     当我们把 Cell<Cursor<'a>>  改为 Cell<Cursor<'static>>时候, ParserBuffer<'a> 就变成协变类型.
     T::parse接收 &'1 ParserBuffer<'a>时,  参数的引用 &'x ParserBuffer<'x>, 由于'1的生命周期 < 'a
-    的生命周期, 取x = 1, 我们有 ParserBuffer<'1> 小于 ParserBuffer<'a> 切  '1 < 'a 所以我们有 
+    的生命周期, 取x = 1, 我们有 ParserBuffer<'1> 小于 ParserBuffer<'a> 且 '1 < 'a 所以我们有 
     &'1 ParserBuffer<'1>  小于 &'a ParserBuffer<'a> 所以可以顺利通过编译.
