@@ -121,7 +121,7 @@ fn f2() {
         let a_mut = pinned_a.as_mut().get_unchecked_mut();
         let b_mut = pinned_b.as_mut().get_unchecked_mut();
         std::mem::swap(a_mut, b_mut);
-        
+
         // 添加矫正逻辑. 手工
         a_mut.correct_ptr();
         b_mut.correct_ptr();
