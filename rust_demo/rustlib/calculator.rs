@@ -1,17 +1,18 @@
-
+use std::marker::PhantomData;
 use crate::utils;
 
 #[derive(Debug)]
 struct Calculator<'a> {
     cache: Vec<i32>,
     str: &'a str,
+    _maker: PhantomData<&'a str>,
 }
 
 
 impl<'a> Calculator<'a> {
 
     pub fn new(str: &'a str) -> Self {
-        Self { cache: vec![], str }
+        Self { cache: vec![], str, _maker: PhantomData }
     }
 
     /// 按值返回结果（安全、简单）
