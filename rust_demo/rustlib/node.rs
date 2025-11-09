@@ -22,7 +22,7 @@ impl<T> Node<T> {
         // 子节点指向父节点
         *child.parent.borrow_mut() = Some(Rc::downgrade(self));
         // 父节点加入子节点
-        if (self.find_child(child).is_none()) {
+        if self.find_child(child).is_none() {
             self.children.borrow_mut().push(Rc::clone(child));
 
         }
