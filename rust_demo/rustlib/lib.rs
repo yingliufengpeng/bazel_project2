@@ -16,6 +16,7 @@ mod parser;
 mod func;
 mod pin;
 mod borrow;
+mod lifetime;
 
 #[repr(C)]
 pub struct Person {
