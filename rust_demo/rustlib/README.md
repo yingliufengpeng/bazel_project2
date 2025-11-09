@@ -30,7 +30,7 @@
     当我的结构体这样定义的时候, 我的parse方法会编译失败, 因为&self引用的生命周期为 &'1 ParserBuffer<'a> 
     但是T::parse参数的入口点的要求的生命周期为   &'x ParserBuffer<'x> 又因为 ParserBuffer<'a> 是不变的,
     所以参数 &'x ParserBuffer<'x>就变为了  &'a ParserBuffer<'a>, 有上面的 生命周期规则, 我们可以知道必须
-    满足 'x : 'a 即 'x的生命周期必须高于'a的生命周期.  这个就是下面为什么要报错的结果.
+    满足 '1 : 'x 即 '1 : 'a 即 '1的生命周期必须高于'a的生命周期.  这个就是下面为什么要报错的结果.
     
 ```rust
         impl <'a> ParseBuffer<'a> {
