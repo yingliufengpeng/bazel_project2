@@ -17,7 +17,7 @@ struct Error {
 pub type Result<T> = std::result::Result<T, Error>;
 
 
-type ParseStream<'a> = &'a ParseBuffer<'a>;
+type ParseStream<'x> = &'x ParseBuffer<'x>;
 
 trait Parse: Sized {
     fn parse(input: ParseStream) -> Result<Self>;
