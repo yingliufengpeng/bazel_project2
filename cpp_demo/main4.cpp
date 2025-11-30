@@ -443,6 +443,7 @@ auto ff4() -> size_t {
     return 0;
 }
 
+auto ff6() -> void;
 
 auto ff5() -> void {
     auto s = std::make_shared<PERSON>();
@@ -451,4 +452,20 @@ auto ff5() -> void {
         auto s = std::make_shared<PERSON>();
     }
 
+    ff6();
+}
+
+
+struct Teacher {
+    int i;
+    int j;
+    explicit Teacher() : i(0), j(0) {}
+    explicit Teacher(int i, int j) : i(i), j(j) {}
+};
+
+auto ff6() -> void {
+    std::optional<Teacher> p;
+    p.emplace(3, 4);
+
+    std::cout << "p is " << p -> i << "  " << p->i << std::endl;
 }
